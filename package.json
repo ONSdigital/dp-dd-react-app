@@ -4,7 +4,8 @@
   "description": "dp-dd-react-app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clear": "rm dist/bundle.js",
+    "webpack": "webpack --config internals/webpack.config.js"
   },
   "repository": {
     "type": "git",
