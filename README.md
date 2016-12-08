@@ -24,10 +24,10 @@ Using NPM `npm install` or [Yarn](https://github.com/yarnpkg/yarn)
 
 Kick off local dev server with:
 ```
-npm start
+./run.sh
 ```
 
-It will host the application (on `:20040`), auto-build and reload on file changes using.
+It will host the application, auto-build and reload on file changes using. By default it uses `:20040` but will accept another port as an argument, eg `./run.sh 9000`.
 
 ...or just build the files with
 ```

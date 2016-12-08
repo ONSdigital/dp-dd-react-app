@@ -22,4 +22,10 @@ else
     exit 1
 fi
 
-echo "Now we run webpack dev"
+if [ $# -eq 0 ]; then
+    echo "Starting server on port 20040"
+    npm start
+else
+    echo "Starting server on port $1"
+    npm start --dp-dd-front:port=$1
+fi

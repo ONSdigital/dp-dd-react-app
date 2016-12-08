@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "description": "dp-dd-react-app",
   "main": "index.js",
+  "config": {
+    "port": 20040
+  },
   "scripts": {
     "clear": "rm dist/bundle.js*",
-    "start": "webpack-dev-server --config internals/webpack.development.config.js --content-base dist/ --hot --inline --port 20040",
+    "start": "webpack-dev-server --config internals/webpack.development.config.js --content-base dist/ --hot --inline --port $npm_package_config_port",
     "build": "webpack --config internals/webpack.production.config.js"
   },
   "repository": {
