@@ -8,10 +8,10 @@
     "webpack": "webpack --config internals/webpack.config.js"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ONSdigital/dp-dd-front.git"
+    "url": "git+https://github.com/ONSdigital/dp-dd-front.git",
+    "type": "git"
   },
-  "author": "",
+  "author": "Marek <mkarwowski@equalexperts.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ONSdigital/dp-dd-front/issues"
