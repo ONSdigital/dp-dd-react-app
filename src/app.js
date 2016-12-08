@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
+import CSS from "./scss/main.scss";
 
 const runApp = () => {
     ReactDOM.render(

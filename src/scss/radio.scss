@@ -1,0 +1,39 @@
+.radio {
+    position: relative;
+
+    & input[type="radio"] {
+        position: absolute;
+        left: -9999px;
+    }
+
+    & input[type="radio"] + label {
+        font-size: $font-size;
+        display: inline-block;
+        background-color: $gallery;
+        padding: $baseline $col $baseline ($col * 3);
+        border: 1px solid $gallery;
+        position: relative;
+
+        &:hover, :focus {
+            border-color: $ship-grey;
+            cursor: pointer;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: $col;
+            border: 2px solid $silver;
+            border-radius: 16px;
+            width: 16px;
+            height: 16px;
+            background: $white;
+        }
+    }
+
+    & input[type="radio"]:checked + label:after {
+        background-color: $matisse;
+        box-shadow: inset 0 0 0 2px $white;
+    }
+}
