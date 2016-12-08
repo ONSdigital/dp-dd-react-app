@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clear": "rm dist/bundle.js",
-    "webpack": "webpack --config internals/webpack.config.js"
+    "start": "webpack-dev-server --config internals/webpack.development.config.js --content-base dist/ --hot --inline --port 20040"
   },
   "repository": {
     "url": "git+https://github.com/ONSdigital/dp-dd-front.git",
