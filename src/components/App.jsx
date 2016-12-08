@@ -1,24 +1,31 @@
-import React from 'react'
+import React, {Component} from 'react'
+
+import CustomComponent from './CustomComponent'
 
 const defaultProps = {
     foo: 'bar'
 };
 
-export default function App(props) {
-    return (
-        <div>
-            <h3>Hello from the app</h3>
+// export default function (props) => {(
+//     <div>
+//         <CustomComponent />
+//     </div>
+// )}
+
+export default class App extends Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
             <div>
-                <hr />
-                <pre>
-                {props.foo}
-                </pre>
-                <hr />
+                <CustomComponent/>
             </div>
-
-
-        </div>
-    )
+        )
+    }
 }
+
 
 App.defaultProps = defaultProps;
