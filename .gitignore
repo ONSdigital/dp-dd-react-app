@@ -45,6 +45,7 @@ bower_components
 dist/*
 build/
 
-
-# Temporary rule
+# Temporary rules
 !dist/index.html
+webpack.config.js
+
