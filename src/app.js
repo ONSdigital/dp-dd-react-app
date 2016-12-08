@@ -3,15 +3,15 @@ import ReactDOM from "react-dom";
 import App from "./components/App";
 import CSS from "./scss/main.scss";
 
-const runApp = () => {
+function init() {
     ReactDOM.render(
         React.createElement(App),
         document.getElementById("app")
     );
-};
+}
 
 if (window.addEventListener) {
-    window.addEventListener('DOMContentLoaded', runApp);
+    window.addEventListener('DOMContentLoaded', init);
 } else {
-    window.attachEvent('onload', runApp);
+    window.attachEvent('onload', init);
 }
