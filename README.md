@@ -1,30 +1,33 @@
-dp-repo-template
+DP data discovery front-end [ALPHA]
 ================
 
-A template git repository for DP repos:
-
-* Standardised files for CHANGELOG, CONTRIBUTING, LICENSE and README
-* Default template for GitHub pull requests
+A React application for the front-end of the data discovery journeys and UIs being tested for the [ONS website](https://www.ons.gov.uk).
 
 ### Getting started
 
-After creating a new repository on GitHub, use these commands to initialise
-it using this repository as a template:
+You'll need both [Node](https://nodejs.org/en/) and [NPM](https://www.npmjs.com/) installed before starting. 
 
-* `git clone git@github.com:ONSdigital/dp-repo-template dp-new-repo-name`
-* `cd dp-new-repo-name`
-* `git remote set-url origin git@github.com:ONSdigital/dp-new-repo-name`
 
-Remember to update the [README](README.md) and [CHANGELOG](CHANGELOG.md) files.
+1. Download this repo:
 
-### Configuration
+`git clone git@github.com:ONSdigital/dp-repo-template dp-new-repo-name`
+`cd dp-new-repo-name`
 
-An overview of the configuration options available, either as a table of
-environment variables, or with a link to a configuration guide.
 
-| Environment variable | Default | Description
-| -------------------- | ------- | -----------
-| BIND_ADDR            | :8080   | The host and port to bind to
+2. Install the dependencies:
+
+Using NPM `npm install` or [Yarn](https://github.com/yarnpkg/yarn) 
+`yarn` 
+
+
+3. Run or build the application:
+
+Kick off the server, which will host the application (on `:20040`), auto-build and reload on file changes using
+`npm run webpack-dev-server`
+ 
+ ...or just build the files with
+ `npm run webpack`
+ 
 
 ### Contributing
 
