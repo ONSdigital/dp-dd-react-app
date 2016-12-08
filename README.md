@@ -10,23 +10,29 @@ You'll need both [Node](https://nodejs.org/en/) and [NPM](https://www.npmjs.com/
 
 1. Download this repo:
 
-`git clone git@github.com:ONSdigital/dp-repo-template dp-new-repo-name`
-`cd dp-new-repo-name`
+`git clone git@github.com:ONSdigital/dp-dd-react-app`
+`cd dp-dd-react-app`
 
 
 2. Install the dependencies:
 
-Using NPM `npm install` or [Yarn](https://github.com/yarnpkg/yarn) 
-`yarn` 
+Using NPM `npm install` or [Yarn](https://github.com/yarnpkg/yarn)
+`yarn`
 
 
 3. Run or build the application:
 
-Kick off the server, which will host the application (on `:20040`), auto-build and reload on file changes using
-`npm run webpack-dev-server`
- 
- ...or just build the files with
- `npm run webpack`
+Kick off local dev server with:
+```
+npm start
+```
+
+It will host the application (on `:20040`), auto-build and reload on file changes using.
+
+...or just build the files with
+```
+npm run build
+```
  
 
 ### Contributing

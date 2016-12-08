@@ -4,8 +4,9 @@
   "description": "dp-dd-react-app",
   "main": "index.js",
   "scripts": {
-    "clear": "rm dist/bundle.js",
-    "start": "webpack-dev-server --config internals/webpack.development.config.js --content-base dist/ --hot --inline --port 20040"
+    "clear": "rm dist/bundle.js*",
+    "start": "webpack-dev-server --config internals/webpack.development.config.js --content-base dist/ --hot --inline --port 20040",
+    "build": "webpack --config internals/webpack.production.config.js"
   },
   "repository": {
     "url": "git+https://github.com/ONSdigital/dp-dd-front.git",
