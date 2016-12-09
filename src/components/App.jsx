@@ -1,10 +1,9 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
 
-import CustomComponent from './CustomComponent'
+import { getStore } from '../config/store';
+import CustomComponent from './CustomComponent';
 
-const defaultProps = {
-    foo: 'bar'
-};
 
 // export default function (props) => {(
 //     <div>
@@ -19,13 +18,11 @@ export default class App extends Component {
     }
 
     render() {
+        var store = getStore();
         return (
-            <div>
+            <Provider store={store}>
                 <CustomComponent/>
-            </div>
+            </Provider>
         )
     }
 }
-
-
-App.defaultProps = defaultProps;
