@@ -1,12 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./components/App";
+
+import { browserHistory } from 'react-router';
 import { initStore } from './config/store';
+
+import App from "./components/App";
 import CSS from "./scss/main.scss";
 
 function init() {
 
-    initStore({
+    initStore(browserHistory, {
         // for alpha we will persist state in local storage
     });
 

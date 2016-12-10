@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
+import { Router, RouterContext } from 'react-router';
 
-import { getStore } from '../config/store';
-import CustomComponent from './CustomComponent';
-
-
-// export default function (props) => {(
-//     <div>
-//         <CustomComponent />
-//     </div>
-// )}
+import store from '../config/store';
+import routes from '../config/routes'
 
 export default class App extends Component {
 
@@ -18,10 +12,9 @@ export default class App extends Component {
     }
 
     render() {
-        var store = getStore();
         return (
-            <Provider store={store}>
-                <CustomComponent/>
+            <Provider store={store.getStore()}>
+                <Router history={store.getHistory()} routes={routes} />
             </Provider>
         )
     }
