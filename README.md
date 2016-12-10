@@ -27,7 +27,7 @@ Kick off local dev server with:
 ./run.sh
 ```
 
-It will host the application, auto-build and reload on file changes using. By default it uses `:20040` but will accept another port as an argument, eg `./run.sh 9000`.
+It will host the application, auto-build and reload on file changes using. By default it uses `:20040` but will accept another port as an argument, eg `PORT=7000 ./run.sh`.
 
 ...or just build the files with
 ```
