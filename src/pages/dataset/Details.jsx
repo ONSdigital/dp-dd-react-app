@@ -4,9 +4,6 @@ import { Link } from 'react-router'
 export default (props) => {
     return (
         <div>
-            <h2>Dataset ({props.params.id})</h2>
-
-
             <div className="col--lg-two-thirds">
                 <h1 className="margin-bottom-md--0">Members of the Armed Forces by residence type by sex by age</h1>
                 <p className="page-intro__content margin-bottom-md--1">This dataset provides 2011 Census estimates that classify usual residents aged 16 and over who are members of the armed forces by residence type (household or communal resident), by sex and by age.</p>
