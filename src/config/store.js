@@ -20,7 +20,8 @@ export function initStore(history, initialState) {
         applyMiddleware(...middleware)
     ];
 
-    internal.store = createStore(reducers, initialState, compose(...enhancers));
+    let composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    internal.store = createStore(reducers, initialState, composeEnhancers(...enhancers));
     internal.history = syncHistoryWithStore(history, internal.store);
     return internal.store;
 }
