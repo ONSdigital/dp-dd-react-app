@@ -1,0 +1,27 @@
+/* TEXT SEARCH INPUT */
+
+.keyword-search {
+    margin-bottom: ($baseline * 2);
+
+    &__label {
+        display: block;
+        margin-bottom: $baseline * 2;
+        font-size: $font-size;
+    }
+
+    &__input {
+        height: $baseline * 5;
+        -webkit-appearance: textfield;
+        border: 1px solid $iron;
+        padding: 0 ($col/2);
+
+        @include breakpoint(md) {
+            width: ($col * 18);
+        }
+
+        &:focus, &:active {
+            border-color: $ship-grey;
+            outline: 0;
+        }
+    }
+}

@@ -1,0 +1,22 @@
+/** SETS ALL MIXINS **/
+
+/* These must mirror the same mixins from github.com/onsdigital/sixteens */
+
+@mixin breakpoint($class) {
+
+    @if $class == sm {
+        @media (max-width: 767px) { @content; }
+    }
+
+    @else if $class == md {
+        @media (min-width: 768px) { @content; }
+    }
+
+    @else if $class == md-max {
+        @media (max-width: 768px) { @content; }
+    }
+
+    @else if $class == lg {
+        @media (min-width: 992px) { @content; }
+    }
+}
