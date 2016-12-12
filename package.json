@@ -8,7 +8,7 @@
   },
   "scripts": {
     "clear": "rm dist/bundle.js*",
-    "start": "webpack-dev-server --config internals/webpack.development.config.js --content-base dist/ --hot --inline --port $npm_package_config_port",
+    "start": "webpack-dev-server --config internals/webpack.development.config.js --content-base dist/ --hot --inline --port $npm_package_config_port  --history-api-fallback",
     "build": "webpack --config internals/webpack.production.config.js"
   },
   "repository": {
