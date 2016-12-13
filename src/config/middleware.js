@@ -1,3 +1,5 @@
+import thunkMiddleware from 'redux-thunk'
+
 export default [
-    //	link all custom middlewares here
+    thunkMiddleware
 ]
