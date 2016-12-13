@@ -5,7 +5,6 @@ export default class Checkbox extends Component {
         super(props);
 
         this.state = {
-            selected: false,
             focused: false
         };
 
