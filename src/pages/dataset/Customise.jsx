@@ -1,3 +1,15 @@
-import React from 'react';
+import React, {Component} from 'react';
+import DimmensionList from '../../components/elements/DimensionList'
 
-export default (props) => <h2>Customise</h2>;
+export default class Customise extends Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <DimmensionList />
+        )
+    }
+}

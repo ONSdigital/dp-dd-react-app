@@ -11,7 +11,6 @@ class Details extends Component {
     componentWillMount() {
         const dispatch = this.props.dispatch;
         dispatch(requestMetadata(this.props.params.id));
-        //requestMetadata(this.props.params.id);
     }
 
     render () {
