@@ -3,7 +3,7 @@ import Home from '../pages/Home';
 
 export default [
     { path: '/', component: Home },
-    { path: 'dataset/:id', component: dataset.Details },
-    { path: 'dataset/:id/download', component: dataset.Download },
-    { path: 'dataset/:id/customise', component: dataset.Customise }
+    { path: 'dd/dataset/:id', component: dataset.Details },
+    { path: 'dd/dataset/:id/download', component: dataset.Download },
+    { path: 'dd/dataset/:id/customise', component: dataset.Customise }
 ]

@@ -6,6 +6,7 @@ import store from '../config/store';
 
 
 import routes from '../config/routes';
+
 export default class App extends Component {
 
     constructor(props) {
