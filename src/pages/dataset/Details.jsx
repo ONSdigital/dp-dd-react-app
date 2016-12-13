@@ -1,9 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router';
+import Checkbox from '../../components/elements/Checkbox.jsx';
+import RadioGroup from '../../components/elements/RadioGroup.jsx';
 
 export default (props) => {
     return (
         <div>
+            <Checkbox label="A checkbox" id="checkbox-1" />
+            <RadioGroup />
+        </div>
+        /* <div>
             <div className="col--lg-two-thirds">
                 <h1 className="margin-bottom-md--0">Members of the Armed Forces by residence type by sex by age</h1>
                 <p className="page-intro__content margin-bottom-md--1">This dataset provides 2011 Census estimates that classify usual residents aged 16 and over who are members of the armed forces by residence type (household or communal resident), by sex and by age.</p>
@@ -22,6 +28,6 @@ export default (props) => {
                     &middot;&nbsp;<a href="./files/background-notes.pdf" target="_blank">Background notes</a> (PDF, 168KB)
                 </p>
             </div>
-        </div>
+        </div> */
     )
 }
