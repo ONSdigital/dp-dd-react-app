@@ -1,4 +1,10 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
+
+const propTypes = {
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired
+};
 
 export default class Checkbox extends Component {
     constructor(props) {
@@ -35,6 +41,6 @@ export default class Checkbox extends Component {
             </div>
         )
     }
-
-
 }
+
+Checkbox.propTypes = propTypes;
