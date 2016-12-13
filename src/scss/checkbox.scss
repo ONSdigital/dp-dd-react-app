@@ -5,19 +5,21 @@
         margin-top: $baseline;
     }
 
-    & input[type="checkbox"] {
+    &__input {
         position: absolute;
-        left: -9999px;
+        top: 10px;
+        left: ($col * 2);
+        opacity: 0;
     }
 
-    & input[type="checkbox"] + label {
+    &__label {
         font-size: $font-size;
         display: inline-block;
         background-color: $gallery;
         padding: $baseline $col $baseline ($col * 3);
         border: 1px solid $gallery;
 
-        &:hover {
+        &:hover, &.focused {
             border-color: $ship-grey;
             cursor: pointer;
         }
@@ -34,7 +36,7 @@
         }
     }
 
-    & input[type="checkbox"]:checked + label {
+    &__input:checked + label {
         background: $white;
         border: 1px solid $ship-grey;
 
