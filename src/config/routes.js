@@ -1,9 +1,11 @@
 import dataset from '../pages/dataset'
 import Home from '../pages/Home';
 
+const { Details, Download, Customise } = dataset;
+
 export default [
     { path: '/', component: Home },
-    { path: 'dd/dataset/:id', component: dataset.Details },
-    { path: 'dd/dataset/:id/download', component: dataset.Download },
-    { path: 'dd/dataset/:id/customise', component: dataset.Customise }
+    { path: 'dd/dataset/:id', component: Details },
+    { path: 'dd/dataset/:id/download', component: Download },
+    { path: 'dd/dataset/:id/customise(/:selectorID)', component: Customise }
 ]

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router';
 
 export default class DimensionItem extends Component {
     constructor(props) {
@@ -15,7 +16,7 @@ export default class DimensionItem extends Component {
                     {this.props.selected}
                 </div>
                 <div className="col col--md-6 col--lg-6">
-                    <a href="aggregate.html" className="float-right">customise</a>
+                    <Link to={'/dd/dataset/AF001EW/customise/'+this.props.id} className="float-right">cusdtomise</Link>
                 </div>
             </li>
 

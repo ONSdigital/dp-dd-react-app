@@ -10,7 +10,7 @@ const defaultState = {
 };
 
 export default function (state = defaultState, action) {
-    console.log('---\n', action.type, '\n', action, state);
+    //console.log('---\n', action.type, '\n', action, state);
 
     switch (action.type) {
         case REQUEST_METADATA_SUCCESS:

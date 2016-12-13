@@ -8,8 +8,8 @@ export default class Customise extends Component {
     }
 
     render() {
-        return (
-            <DimmensionList />
-        )
+        return this.props.params.selectorID === undefined
+            ? <DimmensionList />
+            : <div className="margin-bottom--double"><h3>Customise details { this.props.params.selectorID }</h3></div>
     }
 }
