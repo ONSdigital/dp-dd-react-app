@@ -5,8 +5,8 @@ function DimensionsList(props) {
     const items = props.dimensions;
     return (
         <ul className="list--neutral">
-            {items.map((item) =>
-                <DimensionItem key={item.id} name={item.name} selected={item.selected}/>
+            {items.map((item, key) =>
+                <DimensionItem key={key} name={item.name} selected={item.selected}/>
             )}
 
         </ul>
