@@ -24,7 +24,6 @@ export function requestMetadata(id) {
     const opts = {
         method: 'GET',
         headers: {
-            'Accept': 'application/json',
             'Accept': 'application/json'
         }
     };
