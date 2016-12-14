@@ -1,26 +1,17 @@
 import { checkResponseStatus, parseResponseToJSON } from './utils'
 
 export const REQUEST_METADATA = 'REQUEST_METADATA';
-export const REQUEST_METADATA_INIT = 'REQUEST_METADATA_INIT';
 export const REQUEST_METADATA_SUCCESS = 'REQUEST_METADATA_SUCCESS';
 export const REQUEST_METADATA_FAILURE = 'REQUEST_METADATA_FAILURE';
 
-function initRequestMetadata(id) {
-    return {
-        type: REQUEST_METADATA_INIT,
-        id: id
-    }
-}
+export const REQUEST_DIMENSIONS = 'REQUEST_DIMENSIONS'
+export const REQUEST_DIMENSIONS_SUCCESS = 'REQUEST_DIMENSIONS_SUCCESS'
+export const REQUEST_DIMENSIONS_FAILURE = 'REQUEST_DIMENSIONS_FAILURE'
 
-function failRequestMetadata(err) {
-    return {
-        type: REQUEST_METADATA_FAILURE,
-        err: err
-    }
-}
+const APIURL = 'http://localhost:20099'
 
-export function requestMetadata(id) {
-    const url = `http://localhost:20099/datasets/${id}`;
+export function requestDimensions(id) {
+    const url = `${APIURL}/datasets/${id}/dimensions`
     const opts = {
         method: 'GET',
         headers: {
@@ -29,7 +20,45 @@ export function requestMetadata(id) {
     };
 
     return (dispatch) => {
-        dispatch(initRequestMetadata(id));
+        dispatch({
+            type: REQUEST_DIMENSIONS,
+            id: id
+        })
+        return fetch(url, opts)
+            .then(checkResponseStatus)
+            .then(parseResponseToJSON)
+            .then(function (json) {
+                dispatch(parseDimensions(id, json))
+            }).catch(function (err) {
+                throw(err);
+            })
+    }
+}
+
+export function parseDimensions(datasetID, dimensionsJSON) {
+    return {
+        type: REQUEST_DIMENSIONS_SUCCESS,
+        dataset: {
+            id: datasetID,
+            dimensions: dimensionsJSON
+        }
+    }
+}
+
+export function requestMetadata(id) {
+    const url = `${APIURL}/datasets/${id}`;
+    const opts = {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
+        }
+    };
+
+    return (dispatch) => {
+        dispatch({
+            type: REQUEST_METADATA,
+            id: id
+        })
         return fetch(url, opts)
             .then(checkResponseStatus)
             .then(parseResponseToJSON)

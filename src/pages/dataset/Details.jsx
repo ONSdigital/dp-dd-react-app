@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { requestMetadata } from './actions';
 
 class Details extends Component {
-    constructor(props) {
+    constructor(props) {1
         super(props);
     }
 
@@ -38,7 +38,6 @@ class Details extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log('mapStateToProps()');
     return state.dataset;
 }
 

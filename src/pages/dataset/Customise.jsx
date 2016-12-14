@@ -1,15 +1,39 @@
-import React, {Component} from 'react';
-import DimmensionList from '../../components/elements/DimensionList'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { requestDimensions } from './actions'
+import DimensionList from '../../components/elements/DimensionList'
 
-export default class Customise extends Component {
+class Customise extends Component {
 
     constructor(props) {
-        super(props);
+        super(props)
+    }
+
+    componentWillMount() {
+        const dispatch = this.props.dispatch;
+        dispatch(requestDimensions(this.props.params.id));
     }
 
     render() {
+        const { dimensions, params } = this.props;
+        const selectedDimensions = dimensions.map((dimension) => {
+            return Object.assign({}, dimension, {
+                selected: 'nothing selected'
+            })
+        })
         return this.props.params.selectorID === undefined
-            ? <DimmensionList />
-            : <div className="margin-bottom--double"><h3>Customise details { this.props.params.selectorID }</h3></div>
+            ? <DimensionList dimensions={selectedDimensions} />
+            : <div className="margin-bottom--double"><h3>Customise details {params.selectorID}</h3></div>
     }
 }
+
+
+function mapStateToProps(state) {
+    const props = {
+        dimensions: state.dataset.dimensions
+    }
+
+    return props
+}
+
+export default connect(mapStateToProps)(Customise)
