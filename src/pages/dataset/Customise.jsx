@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { requestDimensions } from './actions'
 import { Link } from 'react-router'
 import DimensionList from '../../components/elements/DimensionList'
+import DimensionSelector from '../../components/elements/DimensionSelector'
 
 class Customise extends Component {
 
@@ -29,9 +30,23 @@ class Customise extends Component {
             page.parentPath = '/dd/dataset/AF001EW/customise/'
             page.component = <DimensionList dimensions={selectedDimensions} />
         } else {
+            const options =  [
+                {
+                    id: "DO000161",
+                    name: "All categories: Residence Type"
+                },
+                {
+                    id: "DO000162",
+                    name: "Lives in a household"
+                },
+                {
+                    id: "DO000163",
+                    name: "Lives in a communal establishment"
+                }
+            ]
             page.title = ""
             page.parentPath = '/dd/dataset/AF001EW/customise/'
-            page.component = <div className="margin-bottom--double"><h3>Customise details {params.selectorID}</h3></div>
+            page.component = <DimensionSelector options={options}/>
         }
 
         return (
