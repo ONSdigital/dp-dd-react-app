@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { requestMetadata } from './actions';
 
 class Details extends Component {
-    constructor(props) {1
+    constructor(props) {
         super(props);
     }
 
