@@ -16,7 +16,7 @@ export default class DimensionItem extends Component {
                     {this.props.selected}
                 </div>
                 <div className="col col--md-6 col--lg-6">
-                    <Link to={'/dd/dataset/AF001EW/customise/'+this.props.id} className="float-right">cusdtomise</Link>
+                    <Link to={'/dd/dataset/AF001EW/customise/'+this.props.id} className="float-right">customise</Link>
                 </div>
             </li>
 
