@@ -22,12 +22,16 @@ class Details extends Component {
                     <p className="page-intro__content margin-bottom-md--1">{description}</p>
 
                     <Link to={`/dd/dataset/${this.props.params.id}/download`}
-                          className="btn btn--primary btn--thick btn--big btn--wide">Download the complete dataset &gt;</Link>
+                          className="btn btn--primary btn--thick btn--big btn--wide margin-top--2 font-size--17">
+                            <strong>Download the complete dataset &gt;</strong>
+                    </Link>
                     <br />
                     <Link to={`/dd/dataset/${this.props.params.id}/customise`}
-                          className="btn btn--primary btn--thick btn--big btn--wide margin-top--2">Customise this dataset</Link>
+                          className="btn btn--primary btn--thick btn--big btn--wide margin-top--2 font-size--17">
+                            <strong>Customise this dataset</strong>
+                    </Link>
 
-                    <p className="margin-bottom--0 margin-top--4">
+                    <p className="margin-bottom--8 margin-top--4">
                         <strong>Supporting information</strong><br />
                         &middot;&nbsp;<a href="./files/background-notes.pdf" target="_blank">Background notes</a> (PDF, 168KB)
                     </p>
