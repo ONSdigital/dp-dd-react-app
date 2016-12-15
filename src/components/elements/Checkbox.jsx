@@ -4,16 +4,16 @@ const propTypes = {
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
+    selected: PropTypes.bool,
     onChange: PropTypes.func
 };
-
 
 export default class Checkbox extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            selected: false,
+            selected: props.selected || false,
             focused: false
         };
 
@@ -23,12 +23,12 @@ export default class Checkbox extends Component {
     }
 
     handleChange(event) {
-        this.setState({selected: event.target.checked});
-        if (this.props.onChange) {
-            this.props.onChange({
-                id: this.props.id,
-                selected: this.state.selected
-            })
+        const selected = event.target.checked;
+        const id = this.props.id;
+        const onChange = this.props.onChange;
+        this.setState({selected});
+        if (onChange) {
+            onChange({ id, selected });
         }
     }
     

@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { requestMetadata, requestDimensions } from './actions';
 import { Link } from 'react-router';
+
+import {
+    requestMetadata,
+    requestDimensions,
+    saveDimensionOptions
+} from './actions';
+
 import DimensionList from '../../components/elements/DimensionList';
 import DimensionSelector from '../../components/elements/DimensionSelector';
 import DocumentTitle from '../../components/elements/DocumentTitle';
@@ -10,8 +16,17 @@ class Customise extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            initialFetchRequired: false
+            initialFetchRequired: false,
+            parentPath: '/dd/dataset/AF001EW/',
+            currentPath: '/dd/dataset/AF001EW/customise/'
         }
+
+        this.saveDimensionOptions = this.saveDimensionOptions.bind(this);
+    }
+
+    saveDimensionOptions({dimensionID, options}) {
+        this.props.dispatch(saveDimensionOptions({dimensionID, options}));
+        this.props.router.push(this.state.currentPath);
     }
 
     componentWillMount() {
@@ -33,13 +48,10 @@ class Customise extends Component {
     }
 
     getOptions() {
-        let options = [];
-        this.props.dimensions.forEach((dimension) => {
-            if (dimension.id === this.props.params.dimensionID) {
-                options = dimension.options;
-            }
-        })
-        return options;
+        const dimension = this.props.dimensions.find((dimension) => {
+            return dimension.id === this.props.params.dimensionID;
+        });
+        return !dimension ? [] : dimension.options;
     }
 
     render() {
@@ -50,20 +62,23 @@ class Customise extends Component {
     }
 
     renderDimensionList() {
-        const title = 'Customise ' + this.props.title;
-        const parentPath = '/dd/dataset/AF001EW/';
+        const parentPath = this.state.parentPath;
         const dimensions = this.props.dimensions.map((dimension) => {
             return Object.assign({}, dimension, {
                 selected: 'nothing selected'
             })
         })
 
+        if (!this.props.hasMetadata) {
+            return null;
+        }
+
         return (
             <div>
                 <div className="margin-top--2">
                     <Link to={parentPath} className="btn--everything">Back</Link>
-                    <DocumentTitle title={title}>
-                        <h1 className="margin-top--half margin-bottom">{title}</h1>
+                    <DocumentTitle title={`Customise ${this.props.title}`}>
+                        <h1 className="margin-top--half margin-bottom">Customise this dataset</h1>
                     </DocumentTitle>
 
                 </div>
@@ -81,8 +96,16 @@ class Customise extends Component {
     }
 
     renderDimensionSelector() {
-        const parentPath = '/dd/dataset/AF001EW/customise/';
-        const params = this.props.params;
+        if (!this.props.hasDimensions) {
+            return null;
+        }
+
+        const parentPath = this.state.currentPath;
+        const selectorProps = {
+            options: this.getOptions(),
+            dimensionID:  this.props.params.dimensionID,
+            saveSelections: this.saveDimensionOptions
+        }
 
         return (
             <div>
@@ -90,7 +113,7 @@ class Customise extends Component {
                     <Link to={parentPath} className="btn--everything">Back</Link>
                 </div>
                 <div>
-                    <DimensionSelector options={this.getOptions()} selectorID={params.dimensionID}/>
+                    <DimensionSelector {...selectorProps} />
                 </div>
             </div>
         )
@@ -100,7 +123,9 @@ class Customise extends Component {
 function mapStateToProps(state) {
     return {
         dimensions: state.dataset.dimensions,
-        title: state.dataset.title
+        title: state.dataset.title,
+        hasDimensions: state.dataset.hasDimensions,
+        hasMetadata: state.dataset.hasMetadata
     }
 }
 

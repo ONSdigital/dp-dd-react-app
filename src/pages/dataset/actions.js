@@ -4,11 +4,20 @@ export const REQUEST_METADATA = 'REQUEST_METADATA';
 export const REQUEST_METADATA_SUCCESS = 'REQUEST_METADATA_SUCCESS';
 export const REQUEST_METADATA_FAILURE = 'REQUEST_METADATA_FAILURE';
 
-export const REQUEST_DIMENSIONS = 'REQUEST_DIMENSIONS'
-export const REQUEST_DIMENSIONS_SUCCESS = 'REQUEST_DIMENSIONS_SUCCESS'
-export const REQUEST_DIMENSIONS_FAILURE = 'REQUEST_DIMENSIONS_FAILURE'
+export const REQUEST_DIMENSIONS = 'REQUEST_DIMENSIONS';
+export const REQUEST_DIMENSIONS_SUCCESS = 'REQUEST_DIMENSIONS_SUCCESS';
+export const REQUEST_DIMENSIONS_FAILURE = 'REQUEST_DIMENSIONS_FAILURE';
+
+export const SAVE_DIMENSION_OPTIONS = 'SAVE_DIMENSION_OPTIONS';
 
 const APIURL = 'http://localhost:20099'
+
+export function saveDimensionOptions({dimensionID, options}) {
+    return {
+        type: SAVE_DIMENSION_OPTIONS,
+        selection: { dimensionID, options }
+    }
+}
 
 export function requestDimensions(id) {
     const url = `${APIURL}/datasets/${id}/dimensions`
