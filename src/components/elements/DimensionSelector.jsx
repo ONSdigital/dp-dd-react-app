@@ -13,7 +13,7 @@ const propTypes = {
 
 const defaultState = {
     selectedOptionIDs: []
-}
+};
 
 export default class DimensionSelector extends Component {
     constructor(props) {
@@ -43,7 +43,7 @@ export default class DimensionSelector extends Component {
         const options = this.props.options;
         const selectorMap = {
             'dimensionList': ['D000123', 'D000124', 'D000125']
-        }
+        };
 
         if (selectorMap.dimensionList.indexOf(selectorID) > -1) {
             return options.map((item, key) => (
@@ -63,7 +63,7 @@ export default class DimensionSelector extends Component {
                 { this.renderSelector() }
                 <div className="margin-top--4 margin-bottom--8">
                     <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
-                       onClick={this.saveSelections.bind(this)}>Same selection &gt;</a>
+                       onClick={this.saveSelections.bind(this)}>Save selection &gt;</a>
                     <Link className="btn btn--secondary btn--thick btn--wide btn--big"
                           to="/dd/dataset/AF001EW/customise/">Cancel</Link>
                 </div>
