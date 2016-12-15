@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { requestMetadata } from './actions';
+import DocumentTitle from '../../components/elements/DocumentTitle';
 
 class Details extends Component {
     constructor(props) {
@@ -14,12 +15,20 @@ class Details extends Component {
     }
 
     render () {
-        const description =  this.props.metadata && this.props.metadata.description ? this.props.metadata.description : '';
+        const page = {};
+        if (this.props.metadata) {
+            page.description =  this.props.metadata.description
+            page.title = this.props.title
+        }
+
         return (
             <div>
                 <div className="col--lg-two-thirds">
-                    <h1 className="margin-bottom-md--0">{this.props.title}</h1>
-                    <p className="page-intro__content margin-bottom-md--1">{description}</p>
+                    <DocumentTitle title={page.title}>
+                        <h1 className="margin-bottom-md--0">{page.title}</h1>
+                    </DocumentTitle>
+
+                    <p className="page-intro__content margin-bottom-md--1">{page.description}</p>
 
                     <Link to={`/dd/dataset/${this.props.params.id}/download`}
                           className="btn btn--primary btn--thick btn--big btn--wide margin-top--2 font-size--17">
