@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const config = require('./webpack.defaults').config;
+const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = Object.assign({}, config, {
     devtool: "source-map",
@@ -18,6 +19,11 @@ module.exports = Object.assign({}, config, {
     //     }
     // },
     plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            }
+        }),
         new webpack.optimize.OccurenceOrderPlugin(true),
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.UglifyJsPlugin({
