@@ -49,3 +49,6 @@ build/
 !dist/index.html
 webpack.config.js
 
+# Yarn
+yarn.lock
+
