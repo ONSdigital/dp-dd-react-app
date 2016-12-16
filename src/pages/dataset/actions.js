@@ -9,18 +9,37 @@ export const REQUEST_DIMENSIONS_SUCCESS = 'REQUEST_DIMENSIONS_SUCCESS';
 export const REQUEST_DIMENSIONS_FAILURE = 'REQUEST_DIMENSIONS_FAILURE';
 
 export const SAVE_DIMENSION_OPTIONS = 'SAVE_DIMENSION_OPTIONS';
+export const PARSE_DIMENSIONS = 'PARSE_DIMENSIONS';
 
 const APIURL = 'http://localhost:20099'
 
 export function saveDimensionOptions({dimensionID, options}) {
-    return {
-        type: SAVE_DIMENSION_OPTIONS,
-        selection: { dimensionID, options }
+    // we are using async to access getState() via redux-thunk
+    return (dispatch, getState) => {
+        const state = getState();
+        // todo: use deep merge for merging hierarchies -> https://www.npmjs.com/package/deepmerge
+        const dimensions = state.dataset.dimensions.map((dimension) => {
+            dimension = Object.assign({}, dimension);
+            if (dimension.id !== dimensionID) {
+                return dimension;
+            }
+
+            dimension.options = dimension.options.map((option) => {
+                option.selected = options.find((selectionOption) => {
+                    return option.id === selectionOption.id;
+                }).selected;
+                return Object.assign({}, option);
+            });
+            return dimension;
+        });
+
+        dispatch({type: SAVE_DIMENSION_OPTIONS, dimensions });
+        dispatch(parseDimensions(state.dataset.id, dimensions));
     }
 }
 
-export function requestDimensions(id) {
-    const url = `${APIURL}/datasets/${id}/dimensions`
+export function requestDimensions(datasetID) {
+    const url = `${APIURL}/datasets/${datasetID}/dimensions`
     const opts = {
         method: 'GET',
         headers: {
@@ -31,16 +50,26 @@ export function requestDimensions(id) {
     return (dispatch) => {
         dispatch({
             type: REQUEST_DIMENSIONS,
-            id: id
+            id: datasetID
         })
         return fetch(url, opts)
             .then(checkResponseStatus)
             .then(parseResponseToJSON)
             .then(function (json) {
-                dispatch(parseDimensions(id, json))
+                dispatch(requestDimensionsSuccess(datasetID, json));
+                dispatch(parseDimensions(datasetID, json));
             }).catch(function (err) {
                 throw(err);
             })
+    }
+}
+export function requestDimensionsSuccess(datasetId, responseData) {
+    return {
+        type: REQUEST_DIMENSIONS_SUCCESS,
+        dataset: {
+            datasetId,
+            responseData
+        }
     }
 }
 
@@ -50,7 +79,7 @@ export function parseDimensions(datasetID, dimensionsJSON) {
     ];
 
     return {
-        type: REQUEST_DIMENSIONS_SUCCESS,
+        type: PARSE_DIMENSIONS,
         dataset: {
             id: datasetID,
             dimensions: dimensionsJSON.map(dimension => {
@@ -60,10 +89,14 @@ export function parseDimensions(datasetID, dimensionsJSON) {
                 dimension.type = typeObj ? typeObj.type : 'UNKNOWN';
                 switch(dimension.type) {
                     case 'SIMPLE_LIST':
-                        dimension.options = dimension.options.map(option => Object.assign({}, option, { selected: true }));
+                        dimension.options = dimension.options.map(option => Object.assign({}, option, {
+                            selected: option.selected === false ? false : true
+                        }));
                         break;
                     default:
-                        dimension.options = dimension.options.map(option => Object.assign({}, option, { selected: false }));
+                        dimension.options = dimension.options.map(option => Object.assign({}, option, {
+                            selected: option.selected === true
+                        }));
                         break;
                 }
                 dimension.optionsCount = dimension.options.length; // todo: count recursively for hierarchy
