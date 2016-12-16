@@ -62,7 +62,7 @@ export default class DimensionSelector extends Component {
     }
 
     renderSelector() {
-        const { dimensionID, type, options } = this.props;
+        const { type, options } = this.props;
         switch(type) {
             // todo: consider moving DimensionSelector to dataset
             case 'SIMPLE_LIST':
