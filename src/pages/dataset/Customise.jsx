@@ -47,13 +47,6 @@ class Customise extends Component {
         return true;
     }
 
-    getOptions() {
-        const dimension = this.props.dimensions.find((dimension) => {
-            return dimension.id === this.props.params.dimensionID;
-        });
-        return !dimension ? [] : dimension.options;
-    }
-
     render() {
         if (this.props.params.dimensionID === undefined) {
             return this.renderDimensionList();
@@ -63,11 +56,7 @@ class Customise extends Component {
 
     renderDimensionList() {
         const parentPath = this.state.parentPath;
-        const dimensions = this.props.dimensions.map((dimension) => {
-            return Object.assign({}, dimension, {
-                selected: 'nothing selected'
-            })
-        })
+        const dimensions = this.props.dimensions;
 
         if (!this.props.hasMetadata) {
             return null;
@@ -101,10 +90,15 @@ class Customise extends Component {
         }
 
         const parentPath = this.state.currentPath;
+        const dimension = this.props.dimensions.find((dimension) => {
+            return dimension.id === this.props.params.dimensionID;
+        });
+
         const selectorProps = {
-            options: this.getOptions(),
+            options: dimension.options,
             dimensionID:  this.props.params.dimensionID,
-            saveSelections: this.saveDimensionOptions
+            saveSelections: this.saveDimensionOptions,
+            type: dimension.type
         }
 
         return (

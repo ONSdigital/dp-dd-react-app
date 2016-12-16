@@ -1,5 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+
+const propTypes = {
+    id: PropTypes.string,
+    name: PropTypes.string,
+    label: PropTypes.string
+}
 
 export default class DimensionItem extends Component {
     constructor(props) {
@@ -13,7 +19,7 @@ export default class DimensionItem extends Component {
                     <strong>{this.props.name}</strong>
                 </div>
                 <div className="col col--md-33 col--lg-25">
-                    {this.props.selected}
+                    {this.props.label}
                 </div>
                 <div className="col col--md-6 col--lg-6">
                     <Link to={'/dd/dataset/AF001EW/customise/'+this.props.id} className="float-right">customise</Link>
@@ -22,5 +28,6 @@ export default class DimensionItem extends Component {
 
         )
     }
-
 }
+
+DimensionItem.propTypes = propTypes;

@@ -1,29 +1,43 @@
-import React, { Component, PropTypes } from 'react'
-import DimensionItem from './DimensionItem'
+import React, { Component, PropTypes } from 'react';
+import DimensionItem from './DimensionItem';
 
 const propTypes = {
-    dimensions: React.PropTypes.arrayOf(React.PropTypes.shape({
-        id: React.PropTypes.string.isRequired,
-        name: React.PropTypes.string.isRequired,
-        selected: React.PropTypes.string.isRequired
+    dimensions: PropTypes.arrayOf(React.PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        selectedCount: PropTypes.number.isRequired,
+        optionsCount: PropTypes.number.isRequired
     })).isRequired
 }
 
 export default class DimensionList extends Component {
     constructor(props) {
-        super(props)
+        super(props);
+    }
+
+    renderDimensionItems() {
+        const dimensions = this.props.dimensions || [];
+        let selectionLabel = '';
+        return dimensions.map((item, key) => {
+            if (item.selectedCount === item.optionsCount) {
+                selectionLabel = `Everything selected (${item.selectedCount})`
+            } else if (item.selectedCount > 0) {
+                selectionLabel = `Selected options (${item.selectedCount})`
+            } else {
+                selectionLabel = `Nothing selected`
+            }
+
+            return <DimensionItem key={key} name={item.name} label={selectionLabel} id={item.id} />
+        })
     }
 
     render() {
-        const dimensions = this.props.dimensions || [];
         return (
             <ul className="list--neutral">
-                {dimensions.map((item, key) => (
-                    <DimensionItem key={key} name={item.name} selected={item.selected} id={item.id} />
-                ))}
+                { this.renderDimensionItems() }
             </ul>
         )
     }
 }
 
-DimensionList.propTypes = propTypes
+DimensionList.propTypes = propTypes;

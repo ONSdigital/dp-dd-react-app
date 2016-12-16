@@ -45,11 +45,33 @@ export function requestDimensions(id) {
 }
 
 export function parseDimensions(datasetID, dimensionsJSON) {
+    const dimensionTypes = [
+        { type: 'SIMPLE_LIST', dimensions: ['D000123', 'D000124', 'D000125'] }
+    ];
+
     return {
         type: REQUEST_DIMENSIONS_SUCCESS,
         dataset: {
             id: datasetID,
-            dimensions: dimensionsJSON
+            dimensions: dimensionsJSON.map(dimension => {
+                const typeObj = dimensionTypes.find((dimensionType) => {
+                    return dimensionType.dimensions.indexOf(dimension.id) > -1;
+                });
+                dimension.type = typeObj ? typeObj.type : 'UNKNOWN';
+                switch(dimension.type) {
+                    case 'SIMPLE_LIST':
+                        dimension.options = dimension.options.map(option => Object.assign({}, option, { selected: true }));
+                        break;
+                    default:
+                        dimension.options = dimension.options.map(option => Object.assign({}, option, { selected: false }));
+                        break;
+                }
+                dimension.optionsCount = dimension.options.length; // todo: count recursively for hierarchy
+                dimension.selectedCount = dimension.options.reduce((count, option) => {
+                    return option.selected ? count + 1 : count
+                } , 0);
+                return dimension;
+            }),
         }
     }
 }
@@ -63,7 +85,7 @@ export function requestMetadata(id) {
         }
     };
 
-    return (dispatch) => {
+    return dispatch => {
         dispatch({
             type: REQUEST_METADATA,
             id: id

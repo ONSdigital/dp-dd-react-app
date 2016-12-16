@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 
 const propTypes = {
     dimensionID: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
@@ -61,26 +62,25 @@ export default class DimensionSelector extends Component {
     }
 
     renderSelector() {
-        const dimensionID = this.props.dimensionID;
-        const options = this.props.options;
-        const selectorMap = {
-            'dimensionList': ['D000123', 'D000124', 'D000125']
-        };
-
-        if (selectorMap.dimensionList.indexOf(dimensionID) > -1) {
-            return options.map((item, key) => {
-                const checkboxProps = {
-                    id: item.id,
-                    label: item.name,
-                    value: item.id,
-                    onChange: this.cacheSelection,
-                    selected: item.selected === false ? false : true,
-                    key
-                }
-                return <Checkbox {...checkboxProps} />
-            });
-        } else {
-            return <span><i>Not supported yet.</i></span>
+        const { dimensionID, type, options } = this.props;
+        switch(type) {
+            // todo: consider moving DimensionSelector to dataset
+            case 'SIMPLE_LIST':
+                return options.map((item, key) => {
+                    const checkboxProps = {
+                        id: item.id,
+                        label: item.name,
+                        value: item.id,
+                        onChange: this.cacheSelection,
+                        selected: item.selected,
+                        key
+                    }
+                    return <Checkbox {...checkboxProps} />
+                });
+                break;
+            default:
+                return <span><i>Not supported yet.</i></span>
+            break;
         }
     }
 }
