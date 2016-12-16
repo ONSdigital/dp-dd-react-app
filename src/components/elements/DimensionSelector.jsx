@@ -23,12 +23,26 @@ export default class DimensionSelector extends Component {
         this.state = {
             cachedOptions: props.options.map(option => {
                 return { id: option.id, selected: option.selected }
-            })
+            }),
+            errorMessage: ""
         }
+    }
+
+    validateSelections() {
+        return (this.state.cachedOptions).some(option => {
+            return option.selected;
+        });
     }
 
     saveSelections() {
         const saveSelections = this.props.saveSelections;
+        const isValid = this.validateSelections();
+
+        if (!isValid) {
+            this.setState({errorMessage: "Select at least one option"});
+            return;
+        }
+
         if (saveSelections) {
             saveSelections({
                 dimensionID: this.props.dimensionID,
@@ -46,18 +60,20 @@ export default class DimensionSelector extends Component {
 
     render () {
         return (
-            <div>
-                <div>
-                    <h3>What do you want to include?</h3>
+            <form className="form">
+                <legend className="visuallyhidden">What do you want to include?</legend>
+                <div className={(this.state.errorMessage.length > 0) && "error__group"}>
+                    <h3 className="margin-bottom--1">What do you want to include?</h3>
+                    <div className={(this.state.errorMessage.length > 0) && "error__message"}>{this.state.errorMessage}</div>
+                    { this.renderSelector() }
                 </div>
-                { this.renderSelector() }
                 <div className="margin-top--4 margin-bottom--8">
                     <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
                        onClick={this.saveSelections}>Save selection &gt;</a>
                     <Link className="btn btn--secondary btn--thick btn--wide btn--big"
                           to="/dd/dataset/AF001EW/customise/">Cancel</Link>
                 </div>
-            </div>
+            </form>
         )
     }
 
