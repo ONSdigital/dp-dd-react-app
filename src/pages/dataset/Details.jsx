@@ -10,11 +10,17 @@ class Details extends Component {
     }
 
     componentWillMount() {
-        const dispatch = this.props.dispatch;
-        dispatch(requestMetadata(this.props.params.id));
+        if (this.props.params.id !== this.props.id) {
+            const dispatch = this.props.dispatch;
+            dispatch(requestMetadata(this.props.params.id));
+        }
     }
 
     render () {
+        if (!this.props.id) {
+            return null;
+        }
+
         const page = {};
         if (this.props.metadata) {
             page.description =  this.props.metadata.description
