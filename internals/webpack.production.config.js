@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const config = require('./webpack.defaults').config;
-const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = Object.assign({}, config, {
     devtool: "source-map",
