@@ -1,3 +1,17 @@
 body {
     font-size: $font-size;
 }
+
+.error {
+
+    &__message {
+        color: $poppy;
+        font-weight: 600;
+        margin-bottom: $baseline;
+    }
+
+    &__group {
+        border-left: 4px solid $poppy;
+        padding-left: $col;
+    }
+}
