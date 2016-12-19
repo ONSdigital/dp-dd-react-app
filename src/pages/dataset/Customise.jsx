@@ -69,13 +69,12 @@ class Customise extends Component {
                     <DocumentTitle title={`Customise ${this.props.title}`}>
                         <h1 className="margin-top--half margin-bottom">Customise this dataset</h1>
                     </DocumentTitle>
-
                 </div>
                 <div>
                     <DimensionList dimensions={dimensions} />
                     <div className="margin-top--4 margin-bottom--8">
-                        <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
-                           href="download.html">Choose a download format &gt;</a>
+                        <Link className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
+                              to="/dd/dataset/AF001EW/download/">Choose a download format &gt;</Link>
                         <Link className="btn btn--secondary btn--thick btn--wide btn--big"
                               to="/dd/dataset/AF001EW">Cancel</Link>
                     </div>
