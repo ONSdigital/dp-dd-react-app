@@ -61,9 +61,8 @@ export default class DimensionSelector extends Component {
     render () {
         return (
             <form className="form">
-                <legend className="visuallyhidden">What do you want to include?</legend>
+                <h1 className="margin-top--half margin-bottom">What do you want to include?</h1>
                 <div className={(this.state.errorMessage.length > 0) && "error__group"}>
-                    <h3 className="margin-bottom--1">What do you want to include?</h3>
                     <div className={(this.state.errorMessage.length > 0) && "error__message"}>{this.state.errorMessage}</div>
                     { this.renderSelector() }
                 </div>
@@ -96,7 +95,7 @@ export default class DimensionSelector extends Component {
                 break;
             default:
                 return <span><i>Not supported yet.</i></span>
-            break;
+                break;
         }
     }
 }
