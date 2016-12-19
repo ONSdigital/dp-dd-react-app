@@ -1,4 +1,5 @@
-import { checkResponseStatus, parseResponseToJSON } from './utils'
+import { checkResponseStatus, parseResponseToJSON } from './utils';
+import config from '../../config/index';
 
 export const REQUEST_METADATA = 'REQUEST_METADATA';
 export const REQUEST_METADATA_SUCCESS = 'REQUEST_METADATA_SUCCESS';
@@ -11,7 +12,7 @@ export const REQUEST_DIMENSIONS_FAILURE = 'REQUEST_DIMENSIONS_FAILURE';
 export const SAVE_DIMENSION_OPTIONS = 'SAVE_DIMENSION_OPTIONS';
 export const PARSE_DIMENSIONS = 'PARSE_DIMENSIONS';
 
-const APIURL = 'http://localhost:20099'
+const API_URL = config.API_URL;
 
 export function saveDimensionOptions({dimensionID, options}) {
     // we are using async to access getState() via redux-thunk
@@ -39,7 +40,7 @@ export function saveDimensionOptions({dimensionID, options}) {
 }
 
 export function requestDimensions(datasetID) {
-    const url = `${APIURL}/datasets/${datasetID}/dimensions`
+    const url = `${API_URL}/datasets/${datasetID}/dimensions`
     const opts = {
         method: 'GET',
         headers: {
@@ -110,7 +111,7 @@ export function parseDimensions(datasetID, dimensionsJSON) {
 }
 
 export function requestMetadata(id) {
-    const url = `${APIURL}/datasets/${id}`;
+    const url = `${API_URL}/datasets/${id}`;
     const opts = {
         method: 'GET',
         headers: {

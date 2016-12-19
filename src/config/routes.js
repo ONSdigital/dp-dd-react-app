@@ -1,4 +1,4 @@
-import dataset from '../pages/dataset'
+import dataset from '../pages/dataset';
 import Home from '../pages/Home';
 
 const { Details, Download, Customise } = dataset;
