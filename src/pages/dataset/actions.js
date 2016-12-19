@@ -100,6 +100,7 @@ export function parseDimensions(datasetID, dimensionsJSON) {
                         }));
                         break;
                 }
+                dimension.datasetID = datasetID,
                 dimension.optionsCount = dimension.options.length; // todo: count recursively for hierarchy
                 dimension.selectedCount = dimension.options.reduce((count, option) => {
                     return option.selected ? count + 1 : count

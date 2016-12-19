@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import config from '../../config';
 
 import {
     requestMetadata,
@@ -17,8 +18,9 @@ class Customise extends Component {
         super(props)
         this.state = {
             initialFetchRequired: false,
-            parentPath: '/dd/dataset/AF001EW/',
-            currentPath: '/dd/dataset/AF001EW/customise/'
+            parentPath: `${config.BASE_PATH}/dataset/${this.props.params.id}/`,
+            currentPath: `${config.BASE_PATH}/dataset/${this.props.params.id}/customise`,
+            downloadPath: `${config.BASE_PATH}/dataset/${this.props.params.id}/download`
         }
 
         this.saveDimensionOptions = this.saveDimensionOptions.bind(this);
@@ -48,6 +50,7 @@ class Customise extends Component {
     }
 
     render() {
+        if (!this.props.hasDimensions) return null;
         if (this.props.params.dimensionID === undefined) {
             return this.renderDimensionList();
         }
@@ -74,9 +77,9 @@ class Customise extends Component {
                     <DimensionList dimensions={dimensions} />
                     <div className="margin-top--4 margin-bottom--8">
                         <Link className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
-                              to="/dd/dataset/AF001EW/download/">Choose a download format &gt;</Link>
+                              to={this.state.downloadPath}>Choose a download format &gt;</Link>
                         <Link className="btn btn--secondary btn--thick btn--wide btn--big"
-                              to="/dd/dataset/AF001EW">Cancel</Link>
+                              to={this.state.parentPath}>Cancel</Link>
                     </div>
                 </div>
             </div>
@@ -95,7 +98,8 @@ class Customise extends Component {
 
         const selectorProps = {
             options: dimension.options,
-            dimensionID:  this.props.params.dimensionID,
+            datasetID: this.props.params.id,
+            dimensionID: this.props.params.dimensionID,
             saveSelections: this.saveDimensionOptions,
             type: dimension.type
         }

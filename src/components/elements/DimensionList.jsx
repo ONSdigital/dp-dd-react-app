@@ -27,7 +27,7 @@ export default class DimensionList extends Component {
                 selectionLabel = `Nothing selected`
             }
 
-            return <DimensionItem key={key} name={item.name} label={selectionLabel} id={item.id} />
+            return <DimensionItem key={key} label={selectionLabel} {...item}/>
         })
     }
 

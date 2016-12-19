@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 
 const propTypes = {
     id: PropTypes.string,
+    datasetID: PropTypes.string,
     name: PropTypes.string,
     label: PropTypes.string
 }
@@ -13,6 +14,7 @@ export default class DimensionItem extends Component {
     }
 
     render() {
+        const dimensionURL = '/dd/dataset/' + this.props.datasetID + '/customise/' + this.props.id;
         return (
             <li className="margin-left--0 padding-bottom--2 padding-top--2 border-top--gallery-md border-bottom--gallery-md col-wrap width-lg--39">
                 <div className="col col--md-8 col--lg-8">
@@ -22,7 +24,7 @@ export default class DimensionItem extends Component {
                     {this.props.label}
                 </div>
                 <div className="col col--md-6 col--lg-6">
-                    <Link to={'/dd/dataset/AF001EW/customise/'+this.props.id} className="float-right">customise</Link>
+                    <Link to={dimensionURL} className="float-right">customise</Link>
                 </div>
             </li>
 

@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import Checkbox from '../elements/Checkbox';
 import { Link } from 'react-router';
+import config from '../../config';
 
 const propTypes = {
+    datasetID: PropTypes.string.isRequired,
     dimensionID: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(PropTypes.shape({
@@ -24,7 +26,8 @@ export default class DimensionSelector extends Component {
             cachedOptions: props.options.map(option => {
                 return { id: option.id, selected: option.selected }
             }),
-            errorMessage: ""
+            errorMessage: "",
+            parentPath: `${config.BASE_PATH}/dataset/${this.props.datasetID}/customise/`,
         }
     }
 
@@ -70,7 +73,7 @@ export default class DimensionSelector extends Component {
                     <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
                        onClick={this.saveSelections}>Save selection &gt;</a>
                     <Link className="btn btn--secondary btn--thick btn--wide btn--big"
-                          to="/dd/dataset/AF001EW/customise/">Cancel</Link>
+                          to={this.state.parentPath}>Cancel</Link>
                 </div>
             </form>
         )

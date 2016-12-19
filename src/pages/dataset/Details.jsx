@@ -7,6 +7,10 @@ import DocumentTitle from '../../components/elements/DocumentTitle';
 class Details extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            downloadPath: `/dd/dataset/${this.props.params.id}/download`,
+            customisePath: `/dd/dataset/${this.props.params.id}/customise`,
+        }
     }
 
     componentWillMount() {
@@ -36,12 +40,12 @@ class Details extends Component {
 
                     <p className="page-intro__content margin-bottom-md--1">{page.description}</p>
 
-                    <Link to={`/dd/dataset/${this.props.params.id}/download`}
+                    <Link to={this.state.downloadPath}
                           className="btn btn--primary btn--thick btn--big btn--wide margin-top--2 font-size--17">
                             <strong>Download the complete dataset &gt;</strong>
                     </Link>
                     <br />
-                    <Link to={`/dd/dataset/${this.props.params.id}/customise`}
+                    <Link to={this.state.customisePath}
                           className="btn btn--primary btn--thick btn--big btn--wide margin-top--2 font-size--17">
                             <strong>Customise this dataset</strong>
                     </Link>
