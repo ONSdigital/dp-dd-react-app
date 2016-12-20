@@ -67,8 +67,9 @@ export default class DimensionSelector extends Component {
             return option;
         });
 
+        const errorMessage = this.validateSelections() ? "" : this.state.errorMessage;
         const {allEnabled, allDisabled} = this.getEnabledStatus();
-        this.setState({ cachedOptions, allEnabled, allDisabled })
+        this.setState({ cachedOptions, allEnabled, allDisabled, errorMessage })
     }
 
     getEnabledStatus() {
