@@ -3,8 +3,6 @@ import { Provider } from 'react-redux';
 import { Router, Route, RouterContext } from 'react-router';
 
 import store from '../config/store';
-
-
 import routes from '../config/routes';
 
 export default class App extends Component {

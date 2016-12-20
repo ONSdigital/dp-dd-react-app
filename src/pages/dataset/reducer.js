@@ -1,7 +1,6 @@
 import {
     REQUEST_METADATA_SUCCESS,
-    PARSE_DIMENSIONS,
-    SAVE_DIMENSION_OPTIONS
+    PARSE_DIMENSIONS
 } from './actions';
 
 const defaultState = {
