@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import Checkbox from '../elements/Checkbox';
 import { Link } from 'react-router';
+
 import config from '../../config';
+import Checkbox from './Checkbox';
+import ToggleLink from './ToggleLink';
 
 const propTypes = {
     datasetID: PropTypes.string.isRequired,
@@ -12,6 +14,7 @@ const propTypes = {
         name: PropTypes.string.isRequired,
         selected: PropTypes.bool
     })).isRequired,
+    optionsCount: PropTypes.number.isRequired,
     saveSelections: PropTypes.func
 };
 
@@ -28,6 +31,8 @@ export default class DimensionSelector extends Component {
             }),
             errorMessage: "",
             parentPath: `${config.BASE_PATH}/dataset/${this.props.datasetID}/customise/`,
+            allEnabled: false,
+            allDisabled: false
         }
     }
 
@@ -55,25 +60,71 @@ export default class DimensionSelector extends Component {
     }
 
     cacheSelection({id, selected = true}) {
-        const option = this.state.cachedOptions.find((option) => {
-            return option.id === id
+        const cachedOptions = this.state.cachedOptions.map((option) => {
+            if (option.id === id) {
+                option.selected = selected;
+            }
+            return option;
         });
-        option.selected = selected;
+
+        const {allEnabled, allDisabled} = this.getEnabledStatus();
+        this.setState({ cachedOptions, allEnabled, allDisabled })
+    }
+
+    getEnabledStatus() {
+        let allEnabled = true;
+        let allDisabled = true;
+
+        const cachedOptions = this.state.cachedOptions.map((option) => {
+            if (option.selected) {
+                allDisabled = false;
+            } else {
+                allEnabled = false;
+            }
+        });
+
+        return {allEnabled, allDisabled}
+    }
+
+    toggleAll(state) {
+        state = typeof state === 'undefined' || state === true
+        return () => {
+            const cachedOptions = this.state.cachedOptions.map((option) => {
+                option.selected = state;
+                return option;
+            });
+            this.setState({ cachedOptions, allEnabled: state, allDisabled: !state })
+        }
+    }
+
+    componentWillMount() {
+        const {allEnabled, allDisabled} = this.getEnabledStatus();
+        this.state.allEnabled = allEnabled;
+        this.state.allDisabled = allDisabled;
     }
 
     render () {
+        const errorMessage = this.state.errorMessage;
+        const allEnabled = this.state.allEnabled;
+        const allDisabled = this.state.allDisabled;
+        const parentPath = this.state.parentPath;
+
         return (
             <form className="form">
                 <h1 className="margin-top--half margin-bottom">What do you want to include?</h1>
-                <div className={(this.state.errorMessage.length > 0) && "error__group"}>
-                    <div className={(this.state.errorMessage.length > 0) && "error__message"}>{this.state.errorMessage}</div>
+                <div className="margin-bottom--2">
+                    <ToggleLink label="Enable all" enabled={!allEnabled} handleOnClick={this.toggleAll(true)} />
+                    <ToggleLink label="Disable all" enabled={!allDisabled} handleOnClick={this.toggleAll(false)} />
+                </div>
+                <div className={(errorMessage.length > 0) && "error__group"}>
+                    <div className={(errorMessage.length > 0) && "error__message"}>{errorMessage}</div>
                     { this.renderSelector() }
                 </div>
                 <div className="margin-top--4 margin-bottom--8">
                     <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
                        onClick={this.saveSelections}>Save selection &gt;</a>
                     <Link className="btn btn--secondary btn--thick btn--wide btn--big"
-                          to={this.state.parentPath}>Cancel</Link>
+                          to={parentPath}>Cancel</Link>
                 </div>
             </form>
         )
@@ -82,15 +133,18 @@ export default class DimensionSelector extends Component {
     renderSelector() {
         const { type, options } = this.props;
         switch(type) {
-            // todo: consider moving DimensionSelector to dataset
+            // todo: consider moving DimensionSelector to dataset component folder
             case 'SIMPLE_LIST':
-                return options.map((item, key) => {
+                return options.map((optionItem, key) => {
+                    const cachedOption = this.state.cachedOptions.find((option) => {
+                        if (option.id === optionItem.id) return option;
+                    });
                     const checkboxProps = {
-                        id: item.id,
-                        label: item.name,
-                        value: item.id,
+                        id: optionItem.id,
+                        label: optionItem.name,
+                        value: optionItem.id,
                         onChange: this.cacheSelection,
-                        selected: item.selected,
+                        selected: cachedOption.selected,
                         key
                     }
                     return <Checkbox {...checkboxProps} />

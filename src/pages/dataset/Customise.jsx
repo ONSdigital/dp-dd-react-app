@@ -98,6 +98,7 @@ class Customise extends Component {
 
         const selectorProps = {
             options: dimension.options,
+            optionsCount: dimension.optionsCount,
             datasetID: this.props.params.id,
             dimensionID: this.props.params.dimensionID,
             saveSelections: this.saveDimensionOptions,
