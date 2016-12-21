@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
-import config from '../../config';
-import Checkbox from './Checkbox';
-import ToggleLink from './ToggleLink';
+import config from '../../../config';
+import Checkbox from '../../../components/elements/Checkbox';
+import ToggleLink from '../../../components/elements/ToggleLink';
 
 const propTypes = {
     datasetID: PropTypes.string.isRequired,

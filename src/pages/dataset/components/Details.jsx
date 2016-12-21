@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { requestMetadata } from './actions';
-import DocumentTitle from '../../components/elements/DocumentTitle';
+import { requestMetadata } from '../actions';
+import DocumentTitle from '../../../components/elements/DocumentTitle';
 
 class Details extends Component {
     constructor(props) {

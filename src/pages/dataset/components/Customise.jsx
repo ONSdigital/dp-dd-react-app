@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import config from '../../config';
+import config from '../../../config';
 
 import {
     requestMetadata,
     requestDimensions,
     saveDimensionOptions
-} from './actions';
+} from '../actions';
 
-import DimensionList from '../../components/elements/DimensionList';
-import DimensionSelector from '../../components/elements/DimensionSelector';
-import DocumentTitle from '../../components/elements/DocumentTitle';
+import DimensionList from './DimensionList';
+import DimensionSelector from './DimensionSelector';
+import DocumentTitle from '../../../components/elements/DocumentTitle';
 
 class Customise extends Component {
     constructor(props) {

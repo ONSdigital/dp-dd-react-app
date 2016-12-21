@@ -1,8 +1,8 @@
-import Customise from './Customise';
-import Details from './Details';
-import Download from './Download';
+import Customise from './components/Customise';
+import Details from './components/Details';
+import Download from './components/Download';
 
-import datasetReducer from './reducer'
+import datasetReducer from './reducers'
 export { datasetReducer }
 
 export default {
