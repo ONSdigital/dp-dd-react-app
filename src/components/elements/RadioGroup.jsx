@@ -1,5 +1,9 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import Radio from './RadioButton';
+
+const propTypes = {
+    handleChange: PropTypes.func.isRequired
+}
 
 export default class RadioGroup extends Component {
     constructor(props) {

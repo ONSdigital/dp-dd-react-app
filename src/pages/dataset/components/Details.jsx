@@ -1,8 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { requestMetadata } from '../actions';
 import DocumentTitle from '../../../components/elements/DocumentTitle';
+
+const propTypes = {
+    metadata: PropTypes.object,
+    title: PropTypes.string
+}
 
 class Details extends Component {
     constructor(props) {
@@ -59,6 +64,8 @@ class Details extends Component {
         )
     }
 }
+
+Component.propTypes = propTypes;
 
 function mapStateToProps(state) {
     return state.dataset;

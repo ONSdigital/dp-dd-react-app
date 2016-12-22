@@ -1,4 +1,12 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
+
+const propTypes = {
+    id: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    group: PropTypes.string.isRequired,
+    handleChange: PropTypes.func.isRequired
+}
 
 export default class RadioButton extends Component {
     constructor(props) {
@@ -29,3 +37,5 @@ export default class RadioButton extends Component {
         )
     }
 }
+
+RadioButton.propTypes = propTypes;

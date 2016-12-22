@@ -8,6 +8,7 @@ const defaultState = {
     title: null,
     info: null,
     dimensions: [],
+    metadata: {},
     hasMetadata: false,
     hasDimensions: false
 };

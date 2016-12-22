@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import config from '../../../config';
@@ -12,6 +12,12 @@ import {
 import DimensionList from './DimensionList';
 import DimensionSelector from './DimensionSelector';
 import DocumentTitle from '../../../components/elements/DocumentTitle';
+
+const propTypes = {
+    hasDimensions: PropTypes.bool.isRequired,
+    hasMetadata: PropTypes.bool.isRequired,
+    dimensions: PropTypes.array
+}
 
 class Customise extends Component {
     constructor(props) {
