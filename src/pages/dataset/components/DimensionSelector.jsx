@@ -123,7 +123,7 @@ export default class DimensionSelector extends Component {
                 </div>
                 <div className="margin-top--4 margin-bottom--8">
                     <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
-                       onClick={this.saveSelections}>Save selection &gt;</a>
+                       onClick={this.saveSelections}>Save selection</a>
                     <Link className="btn btn--secondary btn--thick btn--wide btn--big"
                           to={parentPath}>Cancel</Link>
                 </div>

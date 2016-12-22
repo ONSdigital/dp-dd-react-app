@@ -77,7 +77,7 @@ class Customise extends Component {
                     <DimensionList dimensions={dimensions} />
                     <div className="margin-top--4 margin-bottom--8">
                         <Link className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
-                              to={this.state.downloadPath}>Choose a download format &gt;</Link>
+                              to={this.state.downloadPath}>Choose a download format</Link>
                         <Link className="btn btn--secondary btn--thick btn--wide btn--big"
                               to={this.state.parentPath}>Cancel</Link>
                     </div>

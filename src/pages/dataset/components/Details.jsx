@@ -42,7 +42,7 @@ class Details extends Component {
 
                     <Link to={this.state.downloadPath}
                           className="btn btn--primary btn--thick btn--big btn--wide margin-top--2 font-size--17">
-                            <strong>Download the complete dataset &gt;</strong>
+                            <strong>Download the complete dataset</strong>
                     </Link>
                     <br />
                     <Link to={this.state.customisePath}
