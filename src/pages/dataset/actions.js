@@ -1,4 +1,4 @@
-import { checkResponseStatus, parseResponseToJSON } from './utils';
+import { Request } from './utils';
 import config from '../../config/index';
 
 export const REQUEST_METADATA = 'REQUEST_METADATA';
@@ -12,12 +12,15 @@ export const REQUEST_DIMENSIONS_FAILURE = 'REQUEST_DIMENSIONS_FAILURE';
 export const SAVE_DIMENSION_OPTIONS = 'SAVE_DIMENSION_OPTIONS';
 export const PARSE_DIMENSIONS = 'PARSE_DIMENSIONS';
 
+
 const API_URL = config.API_URL;
+const request = new Request();
 
 export function saveDimensionOptions({dimensionID, options}) {
-    // we are using async to access getState() via redux-thunk
+
     return (dispatch, getState) => {
         const state = getState();
+
         // todo: use deep merge for merging hierarchies -> https://www.npmjs.com/package/deepmerge
         const dimensions = state.dataset.dimensions.map((dimension) => {
             dimension = Object.assign({}, dimension);
@@ -41,29 +44,22 @@ export function saveDimensionOptions({dimensionID, options}) {
 
 export function requestDimensions(datasetID) {
     const url = `${API_URL}/datasets/${datasetID}/dimensions`
-    const opts = {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json'
-        }
-    };
 
     return (dispatch) => {
         dispatch({
             type: REQUEST_DIMENSIONS,
             id: datasetID
         })
-        return fetch(url, opts)
-            .then(checkResponseStatus)
-            .then(parseResponseToJSON)
-            .then(function (json) {
-                dispatch(requestDimensionsSuccess(datasetID, json));
-                dispatch(parseDimensions(datasetID, json));
-            }).catch(function (err) {
-                throw(err);
-            })
+
+        request.get(url).then(function (json) {
+            dispatch(requestDimensionsSuccess(datasetID, json));
+            dispatch(parseDimensions(datasetID, json));
+        }).catch(function (err) {
+            throw(err);
+        })
     }
 }
+
 export function requestDimensionsSuccess(datasetId, responseData) {
     return {
         type: REQUEST_DIMENSIONS_SUCCESS,
@@ -113,26 +109,18 @@ export function parseDimensions(datasetID, dimensionsJSON) {
 
 export function requestMetadata(id) {
     const url = `${API_URL}/datasets/${id}`;
-    const opts = {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json'
-        }
-    };
 
     return dispatch => {
         dispatch({
             type: REQUEST_METADATA,
             id: id
         })
-        return fetch(url, opts)
-            .then(checkResponseStatus)
-            .then(parseResponseToJSON)
-            .then(function (json) {
-                dispatch(parseMetadata(json));
-            }).catch(function (err) {
-                throw(err);
-            })
+
+        return request.get(url).then(function (json) {
+            dispatch(parseMetadata(json));
+        }).catch(function (err) {
+            throw(err);
+        })
     }
 }
 
