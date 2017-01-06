@@ -1,9 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 
 import config from '../../../config';
 import Checkbox from '../../../components/elements/Checkbox';
 import ToggleLink from '../../../components/elements/ToggleLink';
+
+import {
+    saveDimensionOptions
+} from '../actions';
 
 const propTypes = {
     datasetID: PropTypes.string.isRequired,
@@ -15,10 +20,10 @@ const propTypes = {
         selected: PropTypes.bool
     })).isRequired,
     optionsCount: PropTypes.number.isRequired,
-    saveSelections: PropTypes.func
+    onSave: PropTypes.func.isRequired
 };
 
-export default class DimensionSelector extends Component {
+class DimensionSelector extends Component {
     constructor(props) {
         super(props);
 
@@ -36,27 +41,24 @@ export default class DimensionSelector extends Component {
         }
     }
 
-    validateSelections() {
+    isSelectionValid() {
         return (this.state.cachedOptions).some(option => {
             return option.selected;
         });
     }
 
     saveSelections() {
-        const saveSelections = this.props.saveSelections;
-        const isValid = this.validateSelections();
-
-        if (!isValid) {
+        if (!this.isSelectionValid()) {
             this.setState({errorMessage: "Select at least one option"});
             return;
         }
 
-        if (saveSelections) {
-            saveSelections({
-                dimensionID: this.props.dimensionID,
-                options: this.state.cachedOptions
-            });
-        }
+        this.props.dispatch(saveDimensionOptions({
+            dimensionID: this.props.dimensionID,
+            options: this.state.cachedOptions
+        }));
+
+        this.props.onSave();
     }
 
     cacheSelection({id, selected = true}) {
@@ -67,7 +69,7 @@ export default class DimensionSelector extends Component {
             return option;
         });
 
-        const errorMessage = this.validateSelections() ? "" : this.state.errorMessage;
+        const errorMessage = this.isSelectionValid() ? "" : this.state.errorMessage;
         const {allEnabled, allDisabled} = this.getEnabledStatus();
         this.setState({ cachedOptions, allEnabled, allDisabled, errorMessage })
     }
@@ -159,3 +161,20 @@ export default class DimensionSelector extends Component {
 }
 
 DimensionSelector.propTypes = propTypes;
+
+
+function mapStateToProps(state, ownProps) {
+    const dataset = state.dataset;
+    const dimension = dataset.dimensions.find((dimension) => {
+        return dimension.id === ownProps.dimensionID;
+    });
+
+    return {
+        dimension,
+        options: dimension.options,
+        type: dimension.type,
+        optionsCount: dimension.optionsCount
+    }
+}
+
+export default connect(mapStateToProps)(DimensionSelector)

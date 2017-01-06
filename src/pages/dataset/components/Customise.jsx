@@ -5,8 +5,7 @@ import config from '../../../config';
 
 import {
     requestMetadata,
-    requestDimensions,
-    saveDimensionOptions
+    requestDimensions
 } from '../actions';
 
 import DimensionList from './DimensionList';
@@ -28,13 +27,6 @@ class Customise extends Component {
             currentPath: `${config.BASE_PATH}/dataset/${this.props.params.id}/customise`,
             downloadPath: `${config.BASE_PATH}/dataset/${this.props.params.id}/download`
         }
-
-        this.saveDimensionOptions = this.saveDimensionOptions.bind(this);
-    }
-
-    saveDimensionOptions({dimensionID, options}) {
-        this.props.dispatch(saveDimensionOptions({dimensionID, options}));
-        this.props.router.push(this.state.currentPath);
     }
 
     componentWillMount() {
@@ -98,17 +90,11 @@ class Customise extends Component {
         }
 
         const parentPath = this.state.currentPath;
-        const dimension = this.props.dimensions.find((dimension) => {
-            return dimension.id === this.props.params.dimensionID;
-        });
-
         const selectorProps = {
-            options: dimension.options,
-            optionsCount: dimension.optionsCount,
+            router: this.props.router,
             datasetID: this.props.params.id,
             dimensionID: this.props.params.dimensionID,
-            saveSelections: this.saveDimensionOptions,
-            type: dimension.type
+            onSave: () => this.props.router.push(this.state.currentPath)
         }
 
         return (
@@ -124,6 +110,8 @@ class Customise extends Component {
     }
 }
 
+Customise.propTypes = propTypes;
+
 function mapStateToProps(state) {
     return {
         dimensions: state.dataset.dimensions,
@@ -133,4 +121,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(Customise)
+export default connect(mapStateToProps)(Customise);
