@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-var propTypes = {
+const propTypes = {
     label: PropTypes.string.isRequired,
     enabled: PropTypes.bool,
     hideOnDisabled: PropTypes.bool,
@@ -8,7 +8,7 @@ var propTypes = {
     handleOnClick: PropTypes.func,
 }
 
-var defaultProps = {
+const defaultProps = {
     enabled: true,
     hideOnDisabled: false,
     state: false,
@@ -31,12 +31,12 @@ export default class ToggleSelectAll extends Component {
 
         if (this.props.enabled) {
             return (
-                <a className="btn nav--controls__item margin-right"
+                <a className="btn btn--link margin-right"
                    onClick={this.handleOnClick}>{this.props.label}</a>
             )
         }
 
-        return <span className="nav--controls__item margin-right font-size--14">{this.props.label}</span>
+        return <span className="margin-right font-size--14">{this.props.label}</span>
     }
 }
 

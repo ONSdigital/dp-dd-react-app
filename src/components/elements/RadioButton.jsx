@@ -5,8 +5,9 @@ const propTypes = {
     value: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     group: PropTypes.string.isRequired,
-    handleChange: PropTypes.func.isRequired
-}
+    handleChange: PropTypes.func.isRequired,
+    checked: PropTypes.bool
+};
 
 export default class RadioButton extends Component {
     constructor(props) {
@@ -30,8 +31,8 @@ export default class RadioButton extends Component {
 
     render() {
         return (
-            <div className="radio inline">
-                <input className="radio__input" type="radio" name={this.props.group} value={this.props.value} id={this.props.id} onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.props.handleChange} />
+            <div className="radio margin-top--1">
+                <input className="radio__input" checked={this.props.checked} type="radio" name={this.props.group} value={this.props.value} id={this.props.id} onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.props.handleChange} />
                 <label className={"radio__label" + (this.state.focused ? " focused" : "")} htmlFor={this.props.id}>{this.props.label}</label>
             </div>
         )

@@ -5,6 +5,7 @@ if (!window.location.origin) {
 
 export default Object.assign({
     API_URL: 'http://localhost:20099',
+    JOB_API_URL: 'http://localhost:20100',
     BASE_URL: window.location.origin,
     BASE_PATH: '/dd'
 }, typeof __CONFIG__ !== 'undefined' ? __CONFIG__ : {});

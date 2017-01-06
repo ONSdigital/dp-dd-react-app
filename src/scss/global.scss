@@ -1,6 +1,24 @@
+/* Over-writing or extending sixteens */
+
 body {
-    font-size: $font-size;
+    //font-size: $font-size;
 }
+
+// Remove browse default italics styling from definition element
+dfn {
+    font-style: normal;
+}
+
+.btn {
+    font-size: $font-size;
+
+    &--link {
+        font-size: 14px;
+    }
+}
+
+
+/* Specific to DD */
 
 .error {
 
@@ -13,5 +31,70 @@ body {
     &__group {
         border-left: 4px solid $poppy;
         padding-left: $col;
+    }
+}
+
+.highlight {
+    border-left: 4px solid $aluminium;
+    padding-left: 16px;
+}
+
+// A react version of the show-hide seen in the pattern library. Therefore the HTML should move over to production code fairly easy
+.react-show-hide {
+    &__title {
+        position: relative;
+        padding-left: 24px;
+
+        &:before {
+            content: "";
+            top: 12px;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 8px solid $matisse;
+            position: absolute;
+        }
+
+        &.active:before {
+            top: 14px;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 0 solid transparent;
+            border-top: 8px solid $matisse;
+        }
+    }
+
+    &__content {
+        display: none;
+
+        &.active {
+            display: block;
+        }
+    }
+}
+
+
+// Animated ellipsis to show loading - http://codepen.io/thetallweeks/pen/yybGra?css-preprocessor=sass
+.loading {
+    &:after {
+        overflow: hidden;
+        display: inline-block;
+        vertical-align: bottom;
+        -webkit-animation: ellipsis steps(4,end) 900ms infinite;
+        animation: ellipsis steps(4,end) 900ms infinite;
+        content: "\2026";
+        width: 0;
+    }
+}
+@keyframes ellipsis {
+    to {
+        width: 16px;
+    }
+}
+@-webkit-keyframes ellipsis {
+    to {
+        width: 16px;
     }
 }
