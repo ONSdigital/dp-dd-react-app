@@ -13,7 +13,6 @@ import {
 const propTypes = {
     datasetID: PropTypes.string.isRequired,
     dimensionID: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
@@ -164,7 +163,6 @@ function mapStateToProps(state, ownProps) {
     return {
         dimension,
         options: dimension.options,
-        type: dimension.type,
         optionsCount: dimension.optionsCount
     }
 }
