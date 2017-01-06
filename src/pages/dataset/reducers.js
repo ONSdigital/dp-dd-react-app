@@ -1,6 +1,7 @@
 import {
     REQUEST_METADATA_SUCCESS,
-    PARSE_DIMENSIONS
+    PARSE_DIMENSIONS,
+    SAVE_DOWNLOAD_PROGRESS
 } from './actions';
 
 const defaultState = {
@@ -9,6 +10,11 @@ const defaultState = {
     info: null,
     dimensions: [],
     metadata: {},
+    download: {
+        id: '',
+        isInProgress: false,
+        isCompleted: false
+    },
     hasMetadata: false,
     hasDimensions: false
 };
@@ -29,6 +35,16 @@ export default function (state = defaultState, action) {
                 id: action.dataset.id,
                 dimensions: action.dataset.dimensions,
                 hasDimensions: true
+            });
+            break;
+
+        case SAVE_DOWNLOAD_PROGRESS:
+            state = Object.assign({}, state, {
+                download: Object.assign({}, state.download, {
+                    id: action.download.id,
+                    isInProgress: action.download.isInProgress,
+                    isCompleted: action.download.isCompleted === true
+                })
             });
             break;
     }
