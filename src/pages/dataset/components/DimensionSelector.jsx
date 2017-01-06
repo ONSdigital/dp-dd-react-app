@@ -134,29 +134,21 @@ class DimensionSelector extends Component {
     }
 
     renderSelector() {
-        const { type, options } = this.props;
-        switch(type) {
-            // todo: consider moving DimensionSelector to dataset component folder
-            case 'SIMPLE_LIST':
-                return options.map((optionItem, key) => {
-                    const cachedOption = this.state.cachedOptions.find((option) => {
-                        if (option.id === optionItem.id) return option;
-                    });
-                    const checkboxProps = {
-                        id: optionItem.id,
-                        label: optionItem.name,
-                        value: optionItem.id,
-                        onChange: this.cacheSelection,
-                        selected: cachedOption.selected,
-                        key
-                    }
-                    return <Checkbox {...checkboxProps} />
-                });
-                break;
-            default:
-                return <span><i>Not supported yet.</i></span>
-                break;
-        }
+        const { options } = this.props;
+        return options.map((optionItem, key) => {
+            const cachedOption = this.state.cachedOptions.find((option) => {
+                if (option.id === optionItem.id) return option;
+            });
+            const checkboxProps = {
+                id: optionItem.id,
+                label: optionItem.name,
+                value: optionItem.id,
+                onChange: this.cacheSelection,
+                selected: cachedOption.selected,
+                key
+            }
+            return <Checkbox {...checkboxProps} />
+        });
     }
 }
 

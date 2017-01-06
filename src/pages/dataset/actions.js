@@ -71,39 +71,36 @@ export function requestDimensionsSuccess(datasetId, responseData) {
 }
 
 export function parseDimensions(datasetID, dimensionsJSON) {
-    const dimensionTypes = [
-        { type: 'SIMPLE_LIST', dimensions: ['D000123', 'D000124', 'D000125'] }
-    ];
+    let optionsCount;
+    let selectedCount;
 
     return {
         type: PARSE_DIMENSIONS,
         dataset: {
             id: datasetID,
             dimensions: dimensionsJSON.map(dimension => {
-                const typeObj = dimensionTypes.find((dimensionType) => {
-                    return dimensionType.dimensions.indexOf(dimension.id) > -1;
-                });
-                dimension.type = typeObj ? typeObj.type : 'UNKNOWN';
-                switch(dimension.type) {
-                    case 'SIMPLE_LIST':
-                        dimension.options = dimension.options.map(option => Object.assign({}, option, {
-                            selected: option.selected === false ? false : true
-                        }));
-                        break;
-                    default:
-                        dimension.options = dimension.options.map(option => Object.assign({}, option, {
-                            selected: option.selected === true
-                        }));
-                        break;
-                }
-                dimension.datasetID = datasetID,
-                dimension.optionsCount = dimension.options.length; // todo: count recursively for hierarchy
-                dimension.selectedCount = dimension.options.reduce((count, option) => {
-                    return option.selected ? count + 1 : count
-                } , 0);
+                optionsCount = 0;
+                selectedCount = 0;
+
+                dimension.options = parseOptions(dimension.options);
+                dimension.datasetID = datasetID;
+                dimension.optionsCount = optionsCount;
+                dimension.selectedCount = selectedCount;
                 return dimension;
             }),
         }
+    }
+
+    function parseOptions(options, selectedStatus = true) {
+        return options.map(option => {
+            optionsCount ++;
+            option.selected = option.selected === false ? false : selectedStatus;
+            selectedCount += option.selected ? 1 : 0;
+            if (option.options && option.options.length > 0) {
+                option.options = parseOptions(option.options, selectedStatus);
+            }
+            return option;
+        });
     }
 }
 
