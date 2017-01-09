@@ -1,9 +1,10 @@
-import Details from './components/Details'
-import Download from './components/Download'
-import Customise from './components/Customise'
+import Details from './components/Details';
+import Download from './components/Download';
+import Customise from './components/Customise';
+import config from '../../config';
 
 export default [
-    { path: 'dd/dataset/:id', component: Details },
-    { path: 'dd/dataset/:id/download', component: Download },
-    { path: 'dd/dataset/:id/customise(/:dimensionID)', component: Customise }
+    { path: `${config.BASE_PATH}/dataset/:id`, component: Details },
+    { path: `${config.BASE_PATH}/dataset/:id/download`, component: Download },
+    { path: `${config.BASE_PATH}/dataset/:id/customise(/:dimensionID)`, component: Customise }
 ]
