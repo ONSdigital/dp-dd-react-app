@@ -22,21 +22,18 @@ class Download extends Component {
                     id: 'xls',
                     label: 'XLS',
                     value: 'xls',
-                    onChange: this.cacheOption,
                     selected: false
                 },
                 {
                     id: 'csv',
                     label: 'CSV',
                     value: 'csv',
-                    onChange: this.cacheOption,
                     selected: false
                 },
                 {
                     id: 'json',
                     label: 'JSON',
                     value: 'json',
-                    onChange: this.cacheOption,
                     selected: false
                 }
             ],
@@ -45,13 +42,13 @@ class Download extends Component {
         };
     }
 
-    cacheOption(event) {
-        const options = this.state.options;
-        const optionIndex = options.findIndex(option => {
-            return option.id === event.id;
+    cacheOption({id, selected}) {
+        const options = this.state.options.map((option) => {
+            option.selected = option.id === id ? selected : option.selected;
+            return option;
         });
 
-        this.state.options[optionIndex].selected = event.selected;
+        this.setState({options});
     }
     
     saveOptions() {
@@ -93,7 +90,7 @@ class Download extends Component {
                 {
                     options.map((props, index) => {
                         props['key'] = index;
-                        return <Checkbox {...props} />
+                        return <Checkbox {...props} onChange={this.cacheOption}/>
                     })
                 }
                 <div className="margin-top--4 margin-bottom--8">
