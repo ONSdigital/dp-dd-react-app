@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { requestMetadata } from '../actions';
+import config from '../../../config';
 import DocumentTitle from '../../../components/elements/DocumentTitle';
 
 const propTypes = {
@@ -13,8 +14,8 @@ class Details extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            downloadPath: `/dd/dataset/${this.props.params.id}/download`,
-            customisePath: `/dd/dataset/${this.props.params.id}/customise`,
+            downloadPath: `${config.BASE_PATH}/dataset/${this.props.params.id}/download`,
+            customisePath: `${config.BASE_PATH}/dataset/${this.props.params.id}/customise`,
         }
     }
 
