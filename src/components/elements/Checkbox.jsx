@@ -13,8 +13,7 @@ export default class Checkbox extends Component {
         super(props);
 
         this.state = {
-            focused: false,
-            selected: this.props.selected
+            focused: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -26,9 +25,6 @@ export default class Checkbox extends Component {
         const selected = event.target.checked;
         const id = this.props.id;
         const onChange = this.props.onChange;
-
-        this.setState({selected: selected});
-
         if (onChange) {
             onChange({ id, selected });
         }
@@ -46,7 +42,7 @@ export default class Checkbox extends Component {
         return (
             <div className="checkbox">
                 <input className="checkbox__input" type="checkbox"
-                       id={this.props.id} name={this.props.id} value={this.props.value} checked={this.state.selected}
+                       id={this.props.id} name={this.props.id} value={this.props.value} checked={this.props.selected}
                        onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} />
                 <label className={"checkbox__label" + (this.state.focused ? " focused" : "")} htmlFor={this.props.id}>
                     {this.props.label}
