@@ -23,7 +23,11 @@
     "url": "https://github.com/ONSdigital/dp-dd-front/issues"
   },
   "homepage": "https://github.com/ONSdigital/dp-dd-front#readme",
-  "devDependencies": {
+  "dependencies": {
+    "css-loader": "^0.26.1",
+    "node-sass": "^3.13.0",
+    "react-global": "^0.1.8",
+    "style-loader": "^0.13.1",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.9",
@@ -47,15 +51,6 @@
     "sass-loader": "^4.0.2",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2",
-    "whatwg-fetch": "^2.0.1"
-  },
-  "dependencies": {
-    "css-loader": "^0.26.1",
-    "node-sass": "^3.13.0",
-    "react-global": "^0.1.8",
-    "react-router": "^3.0.0",
-    "sass-loader": "^4.0.2",
-    "style-loader": "^0.13.1",
     "whatwg-fetch": "^2.0.1"
   }
 }
