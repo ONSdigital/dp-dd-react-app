@@ -5,7 +5,7 @@ const propTypes = {
     value: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     group: PropTypes.string.isRequired,
-    handleChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
     checked: PropTypes.bool
 };
 
@@ -14,11 +14,22 @@ export default class RadioButton extends Component {
         super(props);
 
         this.state = {
-            focused: false
+            focused: false,
+            checked: props.checked
         };
 
         this.handleFocus = this.handleFocus.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        const checked = this.state.checked = event.target.checked;
+        const id = this.props.id;
+        const onChange = this.props.onChange;
+        if (onChange) {
+            onChange({ id, checked });
+        }
     }
 
     handleFocus() {
@@ -32,8 +43,11 @@ export default class RadioButton extends Component {
     render() {
         return (
             <div className="radio margin-top--1">
-                <input className="radio__input" checked={this.props.checked} type="radio" name={this.props.group} value={this.props.value} id={this.props.id} onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.props.handleChange} />
-                <label className={"radio__label" + (this.state.focused ? " focused" : "")} htmlFor={this.props.id}>{this.props.label}</label>
+                <input className="radio__input" type="radio" name={this.props.group} checked={this.props.checked}
+                       value={this.props.value} id={this.props.id} onFocus={this.handleFocus}
+                       onBlur={this.handleBlur} onChange={this.handleChange} />
+                <label className={"radio__label" + (this.state.focused ? " focused" : "")}
+                       htmlFor={this.props.id}>{this.props.label}</label>
             </div>
         )
     }
