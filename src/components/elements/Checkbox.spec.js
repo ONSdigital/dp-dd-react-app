@@ -8,7 +8,6 @@ describe('<Checkbox />', () => {
 
     it('Should render', () => {
         const component = render(<Checkbox id="foo" value="bar" label="bell" />);
-        expect(true).to.equal(true);
         expect(component.text()).to.equal("bell");
     });
 
