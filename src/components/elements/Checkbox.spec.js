@@ -6,18 +6,18 @@ import { expect } from 'chai';
 
 describe('<Checkbox />', () => {
 
-    it('should render', () => {
+    it('Should render', () => {
         const component = render(<Checkbox id="foo" value="bar" label="bell" />);
         expect(true).to.equal(true);
         expect(component.text()).to.equal("bell");
     });
 
-    it('should render checked', () => {
+    it('Should render checked', () => {
         const component = mount(<Checkbox id="foo" value="bar" label="bell" checked={true} />);
         expect(component.state().checked).to.equal(true);
     })
 
-    it('should register change', () => {
+    it('Should register change', () => {
         let clicked = false;
         const change = () => { clicked = true; }
         const component = shallow(<Checkbox id="foo" value="bar" label="bell" onChange={change} />);
