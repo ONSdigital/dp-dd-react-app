@@ -49,7 +49,9 @@ class Download extends Component {
             return option;
         });
 
-        this.setState({options});
+        const errorMessage = '';
+
+        this.setState({options, errorMessage});
     }
 
     isSelectionValid() {
