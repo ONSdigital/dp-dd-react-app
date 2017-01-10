@@ -4,16 +4,21 @@ const propTypes = {
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
-    selected: PropTypes.bool,
+    checked: PropTypes.bool,
     onChange: PropTypes.func
 };
+
+const defaultProps = {
+    checked: false,
+}
 
 export default class Checkbox extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            focused: false
+            focused: false,
+            checked: props.checked
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -22,11 +27,11 @@ export default class Checkbox extends Component {
     }
 
     handleChange(event) {
-        const selected = event.target.checked;
+        const checked = this.state.checked = event.target.checked;
         const id = this.props.id;
         const onChange = this.props.onChange;
         if (onChange) {
-            onChange({ id, selected });
+            onChange({ id, checked });
         }
     }
     
@@ -42,7 +47,7 @@ export default class Checkbox extends Component {
         return (
             <div className="checkbox">
                 <input className="checkbox__input" type="checkbox"
-                       id={this.props.id} name={this.props.id} value={this.props.value} checked={this.props.selected}
+                       id={this.props.id} name={this.props.id} value={this.props.value} checked={this.props.checked}
                        onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} />
                 <label className={"checkbox__label" + (this.state.focused ? " focused" : "")} htmlFor={this.props.id}>
                     {this.props.label}
@@ -53,3 +58,4 @@ export default class Checkbox extends Component {
 }
 
 Checkbox.propTypes = propTypes;
+Checkbox.defaultProps = defaultProps;

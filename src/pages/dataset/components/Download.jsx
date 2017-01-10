@@ -42,9 +42,9 @@ class Download extends Component {
         };
     }
 
-    cacheOption({id, selected}) {
+    cacheOption({id, checked}) {
         const options = this.state.options.map((option) => {
-            option.selected = option.id === id ? selected : option.selected;
+            option.selected = option.id === id ? checked : option.selected;
             return option;
         });
 
@@ -90,6 +90,7 @@ class Download extends Component {
                 {
                     options.map((props, index) => {
                         props['key'] = index;
+                        props['checked'] = props.selected;
                         return <Checkbox {...props} onChange={this.cacheOption}/>
                     })
                 }

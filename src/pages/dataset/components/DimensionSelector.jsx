@@ -60,10 +60,10 @@ class DimensionSelector extends Component {
         this.props.onSave();
     }
 
-    cacheSelection({id, selected = true}) {
+    cacheSelection({id, checked = true}) {
         const cachedOptions = this.state.cachedOptions.map((option) => {
             if (option.id === id) {
-                option.selected = selected;
+                option.selected = checked;
             }
             return option;
         });
@@ -143,7 +143,7 @@ class DimensionSelector extends Component {
                 label: optionItem.name,
                 value: optionItem.id,
                 onChange: this.cacheSelection,
-                selected: cachedOption.selected,
+                checked: cachedOption.selected,
                 key
             }
             return <Checkbox {...checkboxProps} />
