@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import config from '../../../config';
 import FileTypesHelp from '../../../components/elements/FileTypesHelp';
@@ -114,7 +114,7 @@ class Download extends Component {
 
                 <div className="margin-top--4 margin-bottom--8">
                     <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half" onClick={this.saveOptions}>Generate files</a>
-                    <Link className="btn btn--secondary btn--thick btn--wide btn--big" to={this.state.parentPath}>Cancel</Link>
+                    <a className="btn btn--secondary btn--thick btn--wide btn--big" onClick={browserHistory.goBack}>Cancel</a>
                 </div>
             </div>
         )
