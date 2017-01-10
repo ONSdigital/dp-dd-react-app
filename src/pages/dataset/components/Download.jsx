@@ -38,7 +38,8 @@ class Download extends Component {
                 }
             ],
             selectedOptions: [],
-            parentPath: `${config.BASE_PATH}/dataset/${this.props.datasetID}/customise/`
+            parentPath: `${config.BASE_PATH}/dataset/${this.props.datasetID}/customise/`,
+            errorMessage: ''
         };
     }
 
@@ -50,8 +51,20 @@ class Download extends Component {
 
         this.setState({options});
     }
-    
+
+    isSelectionValid() {
+        return (this.state.options).some(option => {
+            return option.selected;
+        });
+    }
+
     saveOptions() {
+
+        if (!this.isSelectionValid()) {
+            this.setState({errorMessage: "Select at least one option"});
+            return;
+        }
+
         const options = this.state.options;
         const selectedOptions = [];
 
@@ -61,7 +74,7 @@ class Download extends Component {
             }
         });
 
-        this.state.selectedOptions = selectedOptions; // this might not be needed once we are getting the files back from the server, for the moment it still lets us only show links for the formats they chose once they're 'ready for download'
+        this.state.selectedOptions = selectedOptions; // this might not be needed once we are getting the files back from the server, for the moment it still lets us only show links for the formats they chose once they're 'ready for download
         this.props.dispatch(saveDownloadOptions(selectedOptions));
     }
 
@@ -81,19 +94,24 @@ class Download extends Component {
 
     renderOptions() {
         const options = this.state.options;
+        const errorMessage = this.state.errorMessage;
 
         return (
             <div>
                 <h1 className="margin-top--2 margin-bottom--half">Download options</h1>
                 <p className="flush">Choose the file type(s) you want to download.</p>
                 <FileTypesHelp/>
-                {
-                    options.map((props, index) => {
-                        props['key'] = index;
-                        props['checked'] = props.selected;
-                        return <Checkbox {...props} onChange={this.cacheOption}/>
-                    })
-                }
+                <div className={(errorMessage.length > 0) && "error__group"}>
+                    <div className={(errorMessage.length > 0) && "error__message"}>{errorMessage}</div>
+                    {
+                        options.map((props, index) => {
+                            props['key'] = index;
+                            props['checked'] = props.selected;
+                            return <Checkbox {...props} onChange={this.cacheOption}/>
+                        })
+                    }
+                </div>
+
                 <div className="margin-top--4 margin-bottom--8">
                     <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half" onClick={this.saveOptions}>Generate files</a>
                     <Link className="btn btn--secondary btn--thick btn--wide btn--big" to={this.state.parentPath}>Cancel</Link>
