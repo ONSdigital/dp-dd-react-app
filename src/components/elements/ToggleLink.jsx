@@ -3,16 +3,12 @@ import React, { Component, PropTypes } from 'react';
 const propTypes = {
     label: PropTypes.string.isRequired,
     enabled: PropTypes.bool,
-    hideOnDisabled: PropTypes.bool,
-    state: PropTypes.bool,
-    handleOnClick: PropTypes.func,
+    onClick: PropTypes.func,
 }
 
 const defaultProps = {
     enabled: true,
-    hideOnDisabled: false,
-    state: false,
-    handleOnClick: ({state = true}) => { state }
+    handleOnClick: ({enabled = true}) => { enabled }
 }
 
 export default class ToggleSelectAll extends Component {
@@ -22,13 +18,13 @@ export default class ToggleSelectAll extends Component {
     }
 
     handleOnClick() {
-        this.props.handleOnClick({
-            state: this.props.state
-        })
+        const onClick = this.props.onClick;
+        if (onClick) {
+            onClick({ enabled: this.props.enabled })
+        }
     }
 
     render() {
-
         if (this.props.enabled) {
             return (
                 <a className="btn btn--link margin-right"

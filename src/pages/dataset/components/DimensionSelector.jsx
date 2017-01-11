@@ -115,8 +115,8 @@ class DimensionSelector extends Component {
             <form className="form">
                 <h1 className="margin-top--half margin-bottom">What do you want to include?</h1>
                 <div className="margin-bottom--2">
-                    <ToggleLink label="Enable all" enabled={!allEnabled} handleOnClick={this.toggleAll(true)} />
-                    <ToggleLink label="Disable all" enabled={!allDisabled} handleOnClick={this.toggleAll(false)} />
+                    <ToggleLink label="Enable all" enabled={!allEnabled} onClick={this.toggleAll(true)} />
+                    <ToggleLink label="Disable all" enabled={!allDisabled} onClick={this.toggleAll(false)} />
                 </div>
                 <div className={(errorMessage.length > 0) && "error__group"}>
                     <div className={(errorMessage.length > 0) && "error__message"}>{errorMessage}</div>
