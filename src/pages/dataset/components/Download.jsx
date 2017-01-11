@@ -5,7 +5,9 @@ import config from '../../../config';
 import FileTypesHelp from '../../../components/elements/FileTypesHelp';
 import Checkbox from '../../../components/elements/Checkbox';
 import {
-    saveDownloadOptions
+    saveDownloadOptions,
+    requestDownloadProgress,
+    cancelDownload
 } from '../actions';
 
 class Download extends Component {
@@ -17,26 +19,22 @@ class Download extends Component {
         this.saveOptions = this.saveOptions.bind(this);
 
         this.state = {
-            options: [
-                {
-                    id: 'xls',
-                    label: 'XLS',
-                    value: 'xls',
-                    selected: false
-                },
-                {
-                    id: 'csv',
-                    label: 'CSV',
-                    value: 'csv',
-                    selected: false
-                },
-                {
-                    id: 'json',
-                    label: 'JSON',
-                    value: 'json',
-                    selected: false
-                }
-            ],
+            options: [{
+                id: 'xls',
+                label: 'XLS',
+                value: 'xls',
+                selected: false
+            }, {
+                id: 'csv',
+                label: 'CSV',
+                value: 'csv',
+                selected: false
+            }, {
+                id: 'json',
+                label: 'JSON',
+                value: 'json',
+                selected: false
+            }],
             selectedOptions: [],
             parentPath: `${config.BASE_PATH}/dataset/${this.props.datasetID}/customise/`,
             errorMessage: ''
@@ -80,14 +78,28 @@ class Download extends Component {
         this.props.dispatch(saveDownloadOptions(selectedOptions));
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (!nextProps.download.completed && nextProps.download.inProgress) {
+            setTimeout(() => nextProps.dispatch(requestDownloadProgress(nextProps.download.id)), 500);
+        }
+    }
+
+    componentWillUnmount() {
+        const download = this.props.download;
+        const dispatch = this.props.dispatch;
+        if (!download.completed && download.inProgress) {
+            dispatch(cancelDownload(), 500);
+        }
+    }
+
     render() {
         const download = this.props.download;
 
-        if (download.isInProgress) {
+        if (download.inProgress) {
             return this.renderInProgress();
         }
 
-        if (download.isCompleted) {
+        if (download.completed) {
             return this.renderCompleted();
         }
 

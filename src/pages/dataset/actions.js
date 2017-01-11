@@ -15,14 +15,19 @@ export const PARSE_DIMENSIONS = 'PARSE_DIMENSIONS';
 export const SAVE_DOWNLOAD_OPTIONS = 'SAVE_DOWNLOAD_OPTIONS';
 export const SAVE_DOWNLOAD_PROGRESS = 'SAVE_DOWNLOAD_PROGRESS';
 export const SAVE_DOWNLOAD_OPTIONS_SUCCESS = 'SAVE_DOWNLOAD_OPTIONS_SUCCESS';
-
+export const CANCEL_DOWNLOAD = 'CANCEL_DOWNLOAD';
 
 const API_URL = config.API_URL;
 const request = new Request();
 
+export function cancelDownload() {
+    return {
+        type: CANCEL_DOWNLOAD
+    }
+}
+
 export function saveDownloadOptions(options) {
     const url = `${config.JOB_API_URL}/job`;
-
     return dispatch => {
         dispatch({
             type: SAVE_DOWNLOAD_OPTIONS,
@@ -30,12 +35,7 @@ export function saveDownloadOptions(options) {
         });
 
         const body = JSON.stringify({fileFormats: options});
-
         return request.post(url, {body: body}).then(json => {
-            dispatch(saveDownloadProgress({
-                id: json.id,
-                isInProgress: true
-            }));
             dispatch(requestDownloadProgress(json.id));
         }).catch(err => {
             throw(err);
@@ -43,28 +43,11 @@ export function saveDownloadOptions(options) {
     }
 }
 
-function requestDownloadProgress(id) {
+export function requestDownloadProgress(id) {
     const url = `${config.JOB_API_URL}/job/${id}`;
-
-    return dispatch => {
-        setTimeout(function() {
-            request.get(url).then(json => {
-                switch (json.status) {
-                    case ('Pending'): {
-                        dispatch(requestDownloadProgress(id));
-                        break;
-                    }
-                    case ('Complete'): {
-                        dispatch(saveDownloadProgress({
-                            isInProgress: false,
-                            isCompleted: true
-                        }));
-                        break;
-                    }
-                }
-            })
-        }, 1000)
-    }
+    return dispatch => request.get(url).then(json => {
+        dispatch(saveDownloadProgress(json));
+    })
 }
 
 function saveDownloadProgress(json) {
