@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
 import config from '../../../config';
@@ -109,7 +109,6 @@ class DimensionSelector extends Component {
         const errorMessage = this.state.errorMessage;
         const allEnabled = this.state.allEnabled;
         const allDisabled = this.state.allDisabled;
-        const parentPath = this.state.parentPath;
 
         return (
             <form className="form">
@@ -125,8 +124,7 @@ class DimensionSelector extends Component {
                 <div className="margin-top--4 margin-bottom--8">
                     <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
                        onClick={this.saveSelections}>Save selection</a>
-                    <Link className="btn btn--secondary btn--thick btn--wide btn--big"
-                          to={parentPath}>Cancel</Link>
+                    <a className="btn btn--secondary btn--thick btn--wide btn--big" onClick={browserHistory.goBack}>Cancel</a>
                 </div>
             </form>
         )
