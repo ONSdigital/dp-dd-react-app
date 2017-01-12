@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import config from '../../../config';
 import FileTypesHelp from '../../../components/elements/FileTypesHelp';
 import Checkbox from '../../../components/elements/Checkbox';
+import SupportingFilesList from '../../../components/elements/SupportingFilesList';
 import {
     saveDownloadOptions,
     requestDownloadProgress,
@@ -36,7 +37,7 @@ class Download extends Component {
                 selected: false
             }],
             selectedOptions: [],
-            parentPath: `${config.BASE_PATH}/dataset/${this.props.datasetID}/customise/`,
+            parentPath: `${config.BASE_PATH}/dataset/${this.props.params.id}/customise/`,
             errorMessage: ''
         };
     }
@@ -114,6 +115,9 @@ class Download extends Component {
             <div>
                 <h1 className="margin-top--2 margin-bottom--half">Download options</h1>
                 <p className="flush">Choose the file type(s) you want to download.</p>
+
+                <FileTypesHelp/>
+
                 <div className={(errorMessage.length > 0) && "error__group"}>
                     <div className={(errorMessage.length > 0) && "error__message"}>{errorMessage}</div>
                     {
@@ -124,8 +128,6 @@ class Download extends Component {
                         })
                     }
                 </div>
-
-                <div className="margin-top--2"><FileTypesHelp/></div>
 
                 <div className="margin-top--3 margin-bottom--8">
                     <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half" onClick={this.saveOptions}>Generate files</a>
@@ -158,6 +160,11 @@ class Download extends Component {
                         )
                     })
                 }
+
+                <SupportingFilesList/>
+
+                <button className="btn btn--primary btn--thick btn--wide btn--big">Download all as a ZIP</button>
+
             </div>
         )
     }

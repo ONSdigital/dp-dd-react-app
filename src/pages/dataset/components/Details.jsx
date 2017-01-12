@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { requestMetadata } from '../actions';
 import config from '../../../config';
 import DocumentTitle from '../../../components/elements/DocumentTitle';
+import SupportingFilesList from '../../../components/elements/SupportingFilesList';
 
 const propTypes = {
     metadata: PropTypes.object,
@@ -56,10 +57,9 @@ class Details extends Component {
                             <strong>Customise this dataset</strong>
                     </Link>
 
-                    <p className="margin-bottom--8 margin-top--4">
-                        <strong>Supporting information</strong><br />
-                        &middot;&nbsp;<a href="./files/background-notes.pdf" target="_blank">Background notes</a> (PDF, 168KB)
-                    </p>
+                    <div className="margin-bottom--8">
+                        <SupportingFilesList/>
+                    </div>
                 </div>
             </div>
         )
