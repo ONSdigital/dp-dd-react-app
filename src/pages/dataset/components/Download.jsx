@@ -23,17 +23,17 @@ class Download extends Component {
             options: [{
                 id: 'xls',
                 label: 'XLS',
-                value: 'xls',
+                value: 'XLS',
                 selected: false
             }, {
                 id: 'csv',
                 label: 'CSV',
-                value: 'csv',
+                value: 'CSV',
                 selected: false
             }, {
                 id: 'json',
                 label: 'JSON',
-                value: 'json',
+                value: 'JSON',
                 selected: false
             }],
             selectedOptions: [],
