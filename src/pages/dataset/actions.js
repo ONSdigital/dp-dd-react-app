@@ -61,7 +61,7 @@ export function saveDownloadOptions(options) {
                 list.push(option.id);
             }
             if (option.options && option.options.length > 0) {
-                Array.prototype.push.apply(list, flattenSelectedOptions(options));
+                Array.prototype.push.apply(list, flattenSelectedOptions(option.options));
             }
         })
         return list;
