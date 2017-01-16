@@ -71,7 +71,7 @@ class Download extends Component {
 
         options.map(option => {
             if (option.selected) {
-                selectedOptions.push(option.id);
+                selectedOptions.push(option.value);
             }
         });
 
