@@ -28,18 +28,43 @@ export function cancelDownload() {
 
 export function saveDownloadOptions(options) {
     const url = `${config.JOB_API_URL}/job`;
-    return dispatch => {
+    return (dispatch, getState) => {
+        const state = getState();
+
         dispatch({
             type: SAVE_DOWNLOAD_OPTIONS,
-            options: options
+            options
         });
 
-        const body = JSON.stringify({fileFormats: options});
+        const body = JSON.stringify({
+            id: state.dataset.id,
+            fileFormats: options,
+            dimensions: state.dataset.dimensions.map(dimension => {
+                return {
+                    id: dimension.id,
+                    options: flattenSelectedOptions(dimension.options)
+                }
+            })
+        });
+
         return request.post(url, {body: body}).then(json => {
             dispatch(requestDownloadProgress(json.id));
         }).catch(err => {
             throw(err);
         });
+    }
+
+    function flattenSelectedOptions(options) {
+        const list = [];
+        options.forEach(option => {
+            if (option.selected) {
+                list.push(option.id);
+            }
+            if (option.options && option.options.length > 0) {
+                Array.prototype.push.apply(list, flattenSelectedOptions(options));
+            }
+        })
+        return list;
     }
 }
 
