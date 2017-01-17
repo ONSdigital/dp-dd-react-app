@@ -150,12 +150,17 @@ class Download extends Component {
         return (
             <div className="margin-bottom--8">
                 <h1 className="margin-top--2 margin-bottom--half">Download options</h1>
+
                 <p className="margin-top--0 margin-bottom--1">These files are available for you to download.</p>
                 {
-                    this.state.selectedOptions.map((option, index) => {
+                    this.props.download.files.map((file, index) => {
                         return (
                             <div key={index} className="margin-top--1">
-                               <button className="btn btn--primary btn--thick btn--wide btn--big uppercase">{option}</button>
+                               <Link
+                                   to={file.url}
+                                   target="_blank"
+                                   className="btn btn--primary btn--thick btn--wide btn--big uppercase"
+                               >{file.name.slice(-3).toUpperCase()}</Link>
                             </div>
                         )
                     })
@@ -163,7 +168,7 @@ class Download extends Component {
 
                 <SupportingFilesList/>
 
-                <button className="btn btn--primary btn--thick btn--wide btn--big">Download all as a ZIP</button>
+                <Link className="btn btn--primary btn--thick btn--wide btn--big">Download all as a ZIP</Link>
 
             </div>
         )
