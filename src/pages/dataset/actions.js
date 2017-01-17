@@ -58,7 +58,7 @@ export function saveDownloadOptions(options) {
         const list = [];
         options.forEach(option => {
             if (option.selected) {
-                list.push(option.id);
+                list.push(option.name);
             }
             if (option.options && option.options.length > 0) {
                 Array.prototype.push.apply(list, flattenSelectedOptions(option.options));
