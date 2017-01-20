@@ -39,7 +39,7 @@ class Details extends Component {
         }
 
         return (
-            <div>
+            <div className="wrapper">
                 <div className="col--lg-two-thirds">
                     <DocumentTitle title={page.title}>
                         <h1 className="margin-bottom-md--0">{page.title}</h1>

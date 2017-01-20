@@ -67,7 +67,7 @@ class Customise extends Component {
         }
 
         return (
-            <div>
+            <div className="wrapper">
                 <div className="margin-top--2">
                     <Link to={parentPath} className="btn--everything">Back</Link>
                     <DocumentTitle title={`Customise ${this.props.title}`}>
@@ -101,7 +101,7 @@ class Customise extends Component {
         }
 
         return (
-            <div>
+            <div className="wrapper">
                 <div className="margin-top--2">
                     <Link to={parentPath} className="btn--everything">Back</Link>
                 </div>

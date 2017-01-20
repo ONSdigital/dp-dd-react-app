@@ -112,7 +112,7 @@ class Download extends Component {
         const errorMessage = this.state.errorMessage;
 
         return (
-            <div>
+            <div className="wrapper">
                 <h1 className="margin-top--2 margin-bottom--half">Download options</h1>
                 <p className="flush">Choose the file type(s) you want to download.</p>
 
@@ -139,7 +139,7 @@ class Download extends Component {
 
     renderInProgress() {
         return (
-            <div>
+            <div className="wrapper">
                 <h1 className="margin-top--2 margin-bottom--half">Download options</h1>
                 <p className="margin-top--0 margin-bottom--8 font-size--17 loading">Your file is being generated</p>
             </div>
@@ -148,7 +148,7 @@ class Download extends Component {
 
     renderCompleted() {
         return (
-            <div className="margin-bottom--8">
+            <div className="wrapper margin-bottom--8">
                 <h1 className="margin-top--2 margin-bottom--half">Download options</h1>
 
                 <p className="margin-top--0 margin-bottom--1">These files are available for you to download.</p>
