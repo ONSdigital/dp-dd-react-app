@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { requestMetadata } from '../actions';
 import config from '../../../config';
-import DocumentTitle from '../../../components/elements/DocumentTitle';
+import IntroBlock from './static/IntroBlock';
 import SupportingFilesList from '../../../components/elements/SupportingFilesList';
 
 const propTypes = {
@@ -32,49 +32,22 @@ class Details extends Component {
             return null;
         }
 
-        const page = {};
-        if (this.props.metadata) {
-            page.description =  this.props.metadata.description
-            page.title = this.props.title
+        if (!this.props.metadata) {
+            return null;
         }
+
+        const metadata = this.props.metadata;
+        const description =  this.props.metadata.description;
+        const title = this.props.title;
 
         return (
             <div>
-                <div className="meta-wrap">
-                    <div className="wrapper">
-                        <div className="col-wrap">
-                            <p className="col col--md-16 col--lg-20 meta__item">
-
-                                <a className="icon--hide"
-                                   href="https://www.statisticsauthority.gov.uk/national-statistician/types-of-official-statistics/"
-                                   target="_blank">
-                                    <img className="meta__image"
-                                         src="https://www.ons.gov.uk/img/national-statistics.png"
-                                         alt="National Statistics logo" />
-                                </a>
-
-                                <span>Contact: </span><br />
-                                <a href="mailto:census.customerservices@ons.gsi.gov.uk" data-ga-event="" data-ga-event-category="mailto" data-ga-event-label="census.customerservices@ons.gsi.gov.uk">Alexa Bradley</a>
-                            </p>
-                            <p className="col col--md-16 col--lg-20 meta__item">
-                                <span>Release date: </span><br />
-                                23 May 2014<br />
-                            </p>
-                            <p className="col col--md-16 col--lg-20 meta__item">
-                                <span>Next release: </span>
-                                <br />To be announced
-                            </p>
-                        </div>
-                    </div>
-                </div>
+               <IntroBlock {...metadata} {...{title}} />
                 <div className="wrapper">
                     <div className="col--lg-two-thirds">
-                        <DocumentTitle title={page.title}>
-                            <h1 className="margin-bottom-md--0">{page.title}</h1>
-                        </DocumentTitle>
 
-                        <p className="page-intro__content margin-bottom-md--1">{page.description}</p>
-
+                        <h3>About this dataset</h3>
+                        <p className="page-intro__content font-size--14 margin-bottom--0">{description}</p>
                         <Link to={this.state.downloadPath}
                               className="btn btn--primary btn--thick btn--big btn--wide margin-top--2 font-size--17">
                                 <strong>Download the complete dataset</strong>
@@ -85,9 +58,7 @@ class Details extends Component {
                                 <strong>Customise this dataset</strong>
                         </Link>
 
-                        <div className="margin-bottom--8">
-                            <SupportingFilesList/>
-                        </div>
+                        <SupportingFilesList/>
                     </div>
                 </div>
             </div>
