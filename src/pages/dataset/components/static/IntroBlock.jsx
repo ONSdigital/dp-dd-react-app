@@ -21,7 +21,6 @@ export default class IntroBlock extends Component {
 
     render () {
         const title = this.props.title;
-        const description = this.props.description;
         return (
             <div className="page-intro background--gallery">
                 <div className="wrapper">

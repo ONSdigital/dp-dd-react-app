@@ -12,7 +12,6 @@ const propTypes = {
     nextReleaseDAte: PropTypes.string
 }
 
-
 export default class MetaWrapper extends Component {
     constructor(props) {
         super(props);
@@ -30,14 +29,12 @@ export default class MetaWrapper extends Component {
                     <div className="col-wrap">
                         <p className="col col--md-16 col--lg-20 meta__item">
                             {!showLogo || (
-                                <a className="icon--hide" target="_blank"
-                                href="https://www.statisticsauthority.gov.uk/national-statistician/types-of-official-statistics/">
-                                <img className="meta__image" alt="National Statistics logo" src="https://www.ons.gov.uk/img/national-statistics.png" />
+                                <a className="icon--hide" target="_blank" href="https://www.statisticsauthority.gov.uk/national-statistician/types-of-official-statistics/">
+                                    <img className="meta__image" alt="National Statistics logo" src="https://www.ons.gov.uk/img/national-statistics.png" />
                                 </a>
                             )}
                             <span>Contact: </span><br />
-                            <a href={`mailto:${contact.email}`} data-ga-event="" data-ga-event-category="mailto"
-                               data-ga-event-label="census.customerservices@ons.gsi.gov.uk">${contact.name}</a>
+                            <a href={`mailto:${contact.email}`} data-ga-event="" data-ga-event-category="mailto" data-ga-event-label="census.customerservices@ons.gsi.gov.uk">${contact.name}</a>
                         </p>
                         <p className="col col--md-16 col--lg-20 meta__item">
                             <span>Release date: </span><br />{releaseDate}<br />
