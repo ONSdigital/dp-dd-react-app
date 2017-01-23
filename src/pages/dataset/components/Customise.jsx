@@ -23,9 +23,9 @@ class Customise extends Component {
         super(props)
         this.state = {
             initialFetchRequired: false,
-            parentPath: `${config.BASE_PATH}/dataset/${this.props.params.id}/`,
-            currentPath: `${config.BASE_PATH}/dataset/${this.props.params.id}/customise`,
-            downloadPath: `${config.BASE_PATH}/dataset/${this.props.params.id}/download`
+            parentPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/`,
+            currentPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/customise`,
+            downloadPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/download`
         }
     }
 
