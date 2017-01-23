@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 
-
 const propTypes = {
     supportingFiles: PropTypes.arrayOf(React.PropTypes.shape({
         title: PropTypes.string.isRequired,
@@ -17,9 +16,7 @@ export default class SupportingFilesList extends Component {
         const supportingFiles = this.props.supportingFiles || [];
         if (supportingFiles.length > 0) {
             return supportingFiles.map((item, key) => {
-                return (
-                    <li key={key}><a href={item.uri} target="_blank">{item.title}</a></li>
-                )
+                return <li key={key}><a href={item.uri} target="_blank">{item.title}</a></li>
                 }
             )
         }
