@@ -1,57 +1,64 @@
 .checkbox {
     position: relative;
 
-    &:not(:first-of-type) {
-        margin-top: $baseline;
-    }
-
     &__input {
         position: absolute;
-        top: 10px;
-        left: ($col * 2);
-        opacity: 0;
-    }
-
-    &__label {
-        font-size: $font-size;
-        display: inline-block;
-        background-color: $gallery;
-        padding: $baseline $col $baseline ($col * 3);
-        border: 1px solid $gallery;
-
-        &:hover, &.focused {
-            border-color: $ship-grey;
-            cursor: pointer;
-        }
+        cursor: pointer;
+        left: 0;
+        top: 0;
+        width: 38px;
+        height: 38px;
 
         &:before {
-            content: '';
+            content: "";
+            border: 2px solid $ship-grey;
+            background: white;
+            width: 34px;
+            height: 34px;
             position: absolute;
-            top: 10px;
-            left: $col;
-            border: 2px solid $silver;
-            width: 16px;
-            height: 16px;
-            background: $white;
+            top: 0;
+            left: 0;
         }
-    }
-
-    &__input:checked + label {
-        background: $white;
-        border: 1px solid $ship-grey;
 
         &:after {
             content: "";
-            border: solid $ship-grey;
-            border-width: 0 0 3px 3px;
-            width: 9px;
-            height: 4px;
+            border: solid;
+            border-width: 0 0 5px 5px;
+            border-color: $ship-grey;
+            background: transparent;
+            width: 17px;
+            height: 7px;
             position: absolute;
-            top: 15px;
-            left: 20px;
-            -webkit-transform: rotate(-45deg);
-            -ms-transform: rotate(-45deg);
+            top: 10px;
+            left: 8px;
+            -moz-transform: rotate(-45deg); // Firefox 15 compatibility
+            -o-transform: rotate(-45deg); // Opera 12.0 compatibility
+            -webkit-transform: rotate(-45deg); // Safari 8 compatibility
+            -ms-transform: rotate(-45deg); // IE9 compatibility
             transform: rotate(-45deg);
+            @include opacity(0);
         }
+
     }
+
+    &__label {
+        //display: block;
+        display: inline-block;
+        float: none;
+        clear: left;
+        position: relative;
+        padding: (8px 8px 9px 50px);
+        margin-bottom: 8px;
+        cursor: pointer; // Encourage clicking on block labels
+    }
+
+    .selected:after {
+        @include opacity(1);
+    }
+
+    .focused:before {
+        @include box-shadow(0 0 0 5px $carrot);
+
+    }
+
 }
