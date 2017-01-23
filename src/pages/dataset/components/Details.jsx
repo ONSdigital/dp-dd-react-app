@@ -50,12 +50,12 @@ class Details extends Component {
                         <p className="page-intro__content font-size--14 margin-bottom--0">{description}</p>
                         <Link to={this.state.downloadPath}
                               className="btn btn--primary btn--thick btn--big btn--wide margin-top--2 font-size--17">
-                                <strong>Download the complete dataset</strong>
+                                Download the complete dataset
                         </Link>
                         <br />
                         <Link to={this.state.customisePath}
                               className="btn btn--primary btn--thick btn--big btn--wide margin-top--2 font-size--17">
-                                <strong>Customise this dataset</strong>
+                                Customise this dataset
                         </Link>
 
                         <SupportingFilesList/>
