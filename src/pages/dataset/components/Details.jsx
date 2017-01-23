@@ -15,8 +15,8 @@ class Details extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            downloadPath: `${config.BASE_PATH}/dataset/${this.props.params.id}/download`,
-            customisePath: `${config.BASE_PATH}/dataset/${this.props.params.id}/customise`,
+            downloadPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/download`,
+            customisePath: `${config.BASE_PATH}/datasets/${this.props.params.id}/customise`,
         }
     }
 

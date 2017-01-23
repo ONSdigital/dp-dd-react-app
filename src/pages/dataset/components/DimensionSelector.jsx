@@ -34,7 +34,7 @@ class DimensionSelector extends Component {
                 return { id: option.id, selected: option.selected }
             }),
             errorMessage: "",
-            parentPath: `${config.BASE_PATH}/dataset/${this.props.datasetID}/customise/`,
+            parentPath: `${config.BASE_PATH}/datasets/${this.props.datasetID}/customise/`,
             allEnabled: false,
             allDisabled: false
         }
