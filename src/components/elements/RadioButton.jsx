@@ -26,9 +26,10 @@ export default class RadioButton extends Component {
     handleChange(event) {
         const checked = this.state.checked = event.target.checked;
         const id = this.props.id;
+        const value = this.props.value;
         const onChange = this.props.onChange;
         if (onChange) {
-            onChange({ id, checked });
+            onChange({ id, checked, value });
         }
     }
 
@@ -43,11 +44,10 @@ export default class RadioButton extends Component {
     render() {
         return (
             <div className="radio margin-top--1">
-                <input className="radio__input" type="radio" name={this.props.group} checked={this.props.checked}
+                <input className={"radio__input" + (this.props.checked ? " selected" : "") + (this.state.focused ? " focused" : "")} type="radio" name={this.props.group} checked={this.props.checked}
                        value={this.props.value} id={this.props.id} onFocus={this.handleFocus}
                        onBlur={this.handleBlur} onChange={this.handleChange} />
-                <label className={"radio__label" + (this.state.focused ? " focused" : "")}
-                       htmlFor={this.props.id}>{this.props.label}</label>
+                <label className="radio__label" htmlFor={this.props.id}>{this.props.label}</label>
             </div>
         )
     }

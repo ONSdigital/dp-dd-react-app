@@ -26,7 +26,7 @@ export default class RadioGroup extends Component {
     }
 
     handleChange(event) {
-        this.setState({selectedValue: event.target.value});
+        this.setState({selectedValue: event.value});
     }
 
     render() {
@@ -38,7 +38,7 @@ export default class RadioGroup extends Component {
             <div>
                 {
                     radioData.map((radio, index) => {
-                        return <Radio key={index} {...radio} group={groupName} handleChange={this.handleChange} checked={selectedValue === radio.value}/>
+                        return <Radio key={index} {...radio} group={groupName} onChange={this.handleChange} checked={selectedValue === radio.value}/>
                     })
                 }
             </div>
