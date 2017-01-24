@@ -5,6 +5,7 @@ import { requestMetadata } from '../actions';
 import config from '../../../config';
 import IntroBlock from './static/IntroBlock';
 import SupportingFilesList from '../../../components/elements/SupportingFilesList';
+import Foldable from '../../../components/elements/Foldable';
 
 const propTypes = {
     metadata: PropTypes.object,
@@ -43,7 +44,7 @@ class Details extends Component {
         return (
             <div>
                <IntroBlock {...metadata} {...{title}} />
-                <div className="wrapper">
+                <div className="wrapper margin-bottom--double">
                     <div className="col--lg-two-thirds">
 
                         <h3>About this dataset</h3>
@@ -60,6 +61,16 @@ class Details extends Component {
 
                         <SupportingFilesList/>
                     </div>
+
+                    <Foldable header="Selected customisations of this dataset" id="expandable-1" expanded={true} >
+                        <div className="margin-bottom">Lorem ipsum</div>
+                    </Foldable>
+                    <Foldable header="Guide to quality" id="expandable-2">
+                        <div className="margin-bottom">Lorem ipsum</div>
+                    </Foldable>
+                    <Foldable header="Previous versions" id="expandable-3">
+                        <div className="margin-bottom">Lorem ipsum</div>
+                    </Foldable>
                 </div>
             </div>
         )
