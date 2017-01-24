@@ -37,13 +37,15 @@ class Details extends Component {
             return null;
         }
 
-        const metadata = this.props.metadata;
-        const description =  this.props.metadata.description;
+        const metadata = this.props.metadata || { a: 1 };
+        const description =  metadata ? this.props.metadata.description : '';
         const title = this.props.title;
 
         return (
             <div>
-               <IntroBlock {...metadata} {...{title}} />
+                {Object.keys(metadata) > 0 ||
+                    <IntroBlock {...metadata} {...{title}} />
+                }
                 <div className="wrapper margin-bottom--double">
                     <div className="col--lg-two-thirds">
 

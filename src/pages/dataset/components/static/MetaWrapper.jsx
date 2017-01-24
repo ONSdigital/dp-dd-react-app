@@ -21,7 +21,9 @@ export default class MetaWrapper extends Component {
         const releaseDate = this.props.releaseDate;
         const nextReleaseDate = this.props.nextReleaseDate;
         const showLogo = this.props.nationalStatistics;
-        const contact = this.props.contact;
+        const contact = this.props.contact || {};
+        const email = contact.email || '';
+        const name = contact.name || '';
 
         return (
             <div className="meta-wrap">
@@ -34,7 +36,7 @@ export default class MetaWrapper extends Component {
                                 </a>
                             )}
                             <span>Contact: </span><br />
-                            <a href={`mailto:${contact.email}`} data-ga-event="" data-ga-event-category="mailto" data-ga-event-label="census.customerservices@ons.gsi.gov.uk">${contact.name}</a>
+                            <a href={`mailto:${email}`} data-ga-event="" data-ga-event-category="mailto" data-ga-event-label="census.customerservices@ons.gsi.gov.uk">{name}</a>
                         </p>
                         <p className="col col--md-16 col--lg-20 meta__item">
                             <span>Release date: </span><br />{releaseDate}<br />
