@@ -32,7 +32,7 @@ export default class Checkbox extends Component {
         const value = this.props.value;
         const onChange = this.props.onChange;
         if (onChange) {
-            onChange({ id, checked, value, hello: "hello" });
+            onChange({ id, checked });
         }
     }
     
