@@ -6,7 +6,8 @@ const propTypes = {
     label: PropTypes.string.isRequired,
     group: PropTypes.string.isRequired,
     onChange: PropTypes.func,
-    checked: PropTypes.bool
+    checked: PropTypes.bool,
+    inline: PropTypes.bool
 };
 
 export default class RadioButton extends Component {
@@ -43,7 +44,7 @@ export default class RadioButton extends Component {
 
     render() {
         return (
-            <div className="radio margin-top--1">
+            <div className={"radio margin-top--1 " + (this.props.inline ? " radio--inline" : "")}>
                 <input className={"radio__input" + (this.props.checked ? " selected" : "") + (this.state.focused ? " focused" : "")} type="radio" name={this.props.group} checked={this.props.checked}
                        value={this.props.value} id={this.props.id} onFocus={this.handleFocus}
                        onBlur={this.handleBlur} onChange={this.handleChange} />
