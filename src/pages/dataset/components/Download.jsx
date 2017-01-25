@@ -37,7 +37,7 @@ class Download extends Component {
                 selected: false
             }],
             selectedOptions: [],
-            parentPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/customise/`,
+            parentPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/dimensions/`,
             errorMessage: ''
         };
     }
