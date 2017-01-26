@@ -14,7 +14,7 @@ import {
 } from '../../dataset/actions';
 
 
-import Selector from '../../dimension/components/DimensionSelector';
+import Selector from './SimpleSelector';
 
 const propTypes = {
     hasDimensions: PropTypes.bool.isRequired,

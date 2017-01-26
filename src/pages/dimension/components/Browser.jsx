@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link, hashHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { findOptionsByParentID, findOptionsByType } from '../utils';
-import Selector from './DimensionSelector';
+import Selector from './SimpleSelector';
 import {
     requestMetadata,
     requestDimensions

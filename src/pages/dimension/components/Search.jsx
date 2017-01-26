@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, hashHistory } from 'react-router';
 import { connect } from 'react-redux';
-import Selector from './DimensionSelector';
+import Selector from './SimpleSelector';
 import { searchOptions } from '../utils';
 
 class Search extends Component {
