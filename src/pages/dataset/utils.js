@@ -1,7 +1,8 @@
 const defaultOpts = {
     headers: {
-        'Accept': 'application/json'
-    }
+        'Accept': 'application/json'        
+    },
+    credentials: 'include'
 }
 
 export class Request {
@@ -32,7 +33,7 @@ export class Request {
         const headers = opts.headers ? opts.headers : {};
         opts.headers = Object.assign({}, headers, {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json'            
         });
         return this.fetch(url, Object.assign({}, opts, { method: 'POST' }));
     }
