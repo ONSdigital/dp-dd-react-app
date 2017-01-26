@@ -6,12 +6,11 @@ import config from '../../../config';
 import HierarchySelector from '../../dimension/components/HierarchySelector';
 import SimpleSelector from './SimpleSelector';
 
-import Browser from '../../dimension/components/Browser';
-import Search from '../../dimension/components/Search';
-import Summary from '../../dimension/components/Summary';
+import DimensionBrowser from './DimensionBrowser';
+import DimensionSearch from './DimensionSearch';
+import SelectionSummary from './SelectionSummary';
 
 import { requestMetadata, requestDimensions } from '../../dataset/actions';
-
 
 const propTypes = {
     hasDimensions: PropTypes.bool.isRequired,
@@ -81,17 +80,16 @@ class Dimension extends Component {
             case 'customise':
                 return <HierarchySelector {...componentProps} />;
             case 'browse':
-                return <Browser {...componentProps} />;
+                return <DimensionBrowser {...componentProps} />;
             case 'search':
-                return <Search {...componentProps} />;
+                return <DimensionSearch {...componentProps} />;
             case 'summary':
-                return <Summary {...componentProps} />;
+                return <SelectionSummary {...componentProps} />;
             default:
                 componentProps.router = this.props.router;
                 componentProps.onSave =() => this.props.router.push(this.state.currentPath);
                 return <SimpleSelector {...componentProps} />;
         }
-
     }
 }
 
