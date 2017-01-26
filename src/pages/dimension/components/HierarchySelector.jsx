@@ -57,7 +57,6 @@ class Customisation extends Component {
     }
 }
 
-
 function mapStateToProps(state, ownProps) {
     const dimension = state.dataset.dimensions.find((dimension) => {
         return dimension.id === ownProps.dimensionID;

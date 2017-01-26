@@ -4,14 +4,14 @@ import { Link } from 'react-router';
 import config from '../../../config';
 
 import Browser from '../../dimension/components/Browser';
-import Customisation from '../../dimension/components/Customisation';
+import Customisation from '../../dimension/components/HierarchySelector';
 import Search from '../../dimension/components/Search';
 import Summary from '../../dimension/components/Summary';
 
 import {
     requestMetadata,
     requestDimensions
-} from '../actions';
+} from '../../dataset/actions';
 
 
 import Selector from '../../dimension/components/DimensionSelector';

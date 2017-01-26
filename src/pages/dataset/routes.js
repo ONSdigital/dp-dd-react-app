@@ -2,7 +2,7 @@ import config from '../../config';
 
 import Details from './components/Details';
 import Download from './components/Download';
-import Dimension from './components/Dimension';
+import Dimension from '../dimension/components/Dimension';
 import Dimensions from '../dimensions/components/Dimensions';
 
 export default [
