@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Radio from '../../../../components/elements/RadioButton';
-import SelectBox from '../../../../components/elements/SelectBox';
+import Radio from '../../../components/elements/RadioButton';
+import SelectBox from '../../../components/elements/SelectBox';
 
 class TimeSelector extends Component {
 
