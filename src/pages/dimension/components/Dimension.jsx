@@ -3,18 +3,15 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import config from '../../../config';
 
+import HierarchySelector from '../../dimension/components/HierarchySelector';
+import SimpleSelector from './SimpleSelector';
+
 import Browser from '../../dimension/components/Browser';
-import Customisation from '../../dimension/components/HierarchySelector';
 import Search from '../../dimension/components/Search';
 import Summary from '../../dimension/components/Summary';
 
-import {
-    requestMetadata,
-    requestDimensions
-} from '../../dataset/actions';
+import { requestMetadata, requestDimensions } from '../../dataset/actions';
 
-
-import Selector from './SimpleSelector';
 
 const propTypes = {
     hasDimensions: PropTypes.bool.isRequired,
@@ -54,51 +51,47 @@ class Dimension extends Component {
     }
 
     render() {
-        const props = this.props;
-        if (!props.hasDimensions) return null;
-        const defaultProps = {
-            datasetID: props.params.id,
-            dimensionID: props.params.dimensionID,
-            location: props.location
+        if (!this.props.hasDimensions) {
+            return null;
         }
-        const componentProps = Object.assign({}, props, defaultProps);
 
-        switch (props.location.query.action) {
+        const parentPath = this.state.currentPath;
+        return (
+            <div className="wrapper">
+                <div className="margin-top--2">
+                    <Link to={parentPath} className="btn--everything">Back</Link>
+                </div>
+                <div>
+                    { this.renderDimensionScreen() }
+                </div>
+            </div>
+        )
+    }
+
+    renderDimensionScreen() {
+        const defaultProps = {
+            datasetID: this.props.params.id,
+            dimensionID: this.props.params.dimensionID,
+            location: this.props.location
+        }
+        const action = this.props.location.query.action;
+        const componentProps = Object.assign({}, this.props, defaultProps);
+
+        switch (action) {
             case 'customise':
-                return <Customisation {...componentProps} />;
+                return <HierarchySelector {...componentProps} />;
             case 'browse':
                 return <Browser {...componentProps} />;
             case 'search':
                 return <Search {...componentProps} />;
             case 'summary':
                 return <Summary {...componentProps} />;
-        }
-        return this.renderDimensionSelector();
-    }
-
-    renderDimensionSelector() {
-        if (!this.props.hasDimensions) {
-            return null;
+            default:
+                componentProps.router = this.props.router;
+                componentProps.onSave =() => this.props.router.push(this.state.currentPath);
+                return <SimpleSelector {...componentProps} />;
         }
 
-        const parentPath = this.state.currentPath;
-        const selectorProps = {
-            router: this.props.router,
-            datasetID: this.props.params.id,
-            dimensionID: this.props.params.dimensionID,
-            onSave: () => this.props.router.push(this.state.currentPath)
-        }
-
-        return (
-            <div>
-                <div className="margin-top--2">
-                    <Link to={parentPath} className="btn--everything">Back</Link>
-                </div>
-                <div>
-                    <Selector {...selectorProps} />
-                </div>
-            </div>
-        )
     }
 }
 

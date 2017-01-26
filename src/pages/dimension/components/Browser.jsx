@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link, hashHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { findOptionsByParentID, findOptionsByType } from '../utils';
-import Selector from './SimpleSelector';
+import SimpleSelector from './SimpleSelector';
 import {
     requestMetadata,
     requestDimensions
@@ -81,7 +81,7 @@ class Browser extends Component {
             }
         }
 
-        return <Selector {...selectorProps} />
+        return <SimpleSelector {...selectorProps} />
     }
 
     renderOptions () {

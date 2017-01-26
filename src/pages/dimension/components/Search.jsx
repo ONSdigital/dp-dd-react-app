@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, hashHistory } from 'react-router';
 import { connect } from 'react-redux';
-import Selector from './SimpleSelector';
+import SimpleSelector from './SimpleSelector';
 import { searchOptions } from '../utils';
 
 class Search extends Component {
@@ -73,7 +73,7 @@ class Search extends Component {
             }
         }
 
-        return <Selector {...selectorProps} />
+        return <SimpleSelector {...selectorProps} />
     }
 }
 
