@@ -1,5 +1,6 @@
 import { Request } from './utils';
 import config from '../../config/index';
+import { updateOption, toggleSelectedOptions } from '../dimension/utils';   // todo: move to dimension
 
 export const REQUEST_METADATA = 'REQUEST_METADATA';
 export const REQUEST_METADATA_SUCCESS = 'REQUEST_METADATA_SUCCESS';
@@ -12,6 +13,9 @@ export const REQUEST_DIMENSIONS_FAILURE = 'REQUEST_DIMENSIONS_FAILURE';
 export const SAVE_DIMENSION_OPTIONS = 'SAVE_DIMENSION_OPTIONS';
 export const PARSE_DIMENSIONS = 'PARSE_DIMENSIONS';
 
+export const DESELECT_ALL_OPTIONS = 'DESELECT_ALL_OPTIONS';             // todo: move to dimension
+export const SELECT_ALL_OPTIONS = 'SELECT_ALL_OPTIONS';                 // todo: move to dimension
+
 export const SAVE_DOWNLOAD_OPTIONS = 'SAVE_DOWNLOAD_OPTIONS';
 export const SAVE_DOWNLOAD_PROGRESS = 'SAVE_DOWNLOAD_PROGRESS';
 export const SAVE_DOWNLOAD_OPTIONS_SUCCESS = 'SAVE_DOWNLOAD_OPTIONS_SUCCESS';
@@ -23,6 +27,36 @@ const request = new Request();
 export function cancelDownload() {
     return {
         type: CANCEL_DOWNLOAD
+    }
+}
+
+export function deselectAllOptions(dimensionID) {
+    return (dispatch, getState) => {
+        const state = getState();
+        const dimension = Object.assign({}, state.dataset.dimensions.find(dimension => dimension.id === dimensionID));
+
+        dispatch({
+            type: DESELECT_ALL_OPTIONS,
+            dimensionID
+        });
+
+        const options = toggleSelectedOptions({ options: dimension.options, selected: false});
+        dispatch(saveDimensionOptions({dimensionID, options}));
+    }
+}
+
+export function selectAllOptions(dimensionID) {
+    return (dispatch, getState) => {
+        const state = getState();
+        const dimension = Object.assign({}, state.dataset.dimensions.find(dimension => dimension.id === dimensionID));
+
+        dispatch({
+            type: SELECT_ALL_OPTIONS,
+            dimensionID
+        });
+
+        const options = toggleSelectedOptions({ options: dimension.options, selected: true})
+        dispatch(saveDimensionOptions({dimensionID, options}))
     }
 }
 

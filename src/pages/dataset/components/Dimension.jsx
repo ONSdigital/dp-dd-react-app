@@ -3,13 +3,18 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import config from '../../../config';
 
+import Browser from '../../dimension/components/Browser';
+import Customisation from '../../dimension/components/Customisation';
+import Search from '../../dimension/components/Search';
+import Summary from '../../dimension/components/Summary';
+
 import {
     requestMetadata,
     requestDimensions
 } from '../actions';
 
 import DimensionList from './DimensionList';
-import Selector from '../../dimension/components/Selector';
+import Selector from '../../dimension/components/DimensionSelector';
 import DocumentTitle from '../../../components/elements/DocumentTitle';
 
 const propTypes = {
@@ -40,7 +45,6 @@ class Dimension extends Component {
         }
     }
 
-
     shouldComponentUpdate(nextProps) {
         if (this.state.initialFetchRequired) {
             this.state.initialFetchRequired = false;
@@ -51,9 +55,27 @@ class Dimension extends Component {
     }
 
     render() {
-        if (!this.props.hasDimensions) return null;
-        if (this.props.params.dimensionID === undefined) {
+        const props = this.props;
+        if (!props.hasDimensions) return null;
+        if (props.params.dimensionID === undefined) {
             return this.renderDimensionList();
+        }
+        const defaultProps = {
+            datasetID: props.params.id,
+            dimensionID: props.params.dimensionID,
+            location: props.location
+        }
+        const componentProps = Object.assign({}, props, defaultProps);
+
+        switch (props.location.query.action) {
+            case 'customise':
+                return <Customisation {...componentProps} />;
+            case 'browse':
+                return <Browser {...componentProps} />;
+            case 'search':
+                return <Search {...componentProps} />;
+            case 'summary':
+                return <Summary {...componentProps} />;
         }
         return this.renderDimensionSelector();
     }
@@ -71,7 +93,7 @@ class Dimension extends Component {
                 <div className="margin-top--2">
                     <Link to={parentPath} className="btn--everything">Back</Link>
                     <DocumentTitle title={`Customise ${this.props.title}`}>
-                        <h1 className="margin-top--half margin-bottom">Customise this dataset</h1>
+                        <h2 className="margin-top--half margin-bottom">Customise this dataset</h2>
                     </DocumentTitle>
                 </div>
                 <div>
@@ -101,7 +123,7 @@ class Dimension extends Component {
         }
 
         return (
-            <div className="wrapper">
+            <div>
                 <div className="margin-top--2">
                     <Link to={parentPath} className="btn--everything">Back</Link>
                 </div>

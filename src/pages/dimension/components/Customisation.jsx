@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link, hashHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { deselectAllOptions, selectAllOptions } from '../../dataset/actions';
+
 class Customisation extends Component {
     constructor(props) {
         super(props);

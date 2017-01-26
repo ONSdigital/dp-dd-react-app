@@ -28,7 +28,7 @@ class Summary extends Component {
         const dimensionID = this.props.dimensionID;
         const options = this.props.options;
         const currentPath = this.props.location.pathname;
-        const dimensionsPath = `${config.BASE_PATH}/dataset/${dimensionID}/dimensions`;
+        const dimensionsPath = `${config.BASE_PATH}/datasets/${dimensionID}/dimensions`;
 
         return (
             <div className="margin-bottom--8">
