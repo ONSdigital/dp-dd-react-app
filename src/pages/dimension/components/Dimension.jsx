@@ -5,6 +5,7 @@ import config from '../../../config';
 
 import HierarchySelector from '../../dimension/components/HierarchySelector';
 import SimpleSelector from './SimpleSelector';
+import TimeSelector from './TimeSelector';
 
 import DimensionBrowser from './DimensionBrowser';
 import DimensionSearch from './DimensionSearch';
@@ -13,9 +14,9 @@ import SelectionSummary from './SelectionSummary';
 import { requestMetadata, requestDimensions } from '../../dataset/actions';
 
 const propTypes = {
+    type: PropTypes.string.isRequired,
     hasDimensions: PropTypes.bool.isRequired,
-    hasMetadata: PropTypes.bool.isRequired,
-    dimensions: PropTypes.array
+    hasMetadata: PropTypes.bool.isRequired
 }
 
 class Dimension extends Component {
@@ -76,15 +77,21 @@ class Dimension extends Component {
         const action = this.props.location.query.action;
         const componentProps = Object.assign({}, this.props, defaultProps);
 
-        switch (action) {
-            case 'customise':
-                return <HierarchySelector {...componentProps} />;
+        if (action) switch (action) {
             case 'browse':
                 return <DimensionBrowser {...componentProps} />;
             case 'search':
                 return <DimensionSearch {...componentProps} />;
             case 'summary':
                 return <SelectionSummary {...componentProps} />;
+        }
+
+        switch (this.props.type) {
+            case 'time':
+                return <TimeSelector {...componentProps} />
+            case 'specialisation':
+            case 'geography':
+                return <HierarchySelector {...componentProps} />;
             default:
                 componentProps.router = this.props.router;
                 componentProps.onSave =() => this.props.router.push(this.state.currentPath);
@@ -95,9 +102,14 @@ class Dimension extends Component {
 
 Dimension.propTypes = propTypes;
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+    const hasDimensions = state.dataset.hasDimensions;
+    const dimension = !hasDimensions ? null : state.dataset.dimensions.find((dimension) => {
+        return dimension.id === ownProps.params.dimensionID;
+    });
+
     return {
-        dimensions: state.dataset.dimensions,
+        type: hasDimensions && dimension ? dimension.type : 'default',
         title: state.dataset.title,
         hasDimensions: state.dataset.hasDimensions,
         hasMetadata: state.dataset.hasMetadata
