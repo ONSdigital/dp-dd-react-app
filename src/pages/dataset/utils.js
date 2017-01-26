@@ -2,7 +2,7 @@ const defaultOpts = {
     headers: {
         'Accept': 'application/json'        
     },
-    Credentials: 'include'
+    credentials: 'include'
 }
 
 export class Request {
