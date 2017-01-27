@@ -12,7 +12,7 @@ export default class SelectBox extends Component {
                 <label className={"select-box" + (this.props.hideLabel ? " visuallyhidden " : "")} htmlFor={this.props.id}>
                     {this.props.label}
                 </label>
-                <select id={this.props.id} className="select-box__input">
+                <select id={this.props.id} className={"select-box__input" + (this.props.inline ? " margin-right--1" : "")}>
                     {
                         selectOptions.map((option, key) => {
                             return <option key={key} value={option.id}>{option.value}</option>

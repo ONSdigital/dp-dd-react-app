@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { hashHistory } from 'react-router';
 import Radio from '../../../components/elements/RadioButton';
 import SelectBox from '../../../components/elements/SelectBox';
 
@@ -9,7 +10,7 @@ class TimeSelector extends Component {
         super(props);
 
         this.state = {
-            selectedInterval: 'range',
+            selectedInterval: 'month',
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -23,17 +24,18 @@ class TimeSelector extends Component {
 
     render() {
         const intervalSelector = [{
-                id: 'range',
-                value: 'range',
-                label: 'Range'
-            },{
                 id: 'month',
                 value: 'month',
                 label: 'Single month'
-            }];
+            },{
+            id: 'range',
+            value: 'range',
+            label: 'Range'
+        }];
         const selectedInterval = this.state.selectedInterval;
         return (
-            <div>
+            <form className="form">
+                <h2 className="margin-top--half margin-bottom">Add a single month or range</h2>
                 <div className="margin-top-md--1 margin-bottom-md--2">
                 {
                     intervalSelector.map((radio, index) => {
@@ -46,8 +48,14 @@ class TimeSelector extends Component {
 
                 { this.renderTimeSelector() }
 
+                <div className="margin-top--4 margin-bottom--8">
+                    <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
+                       onClick="">Add</a>
+                    <a className="btn btn--secondary btn--thick btn--wide btn--big" onClick={hashHistory.goBack}>Cancel</a>
+                </div>
 
-            </div>
+
+            </form>
         )
     }
 
