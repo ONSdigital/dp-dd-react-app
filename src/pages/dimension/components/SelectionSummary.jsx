@@ -32,8 +32,7 @@ class Summary extends Component {
 
         return (
             <div className="margin-bottom--8">
-                <div className="margin-top--2">
-                    <Link onClick={hashHistory.goBack} className="btn--everything">Back</Link>
+                <div>
                     <h2 className="margin-top margin-bottom--double">Your location selection</h2>
                     <ul className="list--neutral">
                     {options.map(option => (

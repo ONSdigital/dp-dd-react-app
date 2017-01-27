@@ -29,9 +29,7 @@ class Customisation extends Component {
         const pathname = this.props.location.pathname;
 
         return (
-            <div className="margin-top">
-                <Link onClick={hashHistory.goBack} className="btn--everything">Back</Link>
-
+            <div>
                 <h2 className="margin-top margin-bottom">Customise location</h2>
                 <p>
                     <Link to={{ pathname, query: { action: 'search' }}}>Search</Link><br />
