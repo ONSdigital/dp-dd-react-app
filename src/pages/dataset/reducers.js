@@ -22,8 +22,6 @@ const defaultState = {
 };
 
 export default function (state = defaultState, action) {
-    //console.log('---\n', action.type, '\n', action, state);
-
     switch (action.type) {
 
         case REQUEST_METADATA_SUCCESS:
@@ -35,9 +33,21 @@ export default function (state = defaultState, action) {
         case PARSE_DIMENSIONS:
             state = Object.assign({}, state, {
                 id: action.dataset.id,
-                dimensions: action.dataset.dimensions,
+                dimensions: action.dataset.dimensions.length > 1
+                    ? action.dataset.dimensions
+                    : state.dimensions.map(dimension => {
+                        const actionDimension = action.dataset.dimensions[0];
+                        if (dimension.id === actionDimension.id) {
+                            // merges parsed hierarchical dimension
+                            return Object.assign({}, dimension, actionDimension, {
+                                hierarchyReady: true
+                            });
+                        }
+                        return dimension
+                }),
                 hasDimensions: true
             });
+
             break;
 
         case SAVE_DOWNLOAD_PROGRESS:

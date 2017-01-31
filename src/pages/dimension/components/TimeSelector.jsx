@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { hashHistory } from 'react-router';
 import Radio from '../../../components/elements/RadioButton';
 import SelectBox from '../../../components/elements/SelectBox';
+import { requestHierarchicalDimension } from '../../dataset/actions';
 
 class TimeSelector extends Component {
 
@@ -14,7 +15,6 @@ class TimeSelector extends Component {
         };
 
         this.handleChange = this.handleChange.bind(this);
-
     }
 
     handleChange(event) {
@@ -23,6 +23,10 @@ class TimeSelector extends Component {
 
 
     render() {
+        if (!this.props.dimension.hierarchyReady) {
+            return null;
+        }
+
         const intervalSelector = [{
                 id: 'month',
                 value: 'month',
@@ -65,11 +69,9 @@ class TimeSelector extends Component {
         switch(selectedInterval) {
             case 'month':
                 return this.renderMonthSelector();
-                break;
             default:
                 return this.renderRangeSelector();
         }
-
     }
 
     renderMonthSelector() {
@@ -107,9 +109,17 @@ class TimeSelector extends Component {
 
 }
 
-function mapStateToProps(state) {
-    return {
+function mapStateToProps(state, ownProps) {
+    const dataset = state.dataset;
+    const dimension = dataset.dimensions.find((dimension) => {
+        return dimension.id === ownProps.dimensionID;
+    });
+    if (dimension.hierarchical && !dimension.hierarchyReady) {
+        ownProps.dispatch(requestHierarchicalDimension(dataset.id, dimension.id));
+    }
 
+    return {
+        dimension
     }
 }
 

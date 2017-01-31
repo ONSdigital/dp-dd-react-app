@@ -8,7 +8,9 @@ export const REQUEST_METADATA_FAILURE = 'REQUEST_METADATA_FAILURE';
 
 export const REQUEST_DIMENSIONS = 'REQUEST_DIMENSIONS';
 export const REQUEST_DIMENSIONS_SUCCESS = 'REQUEST_DIMENSIONS_SUCCESS';
-export const REQUEST_DIMENSIONS_FAILURE = 'REQUEST_DIMENSIONS_FAILURE';
+
+export const REQUEST_HIERARCHICAL_DIMENSION = 'REQUEST_HIERARCHICAL_DIMENSION';
+export const REQUEST_HIERARCHICAL_DIMENSION_SUCCESS = 'REQUEST_HIERARCHICAL_DIMENSION';
 
 export const SAVE_DIMENSION_OPTIONS = 'SAVE_DIMENSION_OPTIONS';
 export const PARSE_DIMENSIONS = 'PARSE_DIMENSIONS';
@@ -173,9 +175,13 @@ export function requestDimensionsSuccess(datasetId, responseData) {
     }
 }
 
-export function parseDimensions(datasetID, dimensionsJSON) {
+function parseDimensions(datasetID, dimensionsJSON) {
     let optionsCount;
     let selectedCount;
+
+    if (!(dimensionsJSON instanceof Array)) {
+        dimensionsJSON = [dimensionsJSON]
+    }
 
     return {
         type: PARSE_DIMENSIONS,
@@ -204,6 +210,34 @@ export function parseDimensions(datasetID, dimensionsJSON) {
             }
             return option;
         });
+    }
+}
+
+export function requestHierarchicalDimension(datasetID, dimensionID) {
+    const url = `${API_URL}/datasets/${datasetID}/dimensions/${dimensionID}?view=hierarchy`;
+
+    return (dispatch) => {
+        dispatch({
+            type: REQUEST_HIERARCHICAL_DIMENSION,
+            id: datasetID
+        });
+
+        request.get(url).then(function (json) {
+            dispatch(requestHierarchicalDimensionSuccess(datasetID, json));
+            dispatch(parseDimensions(datasetID, json));
+        }).catch(function (err) {
+            throw(err);
+        })
+    }
+}
+
+function requestHierarchicalDimensionSuccess(datasetID, responseData) {
+    return {
+        type: REQUEST_HIERARCHICAL_DIMENSION_SUCCESS,
+        dataset: {
+            datasetID,
+            responseData
+        }
     }
 }
 
