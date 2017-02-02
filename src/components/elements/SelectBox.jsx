@@ -5,7 +5,7 @@ const propTypes = {
     label: PropTypes.string,
     hideLabel: PropTypes.bool,
     inline: PropTypes.bool,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func
 }
 
 const defaultProps = {
