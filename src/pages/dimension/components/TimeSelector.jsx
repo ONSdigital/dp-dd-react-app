@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { hashHistory } from 'react-router';
 import Radio from '../../../components/elements/RadioButton';
-import SelectBox from '../../../components/elements/SelectBox';
 import TimeRangeSelector from './TimeRangeSelector';
 
 import { requestHierarchicalDimension } from '../../dataset/actions';
@@ -67,8 +66,6 @@ class TimeSelector extends Component {
 
 
     renderTimeSelector() {
-        return this.renderMonthSelector();
-
         const selectedInterval = this.state.selectedInterval;
         switch(selectedInterval) {
             case 'month':
@@ -83,22 +80,10 @@ class TimeSelector extends Component {
     }
 
     renderRangeSelector() {
-        const startMonthOptions = [{id: "MON001", value: 'January'},{id: "MON002", value: 'February'}];
-        const startYearOptions = [{id: "YEAR001", value: '2001'},{id: "YEAR002", value: '2002'}];
-        const endMonthOptions = [{id: "MON001", value: 'January'},{id: "MON002", value: 'February'}];
-        const endYearOptions = [{id: "YEAR001", value: '2017'},{id: "YEAR002", value: '2016'}];
         return (
             <div>
-                <fieldset className="margin-bottom-md--2">
-                    <legend>Select a start date</legend>
-                    <SelectBox label={"Month"} options={startMonthOptions} inline={true} hideLabel={true}/>
-                    <SelectBox label={"Year"} options={startYearOptions} inline={true} hideLabel={true}/>
-                </fieldset>
-                <fieldset>
-                    <legend>Select an end date</legend>
-                    <SelectBox label={"Month"} options={endMonthOptions} inline={true} hideLabel={true}/>
-                    <SelectBox label={"Year"} options={endYearOptions} inline={true} hideLabel={true}/>
-                </fieldset>
+                <TimeRangeSelector options={this.props.options} />
+                <TimeRangeSelector options={this.props.options} />
             </div>
         )
     }
