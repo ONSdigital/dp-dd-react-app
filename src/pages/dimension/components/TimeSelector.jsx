@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { hashHistory } from 'react-router';
 import Radio from '../../../components/elements/RadioButton';
 import SelectBox from '../../../components/elements/SelectBox';
+import TimeRangeSelector from './TimeRangeSelector';
+
 import { requestHierarchicalDimension } from '../../dataset/actions';
 
 class TimeSelector extends Component {
@@ -23,7 +25,7 @@ class TimeSelector extends Component {
 
 
     render() {
-        if (!this.props.dimension.hierarchyReady) {
+        if (!this.props.isReady) {
             return null;
         }
 
@@ -65,6 +67,8 @@ class TimeSelector extends Component {
 
 
     renderTimeSelector() {
+        return this.renderMonthSelector();
+
         const selectedInterval = this.state.selectedInterval;
         switch(selectedInterval) {
             case 'month':
@@ -75,15 +79,7 @@ class TimeSelector extends Component {
     }
 
     renderMonthSelector() {
-        const monthOptions = [{id: "MON001", value: 'January'},{id: "MON002", value: 'February'}];
-        const yearOptions = [{id: "YEAR001", value: '2017'},{id: "YEAR002", value: '2016'}];
-        return (
-            <fieldset>
-                <legend>Select a month and year</legend>
-                <SelectBox label={"Month"} options={monthOptions} inline={true} hideLabel={true}/>
-                <SelectBox label={"Year"} options={yearOptions} inline={true} hideLabel={true}/>
-            </fieldset>
-        )
+        return <TimeRangeSelector options={this.props.options} />
     }
 
     renderRangeSelector() {
@@ -117,9 +113,9 @@ function mapStateToProps(state, ownProps) {
     if (dimension.hierarchical && !dimension.hierarchyReady) {
         ownProps.dispatch(requestHierarchicalDimension(dataset.id, dimension.id));
     }
-
     return {
-        dimension
+        options: dimension.options,
+        isReady: dimension.hierarchyReady
     }
 }
 
