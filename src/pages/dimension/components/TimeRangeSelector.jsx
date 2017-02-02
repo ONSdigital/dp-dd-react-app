@@ -11,6 +11,7 @@ export default class TimeRangeSelector extends Component {
         this.state = {
             selectedCodes: []
         }
+        this.onSelectBoxChange = this.onSelectBoxChange.bind(this);
     }
 
     parseOptionsAsKeyValueData(options) {
@@ -29,6 +30,10 @@ export default class TimeRangeSelector extends Component {
         return rangeData;
     }
 
+    onSelectBoxChange(data) {
+        console.log(data);
+    }
+
     render() {
         return (
             <div>
@@ -41,11 +46,19 @@ export default class TimeRangeSelector extends Component {
         const rangeData  = this.parseOptionsAsKeyValueData(options);
         const rangeTypes = Object.keys(rangeData);
         const fieldSets = rangeTypes.map(rangeType => {
-            const data = rangeData[rangeType];
+            const options = rangeData[rangeType];
+            const props = {
+                id: rangeType,
+                label: rangeType,
+                inline: true,
+                hideLabel: true,
+                onChange: this.onSelectBoxChange,
+                options
+            }
             return (
                 <fieldset key={rangeType}>
                     <legend>Select a {rangeType}</legend>
-                    <SelectBox id={rangeType} label={rangeType} options={data} inline={true} hideLabel={true} />
+                    <SelectBox {...props} />
                 </fieldset>
                 
             )

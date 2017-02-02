@@ -16,13 +16,19 @@ const defaultProps = {
 export default class SelectBox extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            id: props.id,
+            value: null
+        }
         this.onChange = this.onChange.bind(this);
     }
 
-    onChange() {
-        if (this.props.onChange) {
-            this.props.onChange()
-        }
+    onChange(evt) {
+        const id = this.state.id;
+        const value = evt.target.value;
+        const onChange = this.props.onChange;
+        this.setState({ id, value });
+        !onChange || onChange({ id, value });
     }
 
     render() {
