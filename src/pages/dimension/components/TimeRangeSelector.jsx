@@ -9,7 +9,8 @@ export default class TimeRangeSelector extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedCodes: []
+            selectedCodes: [],
+            selectedValues: []
         }
         this.onSelectBoxChange = this.onSelectBoxChange.bind(this);
     }
@@ -24,11 +25,7 @@ export default class TimeRangeSelector extends Component {
                     options: []
                 };
             }
-            groupedOptions[levelType.code].options.push({
-                id: option.id,
-                value: option.name,
-                type: levelType.name
-            });
+            groupedOptions[levelType.code].options.push(option);
         });
         return groupedOptions;
     }
@@ -37,7 +34,11 @@ export default class TimeRangeSelector extends Component {
         return data => {
             const selectedCodes = this.state.selectedCodes.slice();
             selectedCodes[levelType.level] = levelType.code;
-            this.setState({ selectedCodes: selectedCodes });
+
+            const selectedValues = this.state.selectedValues.slice();
+            selectedValues[levelType.level] = data.value;
+
+            this.setState({ selectedCodes, selectedValues });
         }
     }
 
@@ -52,6 +53,8 @@ export default class TimeRangeSelector extends Component {
     renderRange(options) {
         const optionGroups  = this.groupOptionsByType(options);
         const rangeTypes = Object.keys(optionGroups);
+        const selectedCodes = this.state.selectedCodes;
+        const selectedValues = this.state.selectedValues;
         const fieldSets = rangeTypes.map(rangeType => {
             const optionGroup = optionGroups[rangeType];
             const props = {
@@ -60,15 +63,28 @@ export default class TimeRangeSelector extends Component {
                 inline: true,
                 hideLabel: true,
                 onChange: this.onSelectBoxChange(optionGroup.levelType),
-                options: optionGroup.options,
+                options: optionGroup.options.map(option => ({
+                    id: option.id,
+                    value: option.name,
+                    type: optionGroup.levelType.name,
+                }))
             }
-            const elements = (
+
+            const elements = [
                 <fieldset key={rangeType}>
                     <legend>Select a {rangeType}</legend>
                     <SelectBox {...props} />
                 </fieldset>
+            ];
 
-            )
+            if (selectedCodes[optionGroup.levelType.level] == optionGroup.levelType.code) {
+                const option = optionGroup.options.find(option => {
+                    return option.id === selectedValues[optionGroup.levelType.level];
+                });
+                if (option && option.options) {
+                    elements.push(this.renderRange(option.options));
+                }
+            }
             return elements;
         });
         return fieldSets;

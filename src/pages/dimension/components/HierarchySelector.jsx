@@ -21,6 +21,7 @@ class Customisation extends Component {
 
     componentWillMount() {
         if (!this.props.dimension.edited) {
+            debugger;
             this.props.dispatch(deselectAllOptions(this.props.dimensionID))
         }
     }
