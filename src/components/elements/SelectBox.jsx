@@ -4,6 +4,10 @@ const propTypes = {
     id: PropTypes.string.isRequired,
     label: PropTypes.string,
     hideLabel: PropTypes.bool,
+    options: React.PropTypes.arrayOf(React.PropTypes.shape({
+        value: PropTypes.string,
+        label: PropTypes.string
+    })),
     inline: PropTypes.bool,
     onChange: PropTypes.func
 }
@@ -37,11 +41,9 @@ export default class SelectBox extends Component {
         const labelClass = "select-box" + (this.props.hideLabel ? " visuallyhidden " : "");
         return (
             <div className={"select-box" + (this.props.inline ? " select-box--inline" : "")}>
-                <label className={labelClass} htmlFor={this.props.id}>
-                    {this.props.label}
-                </label>
+                <label className={labelClass} htmlFor={this.props.id}>{this.props.label}</label>
                 <select id={this.props.id} onChange={this.onChange} className={selectClass}>
-                    {selectOptions.map((option, key) => <option key={key} value={option.id}>{option.value}</option>)}
+                    {selectOptions.map((option, key) => <option key={key} value={option.value} label={option.label} />)}
                 </select>
             </div>
         )

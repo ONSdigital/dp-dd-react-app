@@ -64,12 +64,11 @@ export default class TimeRangeSelector extends Component {
                 hideLabel: true,
                 onChange: this.onSelectBoxChange(optionGroup.levelType),
                 options: optionGroup.options.map(option => ({
-                    id: option.id,
-                    value: option.name,
-                    type: optionGroup.levelType.name,
+                    value: option.id,
+                    label: option.name
                 }))
             }
-
+            props.options.unshift({value: null});
             const elements = [
                 <fieldset key={rangeType}>
                     <legend>Select a {rangeType}</legend>
