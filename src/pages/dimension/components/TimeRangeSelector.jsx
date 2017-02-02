@@ -14,24 +14,31 @@ export default class TimeRangeSelector extends Component {
         this.onSelectBoxChange = this.onSelectBoxChange.bind(this);
     }
 
-    parseOptionsAsKeyValueData(options) {
-        const rangeData = {}
+    groupOptionsByType(options) {
+        const groupedOptions = {}
         options.forEach(option => {
-            const typeData = option.levelType;
-            if (!rangeData[typeData.code]) {
-                rangeData[typeData.code]=[];
+            const levelType = option.levelType;
+            if (!groupedOptions[levelType.code]) {
+                groupedOptions[levelType.code]={
+                    levelType,
+                    options: []
+                };
             }
-            rangeData[typeData.code].push({
+            groupedOptions[levelType.code].options.push({
                 id: option.id,
                 value: option.name,
-                type: typeData.name
+                type: levelType.name
             });
         });
-        return rangeData;
+        return groupedOptions;
     }
 
-    onSelectBoxChange(data) {
-        console.log(data);
+    onSelectBoxChange(levelType) {
+        return data => {
+            const selectedCodes = this.state.selectedCodes.slice();
+            selectedCodes[levelType.level] = levelType.code;
+            this.setState({ selectedCodes: selectedCodes });
+        }
     }
 
     render() {
@@ -43,25 +50,26 @@ export default class TimeRangeSelector extends Component {
     }
 
     renderRange(options) {
-        const rangeData  = this.parseOptionsAsKeyValueData(options);
-        const rangeTypes = Object.keys(rangeData);
+        const optionGroups  = this.groupOptionsByType(options);
+        const rangeTypes = Object.keys(optionGroups);
         const fieldSets = rangeTypes.map(rangeType => {
-            const options = rangeData[rangeType];
+            const optionGroup = optionGroups[rangeType];
             const props = {
                 id: rangeType,
                 label: rangeType,
                 inline: true,
                 hideLabel: true,
-                onChange: this.onSelectBoxChange,
-                options
+                onChange: this.onSelectBoxChange(optionGroup.levelType),
+                options: optionGroup.options,
             }
-            return (
+            const elements = (
                 <fieldset key={rangeType}>
                     <legend>Select a {rangeType}</legend>
                     <SelectBox {...props} />
                 </fieldset>
-                
+
             )
+            return elements;
         });
         return fieldSets;
     }
