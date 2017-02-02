@@ -95,7 +95,6 @@ class Dimension extends Component {
             default:
                 componentProps.router = this.props.router;
                 componentProps.onSave =() => this.props.router.push(this.state.currentPath);
-                debugger;
                 return <SimpleSelector {...componentProps} />;
         }
     }
