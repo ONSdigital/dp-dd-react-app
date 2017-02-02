@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import config from '../../../config';
+import DocumentTitle from '../../../components/elements/DocumentTitle';
 
 import HierarchySelector from '../../dimension/components/HierarchySelector';
 import SimpleSelector from './SimpleSelector';
@@ -58,6 +59,7 @@ class Dimension extends Component {
         const parentPath = this.state.currentPath;
         return (
             <div className="wrapper">
+                <DocumentTitle title={"Customise " + this.props.dimension.name} />
                 <div className="margin-top--2">
                     <Link to={parentPath} className="btn--everything">Back</Link>
                 </div>
@@ -112,7 +114,8 @@ function mapStateToProps(state, ownProps) {
         type: hasDimensions && dimension ? dimension.type : 'default',
         title: state.dataset.title,
         hasDimensions: state.dataset.hasDimensions,
-        hasMetadata: state.dataset.hasMetadata
+        hasMetadata: state.dataset.hasMetadata,
+        dimension
     }
 }
 
