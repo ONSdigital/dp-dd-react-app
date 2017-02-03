@@ -2,7 +2,8 @@ import React, {Component, PropTypes} from 'react'
 import SelectBox from '../../../components/elements/SelectBox';
 
 const propTypes = {
-    options: PropTypes.array.isRequired
+    options: PropTypes.array.isRequired,
+    onChange: PropTypes.func
 }
 
 export default class TimeRangeSelector extends Component {
@@ -16,7 +17,7 @@ export default class TimeRangeSelector extends Component {
     }
 
     groupOptionsByType(options) {
-        const groupedOptions = {}
+        const groupedOptions = {};
         options.forEach(option => {
             const levelType = option.levelType;
             if (!groupedOptions[levelType.code]) {
@@ -39,6 +40,12 @@ export default class TimeRangeSelector extends Component {
             selectedValues[levelType.level] = data.value;
 
             this.setState({ selectedCodes, selectedValues });
+            if (this.props.onChange) {
+                const depth = selectedCodes.length - 1;
+                const code = selectedCodes[depth];
+                const value = selectedValues[depth];
+                this.props.onChange({ depth, code, value });
+            }
         }
     }
 
