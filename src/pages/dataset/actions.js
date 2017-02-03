@@ -122,6 +122,18 @@ function saveDownloadProgress(json) {
 }
 
 export function saveDimensionOptions({dimensionID, options}) {
+    if (!options instanceof Array) {
+        options = [options];
+    }
+    if (options.length === 0) {
+        throw new Error('Options must be an array array can not be empty.');
+    }
+
+    options.forEach(option => {
+        if (option.id === undefined || option.selected === undefined) {
+            console.error('Invalid option data, ', option);
+        }
+    });
 
     return (dispatch, getState) => {
         const state = getState();
