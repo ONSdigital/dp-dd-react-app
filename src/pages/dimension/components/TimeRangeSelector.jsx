@@ -43,8 +43,8 @@ export default class TimeRangeSelector extends Component {
             if (this.props.onChange) {
                 const depth = selectedCodes.length - 1;
                 const code = selectedCodes[depth];
-                const value = selectedValues[depth];
-                this.props.onChange({ depth, code, value });
+                const id = selectedValues[depth];
+                this.props.onChange({ id, depth, code });
             }
         }
     }
@@ -64,7 +64,7 @@ export default class TimeRangeSelector extends Component {
         const selectedValues = this.state.selectedValues;
         const fieldSets = rangeTypes.map(rangeType => {
             const optionGroup = optionGroups[rangeType];
-            const props = {
+            const selectBoxProps = {
                 id: rangeType,
                 label: rangeType,
                 inline: true,
@@ -75,11 +75,11 @@ export default class TimeRangeSelector extends Component {
                     label: option.name
                 }))
             }
-            props.options.unshift({value: null});
+            selectBoxProps.options.unshift({value: null});
             const elements = [
                 <fieldset key={rangeType}>
                     <legend>Select a {rangeType}</legend>
-                    <SelectBox {...props} />
+                    <SelectBox {...selectBoxProps} />
                 </fieldset>
             ];
 

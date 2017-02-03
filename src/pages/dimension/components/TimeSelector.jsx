@@ -13,7 +13,7 @@ class TimeSelector extends Component {
         super(props);
         this.state = {
             selectedInterval: 'month',
-            selectedValues: [] // should either contain 1 item for single date of 2 for range
+            selectedOptions: [] // should either contain 1 item for single date of 2 for range
         };
         this.onIntervalRadioChange = this.onIntervalRadioChange.bind(this);
         this.onRangeChange = this.onRangeChange.bind(this);
@@ -24,18 +24,21 @@ class TimeSelector extends Component {
         this.setState({selectedInterval: event.value});
     }
 
-    onRangeChange(selectedValueIndex) {
+    onRangeChange(optionIndex) {
         return optionData => {
-            const selectedValues = this.state.selectedValues;
-            selectedValues[selectedValueIndex] = optionData;
-            this.setState({ selectedValues });
+            const selectedOptions = this.state.selectedOptions;
+            selectedOptions[optionIndex] = optionData;
+            this.setState({ selectedOptions });
         }
     }
 
     onAddButtonClick() {
         this.props.dispatch(saveDimensionOptions({
             dimensionID: this.props.dimensionID,
-            options: this.state.selectedValues
+            options: this.state.selectedOptions.map(option => {
+                option.selected = true;
+                return option;
+            })
         }));
     }
 
