@@ -6,6 +6,7 @@ import TimeRangeSelector from './TimeRangeSelector';
 
 import { saveDimensionOptions } from '../../dataset/actions';
 import { requestHierarchicalDimension } from '../../dataset/actions';
+import { renderFlatHierarchy } from '../utils';
 
 class TimeSelector extends Component {
 
@@ -32,13 +33,54 @@ class TimeSelector extends Component {
         }
     }
 
+    getOptionRage({list, range}) {
+        let { index, startIndex, endIndex } = -1;
+        const options = [];
+        list.forEach((item, index) => {
+            if (startIndex > -1 && endIndex == -1) {
+                options.push({ id: item.id, selected: true });
+            }
+
+            range.forEach(rangeItem => {
+                if (rangeItem.id === item.id) {
+                    if (startIndex === -1) {
+                        options.push({ id: item.id, selected: true })
+                    } else if (startIndex > 1) {
+                        endIndex = index;
+                        options.push({ id: item.id, selected: true });
+                    }
+                }
+            });
+        })
+
+        return options;
+    }
+
     onAddButtonClick() {
+        // todo: store it, allright? No need to re-iterate over it again and again
+        let options = [];
+        const selectedOptions = this.state.selectedOptions;
+
+        if (selectedOptions.length === 0) {
+            throw new Error("missing selection");
+        }
+
+        options.push(selectedOptions[0]);
+
+        if (selectedOptions.length > 1) {
+            options = this.getOptionRage({
+                list: renderFlatHierarchy({
+                    hierarchy: this.props.options,
+                    filter: {selected: true},
+                }),
+                range: selectedOptions
+            });
+        }
+
+        options.forEach(option => option.selected = true);
         this.props.dispatch(saveDimensionOptions({
             dimensionID: this.props.dimensionID,
-            options: this.state.selectedOptions.map(option => {
-                option.selected = true;
-                return option;
-            })
+            options
         }));
     }
 
