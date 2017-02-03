@@ -122,35 +122,22 @@ function saveDownloadProgress(json) {
 }
 
 export function saveDimensionOptions({dimensionID, options}) {
-    if (!options instanceof Array) {
-        options = [options];
-    }
-    if (options.length === 0) {
-        throw new Error('Options must be an array array can not be empty.');
-    }
-
-    options.forEach(option => {
-        if (option.id === undefined || option.selected === undefined) {
-            console.error('Invalid option data, ', option);
-        }
-    });
-
     return (dispatch, getState) => {
         const state = getState();
-
-        // todo: use deep merge for merging hierarchies -> https://www.npmjs.com/package/deepmerge
         const dimensions = state.dataset.dimensions.map((dimension) => {
             dimension = Object.assign({}, dimension);
             if (dimension.id !== dimensionID) {
                 return dimension;
             }
 
-            dimension.options = dimension.options.map((option) => {
-                option.selected = options.find((selectionOption) => {
-                    return option.id === selectionOption.id;
-                }).selected;
-                return Object.assign({}, option);
+            options.forEach(option => {
+                updateOption({
+                    id: option.id,
+                    options: dimension.options,
+                    update: { selected: option.selected  }
+                })
             });
+
             return dimension;
         });
 
