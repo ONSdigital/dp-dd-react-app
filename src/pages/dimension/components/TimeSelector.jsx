@@ -4,6 +4,7 @@ import { hashHistory } from 'react-router';
 import Radio from '../../../components/elements/RadioButton';
 import TimeRangeSelector from './TimeRangeSelector';
 
+import { saveDimensionOptions } from '../../dataset/actions';
 import { requestHierarchicalDimension } from '../../dataset/actions';
 
 class TimeSelector extends Component {
@@ -32,7 +33,10 @@ class TimeSelector extends Component {
     }
 
     onAddButtonClick() {
-        console.log('save it');
+        this.props.dispatch(saveDimensionOptions({
+            dimensionID: this.props.dimensionID,
+            options: this.state.selectedValues
+        }));
     }
 
     render() {
