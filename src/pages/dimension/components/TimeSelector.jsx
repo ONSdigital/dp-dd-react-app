@@ -36,28 +36,30 @@ class TimeSelector extends Component {
         }
     }
 
-    getOptionRage({list, range}) {
+    getRangeOfOptions({list, range}) {
+        const retOptions = [];
+        let startIndex = -1;
+        let endIndex = -1;
 
-        let { index, startIndex, endIndex } = -1;
-        const options = [];
         list.forEach((item, index) => {
             if (startIndex > -1 && endIndex == -1) {
-                options.push({ id: item.id, selected: true });
+                retOptions.push({ id: item.id, selected: true });
             }
 
-            range.forEach(rangeItem => {
+            range.forEach((rangeItem) => {
                 if (rangeItem.id === item.id) {
                     if (startIndex === -1) {
-                        options.push({ id: item.id, selected: true })
+                        startIndex = index;
+                        retOptions.push({ id: item.id, selected: true })
                     } else if (startIndex > 1) {
                         endIndex = index;
-                        options.push({ id: item.id, selected: true });
+                        retOptions.push({ id: item.id, selected: true });
                     }
                 }
             });
         })
 
-        return options;
+        return retOptions;
     }
 
     onAddButtonClick() {
@@ -77,7 +79,7 @@ class TimeSelector extends Component {
                 filter: { /* select all */ },
             });
 
-            options = this.getOptionRage({
+            options = this.getRangeOfOptions({
                 range: selectedOptions,
                 list
             });
