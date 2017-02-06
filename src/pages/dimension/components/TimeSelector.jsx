@@ -14,6 +14,8 @@ class TimeSelector extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            requestedOptionsUpdate: false,
+            requestedDeselectAll: false,
             selectedInterval: 'month',
             selectedOptions: [] // should either contain 1 item for single date of 2 for range
         };
@@ -35,6 +37,7 @@ class TimeSelector extends Component {
     }
 
     getOptionRage({list, range}) {
+
         let { index, startIndex, endIndex } = -1;
         const options = [];
         list.forEach((item, index) => {
@@ -72,13 +75,14 @@ class TimeSelector extends Component {
             options = this.getOptionRage({
                 list: renderFlatHierarchy({
                     hierarchy: this.props.options,
-                    filter: {selected: true},
+                    filter: { selected: false },
                 }),
                 range: selectedOptions
             });
         }
 
         options.forEach(option => option.selected = true);
+
         this.props.dispatch(saveDimensionOptions({
             dimensionID: this.props.dimensionID,
             options
@@ -92,9 +96,40 @@ class TimeSelector extends Component {
         })
     }
 
+    componentWillMount() {
+        console.log("> componentWillMount()")
+        this.requestPropsUpdate();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log('> componentWillReceiveProps()')
+        this.requestPropsUpdate(nextProps);
+    }
+
+    requestPropsUpdate(props = this.props) {
+        const isEdited = props.isEdited;
+        const isReady = props.isReady;
+        const isHierarchical = props.isHierarchical;
+        const dispatch = props.dispatch;
+        const datasetId = props.datasetId;
+        const dimensionId = props.dimensionId;
+        const state = this.state;
+
+        console.log("> requestPropsUpdate()", {isEdited, isReady, isHierarchical });
+        if (!isReady && isHierarchical && !state.requestedOptionsUpdate) {
+            state.requestedOptionsUpdate = true;
+            dispatch(requestHierarchical(datasetId, dimensionId));
+        }
+
+        if (isReady && !isEdited && !state.requestedDeselectAll) {
+            state.requestedDeselectAll = true;
+            dispatch(deselectAllOptions(this.props.dimensionID))
+        }
+
+    }
 
     render() {
-        if (!this.props.isReady) {
+        if (!this.props.isReady || !this.props.isEdited) {
             return null;
         }
         const selectedInterval = this.state.selectedInterval;
@@ -159,16 +194,18 @@ function mapStateToProps(state, ownProps) {
         return dimension.id === ownProps.dimensionID;
     });
 
-    if (dimension.hierarchical && !dimension.hierarchyReady) {
-        ownProps.dispatch(requestHierarchical(dataset.id, dimension.id));
-    } else if (dimension.hierarchyReady && !dimension.edited) {
-        this.props.dispatch(deselectAllOptions(this.props.dimensionID))
+    const props = {
+        isEdited: dimension.edited || false,
+        isReady: dimension.hierarchyReady || false,
+        isHierarchical: dimension.hierarchical,
+        options: dimension.options,
+        datasetId: dataset.id,
+        dimensionId: ownProps.dimensionID
+        //timestamp: (new Date()).getTime() // todo:
     }
 
-    return {
-        options: dimension.options,
-        isReady: dimension.hierarchyReady
-    }
+    console.log("> mapStateToProps()", props);
+    return props;
 }
 
 export default connect(mapStateToProps)(TimeSelector)
