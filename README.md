@@ -62,10 +62,10 @@ By default app will be servered via `:20040` but will accept another port as an 
 
 > **IMPORTANT UPDATE** 
 >   
-> Currently you app can not be run on its own.  
-> You need all above services up and running.  
+> Currently app doesn't run on its own.
+> You need all above dependency services up and running.
 >   
-> You can run it from `localhost:20000`.
+> Once started it will be served from `localhost:20000` via `dp-frontend-router`
 
 ### Building application
 
