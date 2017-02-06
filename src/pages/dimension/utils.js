@@ -120,3 +120,21 @@ export function renderFlatHierarchy ({ hierarchy, filter = {} }) {
     })
     return list;
 }
+
+export function renderFlatListOfOptions ({ hierarchy, filter = {} }) {
+    const list = [];
+    if (!hierarchy instanceof Array) {
+        hierarchy = [hierarchy];
+    }
+
+    hierarchy.forEach(element => {
+        const internalHierarchy = element.options || [];
+        delete element.options;
+        list.push(Object.assign({}, element));
+        if (internalHierarchy.length > 0) {
+            Array.prototype.push.apply(list, renderFlatListOfOptions({ hierarchy: internalHierarchy, filter }));
+        }
+    });
+
+    return list;
+}

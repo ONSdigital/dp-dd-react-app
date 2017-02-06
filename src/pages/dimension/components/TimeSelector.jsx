@@ -6,7 +6,7 @@ import TimeRangeSelector from './TimeRangeSelector';
 
 import { saveDimensionOptions } from '../../dataset/actions';
 import { requestHierarchical } from '../../dataset/actions';
-import { renderFlatHierarchy } from '../utils';
+import { renderFlatListOfOptions } from '../utils';
 import { deselectAllOptions, selectAllOptions } from '../../dataset/actions';
 
 class TimeSelector extends Component {
@@ -72,12 +72,14 @@ class TimeSelector extends Component {
         options.push(selectedOptions[0]);
 
         if (selectedOptions.length > 1) {
+            const list = renderFlatListOfOptions({
+                hierarchy: this.props.options,
+                filter: { /* select all */ },
+            });
+
             options = this.getOptionRage({
-                list: renderFlatHierarchy({
-                    hierarchy: this.props.options,
-                    filter: { selected: false },
-                }),
-                range: selectedOptions
+                range: selectedOptions,
+                list
             });
         }
 
