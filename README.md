@@ -3,38 +3,64 @@ DP data discovery front-end [ALPHA]
 
 A React application for the front-end of the data discovery journeys and UIs being tested for the [ONS website](https://www.ons.gov.uk).
 
-### Getting started
+### Prequisites
+
+#### Environment
 
 You'll need both [Node](https://nodejs.org/en/) and [NPM](https://www.npmjs.com/) installed before starting. 
 
+####  Dependencies
 
-1. Download this repo:
+##### Go services
 
-`git clone git@github.com:ONSdigital/dp-dd-react-app`
-`cd dp-dd-react-app`
+Checkout `develop` branch on all _dp-dd-\*_ repos.
+- `github.com/ONSdigital/dp-dd-api-stub`
+- `github.com/ONSdigital/dp-dd-job-creator-api-stub`
+- `github.com/ONSdigital/dp-dd-frontend-controller`
 
+Checkout `dd-develop` on _dp-\*_ repos.
+- `github.com/ONSdigital/dp-frontend-renderer`
+- `github.com/ONSdigital/dp-frontend-router`
 
-2. Install the dependencies:
+##### Other dependencies
 
-Using NPM `npm install` or [Yarn](https://github.com/yarnpkg/yarn)
-`yarn`
+- [sixteens](https://github.com/ONSdigital/sixteens)
+    - use `develop` branch
+    - start with `./run.sh`
 
+- [babbage](https://github.com/ONSdigital/babbage)
+    - use `develop` branch
+    - start with `./run.sh`
 
-3. Run or build the application:
+### Run application locally
 
-Kick off local dev server with:
+Using NPM
+
+```
+npm install
+```
+  
+Using [Yarn](https://github.com/yarnpkg/yarn)
+```
+yarn
+```
+
+Start local dev server
 ```
 ./run.sh
 ```
 
-It will host the application, auto-build and reload on file changes using. By default it uses `:20040` but will accept another port as an argument, eg `PORT=7000 ./run.sh`.
+It will host the application, auto-build and reload on file changes using. 
 
-...or just build the files with
+By default app will be servered via `:20040` but will accept another port as an argument, eg `PORT=7000 ./run.sh`.
+
+
+### Building application
+
 ```
 npm run build
 ```
  
-
 ### Contributing
 
 See [CONTRIBUTING](CONTRIBUTING.md) for details.
