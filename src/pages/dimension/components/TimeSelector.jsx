@@ -140,8 +140,14 @@ class TimeSelector extends Component {
     renderRangeSelector() {
         return (
             <div>
-                <TimeRangeSelector options={this.props.options} onChange={this.onRangeChange(0)} />
-                <TimeRangeSelector options={this.props.options} onChange={this.onRangeChange(1)} />
+                <div>
+                    <h3>Start date</h3>
+                    <TimeRangeSelector options={this.props.options} onChange={this.onRangeChange(0)} />
+                </div>
+                <div>
+                    <h3>End date</h3>
+                    <TimeRangeSelector options={this.props.options} onChange={this.onRangeChange(1)} />
+                </div>
             </div>
         )
     }

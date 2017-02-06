@@ -77,7 +77,7 @@ export default class TimeRangeSelector extends Component {
             }
             selectBoxProps.options.unshift({value: null});
             const elements = [
-                <fieldset key={rangeType}>
+                <fieldset key={rangeType} className="margin-bottom--half">
                     <legend>Select a {rangeType}</legend>
                     <SelectBox {...selectBoxProps} />
                 </fieldset>
