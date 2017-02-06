@@ -25,8 +25,8 @@ export function updateOption ({options, id, update}) {
     while (!retOption && index < options.length) {
         const option = options[index];
         if (option.id == id) {
-            options[index] = Object.assign(option, options[index], update);
-            retOption = options[index];
+            options[index] = Object.assign({}, option, update);
+            retOption = option;
         }
         if (option.options) {
             retOption = updateOption({ options: option.options, id, update});
@@ -128,6 +128,7 @@ export function renderFlatListOfOptions ({ hierarchy, filter = {} }) {
     }
 
     hierarchy.forEach(element => {
+        element = Object.assign({}, element);
         const internalHierarchy = element.options || [];
         delete element.options;
         list.push(Object.assign({}, element));
