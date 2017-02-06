@@ -22,6 +22,10 @@ Checkout `dd-develop` on _dp-\*_ repos.
 - `github.com/ONSdigital/dp-frontend-renderer`
 - `github.com/ONSdigital/dp-frontend-router`
 
+Run all services with `make debug`.
+
+> You should check individual `README.md` files for more configuration and debug/build details.
+
 ##### Other dependencies
 
 - [sixteens](https://github.com/ONSdigital/sixteens)
