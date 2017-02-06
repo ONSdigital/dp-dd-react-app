@@ -5,8 +5,9 @@ import Radio from '../../../components/elements/RadioButton';
 import TimeRangeSelector from './TimeRangeSelector';
 
 import { saveDimensionOptions } from '../../dataset/actions';
-import { requestHierarchicalDimension } from '../../dataset/actions';
+import { requestHierarchical } from '../../dataset/actions';
 import { renderFlatHierarchy } from '../utils';
+import { deselectAllOptions, selectAllOptions } from '../../dataset/actions';
 
 class TimeSelector extends Component {
 
@@ -84,6 +85,7 @@ class TimeSelector extends Component {
         }));
     }
 
+
     render() {
         if (!this.props.isReady) {
             return null;
@@ -143,9 +145,13 @@ function mapStateToProps(state, ownProps) {
     const dimension = dataset.dimensions.find((dimension) => {
         return dimension.id === ownProps.dimensionID;
     });
+
     if (dimension.hierarchical && !dimension.hierarchyReady) {
-        ownProps.dispatch(requestHierarchicalDimension(dataset.id, dimension.id));
+        ownProps.dispatch(requestHierarchical(dataset.id, dimension.id));
+    } else if (dimension.hierarchyReady && !dimension.edited) {
+        this.props.dispatch(deselectAllOptions(this.props.dimensionID))
     }
+
     return {
         options: dimension.options,
         isReady: dimension.hierarchyReady
