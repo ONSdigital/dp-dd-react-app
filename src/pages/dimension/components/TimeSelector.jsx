@@ -83,6 +83,13 @@ class TimeSelector extends Component {
             dimensionID: this.props.dimensionID,
             options
         }));
+
+        this.props.router.push({
+            pathname: this.props.location.pathname,
+            query: {
+                action: 'summary'
+            }
+        })
     }
 
 
