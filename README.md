@@ -56,8 +56,16 @@ Start local dev server
 
 It will host the application, auto-build and reload on file changes using. 
 
+<strike>
 By default app will be servered via `:20040` but will accept another port as an argument, eg `PORT=7000 ./run.sh`.
+</strike>
 
+> **IMPORTANT UPDATE** 
+>   
+> Currently you app can not be run on its own.  
+> You need all above services up and running.  
+>   
+> You can run it from `localhost:20000`.
 
 ### Building application
 
