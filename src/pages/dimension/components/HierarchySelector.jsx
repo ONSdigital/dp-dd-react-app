@@ -10,18 +10,18 @@ class HierarchySelector extends Component {
     }
 
     selectAll() {
-        this.props.dispatch(selectAllOptions(this.props.dimensionID))
+        this.props.dispatch(selectAllOptions(this.props.dimensionID));
         this.props.router.push({
             pathname: this.props.location.pathname,
             query: {
                 action: 'summary'
             }
-        })
+        });
     }
 
     componentWillMount() {
         if (!this.props.dimension.edited) {
-            this.props.dispatch(deselectAllOptions(this.props.dimensionID))
+            this.props.dispatch(deselectAllOptions(this.props.dimensionID));
         }
     }
 
@@ -30,21 +30,21 @@ class HierarchySelector extends Component {
 
         return (
             <div>
-                <h2 className="margin-top margin-bottom">Customise location</h2>
-                <p>
-                    <Link to={{ pathname, query: { action: 'search' }}}>Search</Link><br />
+                <h1 className="margin-top margin-bottom">Customise location</h1>
+                <div>
+                    <h2><Link to={{pathname, query: {action: 'search'}}}>Search</Link></h2>
                     Search for specific location
-                </p>
+                </div>
 
-                <p>
-                    <Link to={{ pathname: pathname, query: { action: 'browse' }}}>Browse</Link><br />
-                    Search for location from the list
-                </p>
+                <div className="margin-top--3">
+                    <h2><Link to={{pathname: pathname, query: {action: 'browse'}}}>Browse</Link></h2>
+                    Select locations from the list
+                </div>
 
-                <p>
-                    <a onClick={this.selectAll}>All locations</a><br />
+                <div className="margin-top--3">
+                    <h2><a href="" onClick={this.selectAll}>Add all</a></h2>
                     Add all locations in the dataset
-                </p>
+                </div>
             </div>
         )
     }

@@ -10,7 +10,7 @@ class Search extends Component {
         this.search = this.search.bind(this);
         this.state = {
             term: ''
-        }
+        };
 
         this.onChange = this.onChange.bind(this);
     }
@@ -32,9 +32,6 @@ class Search extends Component {
     render () {
         return (
             <div className="margin-top--2 margin-bottom--4">
-                <div className="margin-top--2">
-                    <Link onClick={hashHistory.goBack} className="btn--everything">Back</Link>
-                </div>
                 {!this.props.options ? this.renderSearchInput() : this.renderDimensionSelector() }
             </div>
         )
@@ -43,7 +40,7 @@ class Search extends Component {
     renderSearchInput() {
         return (
             <div>
-                <h3>What location do you want?</h3>
+                <h1 className="margin-top margin-bottom">Search</h1>
                 <input className="keyword-search__input" value={this.state.value} type="search" onChange={this.onChange} />
                 <div className="margin-top--2 margin-bottom--4">
                     <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
@@ -71,7 +68,7 @@ class Search extends Component {
                     }
                 })
             }
-        }
+        };
 
         return <SimpleSelector {...selectorProps} />
     }

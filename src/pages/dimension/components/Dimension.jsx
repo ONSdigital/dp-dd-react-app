@@ -90,7 +90,7 @@ class Dimension extends Component {
 
         switch (this.props.type) {
             case 'time':
-                return <TimeSelector {...componentProps} />
+                return <TimeSelector {...componentProps} />;
             case 'classification':
             case 'geography':
                 return <HierarchySelector {...componentProps} />;
