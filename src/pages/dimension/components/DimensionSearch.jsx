@@ -15,7 +15,8 @@ class Search extends Component {
         this.onChange = this.onChange.bind(this);
     }
 
-    search () {
+    search (evt) {
+        evt.preventDefault();
         this.props.router.push({
             pathname: this.props.location.pathname,
             query: {
@@ -41,11 +42,14 @@ class Search extends Component {
         return (
             <div>
                 <h1 className="margin-top margin-bottom">Search</h1>
-                <input className="keyword-search__input" value={this.state.value} type="search" onChange={this.onChange} />
-                <div className="margin-top--2 margin-bottom--4">
-                    <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
-                        onClick={this.search}>Search</a>
-                </div>
+                <form onSubmit={this.search}>
+                    <label className="block baseline">Search for a location</label>
+                    <input className="keyword-search__input" value={this.state.value} type="search"
+                           onChange={this.onChange}/>
+                    <div className="margin-top--2 margin-bottom--4">
+                        <button type="submit" className="btn btn--primary btn--thick btn--wide btn--big margin-right--half">Search</button>
+                    </div>
+                </form>
             </div>
         )
     }
