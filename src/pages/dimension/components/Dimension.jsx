@@ -78,7 +78,6 @@ class Dimension extends Component {
             dispatch(deselectAllOptions(this.props.dimensionID));
             return;
         }
-
     }
 
     render() {
@@ -118,17 +117,26 @@ class Dimension extends Component {
                 return <SelectionSummary {...componentProps} />;
         }
 
+        let screen = null;
         switch (this.props.type) {
             case 'time':
-                return <TimeSelector {...componentProps} />;
+                screen = <TimeSelector {...componentProps} />;
+                break;
             case 'classification':
             case 'geography':
-                return <HierarchyNavigator {...componentProps} />;
+                screen = <HierarchyNavigator {...componentProps} />;
+                break;
             default:
                 componentProps.router = this.props.router;
                 componentProps.onSave =() => this.props.router.push(this.state.currentPath);
-                return <SimpleSelector {...componentProps} />;
+                screen = <SimpleSelector {...componentProps} />;
         }
+
+        if (this.props.isEdited && this.props.selectedCount > 0) {
+            return <SelectionSummary {...componentProps} />;
+        }
+
+        return screen;
     }
 }
 
@@ -146,8 +154,7 @@ function mapStateToProps(state, ownProps) {
         datasetID: ownProps.router.params.id,
         dimensionID: ownProps.router.params.dimensionID,
         hasDimensions: dataset.hasDimensions,
-        hasMetadata: dataset.hasMetadata,
-        dimension
+        hasMetadata: dataset.hasMetadata
     }
 
     if (dimension) {
@@ -156,7 +163,9 @@ function mapStateToProps(state, ownProps) {
             type: dimension.type || 'default',
             isEdited: dimension.edited || false,
             isReady: dimension.hierarchyReady || false,
-            isHierarchical: dimension.hierarchical || false
+            isHierarchical: dimension.hierarchical || false,
+            optionsCount: dimension.optionsCount,
+            selectedCount: dimension.selectedCount
         });
     }
 
