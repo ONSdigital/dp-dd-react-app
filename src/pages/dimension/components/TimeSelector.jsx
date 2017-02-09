@@ -5,9 +5,7 @@ import Radio from '../../../components/elements/RadioButton';
 import TimeRangeSelector from './TimeRangeSelector';
 
 import { saveDimensionOptions } from '../../dataset/actions';
-import { requestHierarchical } from '../../dataset/actions';
 import { renderFlatListOfOptions } from '../utils';
-import { deselectAllOptions, selectAllOptions } from '../../dataset/actions';
 
 class TimeSelector extends Component {
 
@@ -100,38 +98,6 @@ class TimeSelector extends Component {
         })
     }
 
-    componentWillMount() {
-        console.log("> componentWillMount()")
-        this.requestPropsUpdate();
-    }
-
-    componentWillReceiveProps(nextProps) {
-        console.log('> componentWillReceiveProps()')
-        this.requestPropsUpdate(nextProps);
-    }
-
-    requestPropsUpdate(props = this.props) {
-        const isEdited = props.isEdited;
-        const isReady = props.isReady;
-        const isHierarchical = props.isHierarchical;
-        const dispatch = props.dispatch;
-        const datasetId = props.datasetId;
-        const dimensionId = props.dimensionId;
-        const state = this.state;
-
-        console.log("> requestPropsUpdate()", {isEdited, isReady, isHierarchical });
-        if (!isReady && isHierarchical && !state.requestedOptionsUpdate) {
-            state.requestedOptionsUpdate = true;
-            dispatch(requestHierarchical(datasetId, dimensionId));
-        }
-
-        if (isReady && !isEdited && !state.requestedDeselectAll) {
-            state.requestedDeselectAll = true;
-            dispatch(deselectAllOptions(this.props.dimensionID))
-        }
-
-    }
-
     render() {
         if (!this.props.isReady || !this.props.isEdited) {
             return null;
@@ -199,16 +165,10 @@ function mapStateToProps(state, ownProps) {
     });
 
     const props = {
-        isEdited: dimension.edited || false,
-        isReady: dimension.hierarchyReady || false,
-        isHierarchical: dimension.hierarchical,
         options: dimension.options,
-        datasetId: dataset.id,
         dimensionId: ownProps.dimensionID
-        //timestamp: (new Date()).getTime() // todo:
     }
 
-    console.log("> mapStateToProps()", props);
     return props;
 }
 
