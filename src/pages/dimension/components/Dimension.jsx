@@ -13,11 +13,20 @@ import DimensionSearch from './DimensionSearch';
 import SelectionSummary from './SelectionSummary';
 
 import { requestMetadata, requestDimensions } from '../../dataset/actions';
+import { requestHierarchical } from '../../dataset/actions';
+import { deselectAllOptions, selectAllOptions } from '../../dataset/actions';
 
 const propTypes = {
-    type: PropTypes.string.isRequired,
+    datasetID: PropTypes.string.isRequired,
+    dimensionID: PropTypes.string,
     hasDimensions: PropTypes.bool.isRequired,
-    hasMetadata: PropTypes.bool.isRequired
+    hasMetadata: PropTypes.bool.isRequired,
+    title: PropTypes.string,
+    dimensionName: PropTypes.string,
+    type: PropTypes.string,
+    isEdited: PropTypes.bool,
+    isReady: PropTypes.bool,
+    isHierarchical: PropTypes.bool
 }
 
 class Dimension extends Component {
@@ -32,23 +41,44 @@ class Dimension extends Component {
     }
 
     componentWillMount() {
-        const dispatch = this.props.dispatch;
-        if (!this.props.hasMetadata) {
-            this.state.initialFetchRequired = true;
-            return dispatch(requestMetadata(this.props.params.id));
-        }
-        if (!this.props.hasDimensions) {
-            dispatch(requestDimensions(this.props.params.id));
-        }
+        this.requestDimensionUpdate();
     }
 
-    shouldComponentUpdate(nextProps) {
-        if (this.state.initialFetchRequired) {
-            this.state.initialFetchRequired = false;
-            nextProps.dispatch(requestDimensions(this.props.params.id));
-            return false;
+    componentWillReceiveProps(nextProps) {
+        this.requestDimensionUpdate(nextProps);
+    }
+
+    requestDimensionUpdate(props = this.props) {
+        const isEdited = props.isEdited;
+        const isReady = props.isReady;
+        const isHierarchical = props.isHierarchical;
+        const dispatch = props.dispatch;
+        const datasetID = props.datasetID;
+        const dimensionID = props.dimensionID;
+        const state = this.state;
+
+        if (!props.hasMetadata) {
+            dispatch(requestMetadata(this.props.params.id));
+            return;
         }
-        return true;
+
+        if (!props.hasDimensions) {
+            dispatch(requestDimensions(this.props.params.id));
+            return;
+        }
+
+        if (!isReady && isHierarchical && !state.requestedOptionsUpdate) {
+            state.requestedOptionsUpdate = true;
+            dispatch(requestHierarchical(datasetID, dimensionID));
+            return;
+        }
+
+        if (isReady && !isEdited && !state.requestedDeselectAll) {
+            state.requestedDeselectAll = true;
+            dispatch(deselectAllOptions(this.props.dimensionID));
+            return;
+        }
+
     }
 
     render() {
@@ -59,7 +89,7 @@ class Dimension extends Component {
         const parentPath = this.state.currentPath;
         return (
             <div className="wrapper">
-                <DocumentTitle title={"Customise " + this.props.dimension.name} />
+                <DocumentTitle title={"Customise " + this.props.dimensionName} />
                 <div className="margin-top--2">
                     <Link to={parentPath} className="btn--everything">Back</Link>
                 </div>
@@ -105,18 +135,32 @@ class Dimension extends Component {
 Dimension.propTypes = propTypes;
 
 function mapStateToProps(state, ownProps) {
-    const hasDimensions = state.dataset.hasDimensions;
-    const dimension = !hasDimensions ? null : state.dataset.dimensions.find((dimension) => {
+    const dataset = state.dataset;
+    const hasDimensions = dataset.hasDimensions;
+    const dimension = !hasDimensions ? null : dataset.dimensions.find((dimension) => {
         return dimension.id === ownProps.params.dimensionID;
     });
 
-    return {
-        type: hasDimensions && dimension ? dimension.type : 'default',
-        title: state.dataset.title,
-        hasDimensions: state.dataset.hasDimensions,
-        hasMetadata: state.dataset.hasMetadata,
+    const props = {
+        title: dataset.title,
+        datasetID: ownProps.router.params.id,
+        dimensionID: ownProps.router.params.dimensionID,
+        hasDimensions: dataset.hasDimensions,
+        hasMetadata: dataset.hasMetadata,
         dimension
     }
+
+    if (dimension) {
+        Object.assign(props, {
+            dimensionName: dimension.name,
+            type: dimension.type || 'default',
+            isEdited: dimension.edited || false,
+            isReady: dimension.hierarchyReady || false,
+            isHierarchical: dimension.hierarchical || false
+        });
+    }
+
+    return props;
 }
 
 export default connect(mapStateToProps)(Dimension);
