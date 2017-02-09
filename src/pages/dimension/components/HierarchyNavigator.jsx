@@ -19,12 +19,6 @@ class HierarchyNavigator extends Component {
         });
     }
 
-    componentWillMount() {
-        if (!this.props.dimension.edited) {
-            this.props.dispatch(deselectAllOptions(this.props.dimensionID));
-        }
-    }
-
     render () {
         const pathname = this.props.location.pathname;
 
