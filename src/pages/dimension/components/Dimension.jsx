@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import config from '../../../config';
 import DocumentTitle from '../../../components/elements/DocumentTitle';
 
-import HierarchySelector from '../../dimension/components/HierarchySelector';
+import HierarchyNavigator from '../../dimension/components/HierarchyNavigator';
 import SimpleSelector from './SimpleSelector';
 import TimeSelector from './TimeSelector';
 
@@ -123,7 +123,7 @@ class Dimension extends Component {
                 return <TimeSelector {...componentProps} />;
             case 'classification':
             case 'geography':
-                return <HierarchySelector {...componentProps} />;
+                return <HierarchyNavigator {...componentProps} />;
             default:
                 componentProps.router = this.props.router;
                 componentProps.onSave =() => this.props.router.push(this.state.currentPath);

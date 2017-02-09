@@ -3,7 +3,7 @@ import { Link, hashHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { deselectAllOptions, selectAllOptions } from '../../dataset/actions';
 
-class HierarchySelector extends Component {
+class HierarchyNavigator extends Component {
     constructor(props) {
         super(props);
         this.selectAll = this.selectAll.bind(this);
@@ -61,4 +61,4 @@ function mapStateToProps(state, ownProps) {
     }
 }
 
-export default connect(mapStateToProps)(HierarchySelector)
+export default connect(mapStateToProps)(HierarchyNavigator)
