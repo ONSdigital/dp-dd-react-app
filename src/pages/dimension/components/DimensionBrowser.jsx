@@ -50,9 +50,6 @@ class Browser extends Component {
         const optionsAreParents = options instanceof Array && options.length > 0 && !!options[0].options;
         return (
             <div className="margin-bottom--8">
-                <div className="margin-top--2">
-                    <Link onClick={hashHistory.goBack} className="btn--everything">Back</Link>
-                </div>
                 {(() => {return !optionsAreParents
                     ? this.renderDimensionSelector()
                     : this.renderOptions()
