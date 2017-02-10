@@ -41,6 +41,7 @@ class TimeSelector extends Component {
 
         list.forEach((item, index) => {
             if (startIndex > -1 && endIndex == -1) {
+                console.log(item.id, item.id, startIndex, endIndex);
                 retOptions.push({ id: item.id, selected: true });
             }
 
@@ -48,15 +49,17 @@ class TimeSelector extends Component {
                 if (rangeItem.id === item.id) {
                     if (startIndex === -1) {
                         startIndex = index;
-                        retOptions.push({ id: item.id, selected: true })
+                        retOptions.push({ id: item.id, selected: true });
                     } else if (startIndex > 1) {
                         endIndex = index;
                         retOptions.push({ id: item.id, selected: true });
                     }
+                    console.log(item.id, rangeItem.id, startIndex, endIndex);
                 }
             });
-        })
+        });
 
+        console.log('Found range:', retOptions);
         return retOptions;
     }
 
