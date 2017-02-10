@@ -33,7 +33,7 @@ class Summary extends Component {
         return (
             <div className="margin-bottom--8">
                 <div>
-                    <h2 className="margin-top margin-bottom--double">Your location selection</h2>
+                    <h2 className="margin-top margin-bottom--double">Your selection</h2>
                     <ul className="list--neutral">
                     {options.map(option => (
                         this.renderSummaryItemParent(option)
