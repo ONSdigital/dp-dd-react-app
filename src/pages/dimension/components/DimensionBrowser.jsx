@@ -17,7 +17,7 @@ const propTypes = {
     options: PropTypes.array.isRequired
 }
 
-class Browser extends Component {
+class DimensionBrowser extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -51,6 +51,10 @@ class Browser extends Component {
         const optionsAreParents = options instanceof Array && options.length > 0 && !!options[0].options;
         const isNested = !!this.props.location.query.id;
 
+        if (!this.props.hasDimensions) {
+            return null;
+        }
+
         if (optionsAreParents) {
             if (!isNested) {
                 return this.renderOptions();
@@ -59,7 +63,6 @@ class Browser extends Component {
 
                 // render this for geography
                 // this.renderDimensionSelector()
-
                 return this.renderHierarchySelector();
             }
         }
@@ -68,29 +71,17 @@ class Browser extends Component {
     }
 
     renderHierarchySelector() {
-        return <HierarchySelector />
+        const hierarchyProps = this.getChildComponentProps();
+        hierarchyProps.option = this.props.options.find(option => {
+            return option.id === this.props.location.query.id;
+        });
+        debugger;
+        return <HierarchySelector {...hierarchyProps} />
     }
 
     renderDimensionSelector() {
-        if (!this.props.hasDimensions) {
-            return null;
-        }
-
-        const selectorProps = {
-            router: this.props.router,
-            datasetID: this.props.params.id,
-            dimensionID: this.props.params.dimensionID,
-            options: this.props.options,
-            onSave: () => {
-                this.props.router.push({
-                    pathname: this.props.location.pathname,
-                    query: {
-                        action: 'summary'
-                    }
-                })
-            }
-        }
-
+        const selectorProps = this.getChildComponentProps();
+        selectorProps.options = this.props.options;
         return <SimpleSelector {...selectorProps} />
     }
 
@@ -127,9 +118,26 @@ class Browser extends Component {
             </div>
         )
     }
+
+    getChildComponentProps() {
+        return {
+            router: this.props.router,
+            datasetID: this.props.params.id,
+            dimensionID: this.props.params.dimensionID,
+            onSave: () => {
+                this.props.router.push({
+                    pathname: this.props.location.pathname,
+                    query: {
+                        action: 'summary'
+                    }
+                })
+            }
+        }
+    }
+
 }
 
-Browser.propTypes = propTypes;
+DimensionBrowser.propTypes = propTypes;
 
 function mapStateToProps(state, ownProps) {
     const dataset = state.dataset;
@@ -149,4 +157,4 @@ function mapStateToProps(state, ownProps) {
     }
 }
 
-export default connect(mapStateToProps)(Browser);
+export default connect(mapStateToProps)(DimensionBrowser);
