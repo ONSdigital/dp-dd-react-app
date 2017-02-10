@@ -35,9 +35,9 @@ class Summary extends Component {
                 <div>
                     <h2 className="margin-top margin-bottom--double">Your selection</h2>
                     <ul className="list--neutral">
-                    {options.map(option => (
-                        this.renderSummaryItemParent(option)
-                    ))}
+                    {options.map(option => {
+                        return this.renderSummaryItemParent(option);
+                    })}
                     </ul>
                 </div>
 
@@ -53,7 +53,7 @@ class Summary extends Component {
         )
     }
 
-    renderSummaryItemParent({ name, id, options}) {
+    renderSummaryItemParent({ name, id, options = []}) {
         if (options.length === 0) {
             return null;
         }

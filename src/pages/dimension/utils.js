@@ -60,11 +60,11 @@ export function filterOptions({options, filter = {}}) {
     const keys = Object.keys(filter);
     return options.filter(option => {
         let matches = true;
-        keys.forEach( key => {
+        keys.forEach(key => {
             if (option[key] !== filter[key]) {
                 matches = false;
             }
-        })
+        });
         return matches;
     }).map(option => {
         option = Object.assign({}, option);
@@ -100,25 +100,56 @@ export function searchOptions({options, term = ''}) {
     return list;
 }
 
-export function renderFlatHierarchy ({ hierarchy, filter = {} }) {
-    const list = [];
+/**
+ * @param hierarchy dimension options or dimension option options
+ * @param filter option field with value
+ * @param depth
+ */
+export function renderFlatHierarchy ({ hierarchy, filter = {}, depth = 0 }) {
+    const selectedOptions = [];
     if (!hierarchy instanceof Array) {
         hierarchy = [hierarchy];
     }
 
+    if (depth === 0) {
+        const parent = { id: "hierarchy-root", name: "Top Level", options: [] };
+        parent.options = filterOptions({
+            options: hierarchy,
+            filter: { selected: true }
+        }).map(function (option) {
+            delete option.options;
+            return option;
+        });
+
+        if (parent.options.length > 0) {
+            selectedOptions.push(parent);
+        }
+    }
+
     hierarchy.forEach(element => {
+
+        if (element.selected)  {
+            const option = Object.assign({}, element)
+            delete option.options;
+            selectedOptions.push(option);
+        }
+
         if (element.options) {
-            list.push(Object.assign({}, element, {
-                options: filterOptions({options: element.options, filter})
+            selectedOptions.push(Object.assign({}, element, {
+                options: filterOptions({
+                    options: element.options,
+                    filter: { selected: true }
+                })
             }));
 
-            Array.prototype.push.apply(list, renderFlatHierarchy({
+            Array.prototype.push.apply(selectedOptions, renderFlatHierarchy({
                 hierarchy: element.options,
-                filter
+                filter,
+                depth: depth + 1
             }));
         }
     })
-    return list;
+    return selectedOptions;
 }
 
 export function renderFlatListOfOptions ({ hierarchy, filter = {} }) {

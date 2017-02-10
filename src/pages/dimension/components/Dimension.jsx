@@ -33,10 +33,12 @@ class Dimension extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            initialFetchRequired: false,
             parentPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/`,
             currentPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/dimensions`,
-            downloadPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/download`
+            downloadPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/download`,
+            requestedOptionsUpdate: false,
+            requestedDeselectAll: false
+
         }
     }
 
@@ -81,7 +83,10 @@ class Dimension extends Component {
     }
 
     render() {
-        if (!this.props.hasDimensions) {
+        if (!this.props.hasDimensions || !this.props.isReady) {
+            return null;
+        }
+        if (this.props.isReady && !this.props.isEdited) {
             return null;
         }
 
