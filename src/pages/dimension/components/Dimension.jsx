@@ -132,7 +132,7 @@ class Dimension extends Component {
                 screen = <SimpleSelector {...componentProps} />;
         }
 
-        if (this.props.isEdited && this.props.selectedCount > 0) {
+        if (this.props.isEdited && this.props.selectedCount > 0 && action !== 'customise') {
             return <SelectionSummary {...componentProps} />;
         }
 
