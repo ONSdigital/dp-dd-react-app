@@ -3,11 +3,12 @@ import { Link, hashHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { findOptionsByParentID, findOptionsByType } from '../utils';
 import SimpleSelector from './SimpleSelector';
+import HierarchySelector from './HierarchySelector';
+
 import {
     requestMetadata,
     requestDimensions
 } from '../../dataset/actions';
-
 
 const propTypes = {
     dimensionID: PropTypes.string.isRequired,
@@ -48,14 +49,26 @@ class Browser extends Component {
     render () {
         const options = this.props.options;
         const optionsAreParents = options instanceof Array && options.length > 0 && !!options[0].options;
-        return (
-            <div className="margin-bottom--8">
-                {(() => {return !optionsAreParents
-                    ? this.renderDimensionSelector()
-                    : this.renderOptions()
-                })()}
-            </div>
-        )
+        const isNested = !!this.props.location.query.id;
+
+        if (optionsAreParents) {
+            if (!isNested) {
+                return this.renderOptions();
+            } else {
+
+
+                // render this for geography
+                // this.renderDimensionSelector()
+
+                return this.renderHierarchySelector();
+            }
+        }
+
+        return null;
+    }
+
+    renderHierarchySelector() {
+        return <HierarchySelector />
     }
 
     renderDimensionSelector() {
@@ -99,7 +112,6 @@ class Browser extends Component {
                 label += ` (${option.options.length})`;
             }
             let info = option.options && option.options.length > 0 ?`For example ${option.options[0].name}` : '';
-
             return (
                 <div key={index} className="margin-top">
                     <Link to={{ pathname, query }}>{label}</Link><br />
