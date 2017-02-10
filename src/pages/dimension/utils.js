@@ -38,17 +38,17 @@ export function updateOption ({options, id, update}) {
     return retOption;
 }
 
-export function findOptionsByParentID ({options, id}) {
+export function findOptionByID ({options, id}) {
     let retOptions = null;
     let index = 0;
 
     while (!retOptions && index < options.length) {
         const option = options[index];
         if (option.id === id) {
-            return option.options;
+            return option;
         }
         if (option.options) {
-            retOptions = findOptionsByParentID({ options: option.options, id });
+            retOptions = findOptionByID({ options: option.options, id });
         }
         index++;
     }

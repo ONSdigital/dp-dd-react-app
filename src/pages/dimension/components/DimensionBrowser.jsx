@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link, hashHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { findOptionsByParentID, findOptionsByType } from '../utils';
+import { findOptionByID, findOptionsByType } from '../utils';
 import SimpleSelector from './SimpleSelector';
 import HierarchySelector from './HierarchySelector';
 
@@ -14,7 +14,8 @@ const propTypes = {
     dimensionID: PropTypes.string.isRequired,
     datasetID: PropTypes.string.isRequired,
     location: PropTypes.object.isRequired,
-    options: PropTypes.array.isRequired
+    option: PropTypes.object,
+    options: PropTypes.array
 }
 
 class DimensionBrowser extends Component {
@@ -60,7 +61,6 @@ class DimensionBrowser extends Component {
                 return this.renderOptions();
             } else {
 
-
                 // render this for geography
                 // this.renderDimensionSelector()
                 return this.renderHierarchySelector();
@@ -72,10 +72,7 @@ class DimensionBrowser extends Component {
 
     renderHierarchySelector() {
         const hierarchyProps = this.getChildComponentProps();
-        hierarchyProps.option = this.props.options.find(option => {
-            return option.id === this.props.location.query.id;
-        });
-        debugger;
+        hierarchyProps.option = this.props.option;
         return <HierarchySelector {...hierarchyProps} />
     }
 
@@ -146,15 +143,12 @@ function mapStateToProps(state, ownProps) {
         return dimension.id === ownProps.dimensionID;
     });
 
-    const options = optionID
-        ? findOptionsByParentID({ options: dimension.options, id: optionID })
-        : dimension.options;
-
-    return {
-        dimension,
-        options: options || [],
-        optionsCount: dimension.optionsCount
-    }
+    const props = {};
+    props.dimension = dimension;
+    props.optionsCount = dimension.optionsCount;
+    props.options = dimension.options;
+    props.option = optionID ? findOptionByID({ options: dimension.options, id: optionID }) : null;
+    return props;
 }
 
 export default connect(mapStateToProps)(DimensionBrowser);
