@@ -43,7 +43,7 @@ class Summary extends Component {
 
                 <div className="margin-bottom">
                     <Link to={{pathname: currentPath, query: { action: 'customise' }}}
-                          className="btn--everything">Add more locations</Link>
+                          className="btn--everything">Add more</Link>
                 </div>
                 <div className="margin-bottom--double">
                     <Link to={dimensionsPath}
