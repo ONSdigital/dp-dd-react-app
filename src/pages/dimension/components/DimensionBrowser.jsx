@@ -109,7 +109,7 @@ class DimensionBrowser extends Component {
         })
 
         return (
-            <div>
+            <div className="margin-bottom--8">
                 <h2 className="margin-top margin-bottom">Customise location</h2>
                 {optionElements}
             </div>
