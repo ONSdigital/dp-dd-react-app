@@ -14,6 +14,7 @@ class HierarchySelector extends Component {
         this.state = {
             allEnabled: false,
             allDisabled: false,
+            errorMessage: "",
             cachedOptions: renderFlatListOfOptions({
                 hierarchy: props.option,
                 filter: {}
@@ -116,16 +117,24 @@ class HierarchySelector extends Component {
     render() {
         const option = this.props.option;
         const {allEnabled, allDisabled} = this.getEnabledStatus();
+        const errorMessage = this.state.errorMessage;
+        const errorClass = (errorMessage.length > 0) && "error__group";
+
 
         return (
-            <form className="form">
+            <form className="form margin-bottom--8">
                 <h1 className="margin-top--half margin-bottom">Select {option.name}</h1>
                 <div className="margin-bottom--2">
                     <ToggleLink label="Enable all" enabled={!allEnabled} onClick={this.toggleAll(true)} />
                     <ToggleLink label="Disable all" enabled={!allDisabled} onClick={this.toggleAll(false)} />
                 </div>
 
-                <div className="margin-top--4 margin-bottom--8">
+                <div className={`${errorClass}`}>
+                    <div className={(errorMessage.length > 0) && "error__message"}>{errorMessage}</div>
+
+                </div>
+
+                <div >
 
                     <ul className="hierarchy">
                         {option.options.map(option => {
