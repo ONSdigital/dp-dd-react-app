@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import { hashHistory } from 'react-router';
+
 import Checkbox from '../../../components/elements/Checkbox';
 import ToggleLink from '../../../components/elements/ToggleLink';
 import { renderFlatListOfOptions } from '../utils';
+import { saveDimensionOptions } from '../../dataset/actions';
 
-export default class HierarchySelector extends Component {
+class HierarchySelector extends Component {
     constructor(props) {
         super(props);
 
@@ -18,6 +21,21 @@ export default class HierarchySelector extends Component {
         }
 
         this.cacheSelectedOption = this.cacheSelectedOption.bind(this);
+        this.saveSelectedOptions = this.saveSelectedOptions.bind(this);
+    }
+
+    saveSelectedOptions() {
+        if (!this.isSelectionValid()) {
+            this.setState({errorMessage: "Select at least one option"});
+            return;
+        }
+
+        this.props.dispatch(saveDimensionOptions({
+            dimensionID: this.props.dimensionID,
+            options: this.state.cachedOptions
+        }));
+
+        this.props.onSave();
     }
 
     cacheSelectedOption({id, checked = true}) {
@@ -116,10 +134,12 @@ export default class HierarchySelector extends Component {
                     </ul>
 
                     <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
-                       onClick={this.saveSelections}>Save selection</a>
+                       onClick={this.saveSelectedOptions}>Save selection</a>
                     <a className="btn btn--secondary btn--thick btn--wide btn--big" onClick={hashHistory.goBack}>Cancel</a>
                 </div>
             </form>
         )
     }
 }
+
+export default connect(null)(HierarchySelector);
