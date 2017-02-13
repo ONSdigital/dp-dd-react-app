@@ -1,19 +1,37 @@
 import React, {Component} from 'react';
+import Checkbox from '../../../components/elements/Checkbox';
 
 export default class HierarchySelector extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            cachedOptions: []
+        }
+
+        this.cacheSelection = this.cacheSelection.bind(this);
+    }
+
+    cacheSelection({id, checked = true}) {
+        console.log(id, checked);
     }
 
     renderElement(option) {
         const key = option.id;
-        const id = option.id;
+        const checkboxProps = {
+            id: option.id,
+            label: option.name,
+            value: option.name,
+            onChange: this.cacheSelection,
+            checked: option.selected,
+            key
+        }
+
         return (
             <li className={"hierarchy--" + (option.options ? "children" : "option")} key={key}>
-                <input className="checkbox__input" type="checkbox" id={id} name="checkbox" value="value-01" />
-                <label className="font-size--19 checkbox__label" htmlFor={id}>
-                    {option.name}
-                </label>
+                <Checkbox {...checkboxProps} />
+
+
                 {!option.options || (
                     <ul className="hierarchy">
                         {option.options.map(option => {
