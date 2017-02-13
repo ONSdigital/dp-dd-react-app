@@ -202,6 +202,14 @@ function parseDimensions(datasetID, dimensionsJSON) {
     function parseOptions(options, selectedStatus = true) {
         return options.map(option => {
             optionsCount ++;
+
+            // todo: we should always use code, requires refactoring across whole app
+            if (option.code) {
+                option.id = option.code;
+            } else {
+                console.error('Code is missing');
+            }
+
             option.selected = option.selected === false ? false : selectedStatus;
             selectedCount += option.selected ? 1 : 0;
             if (option.options && option.options.length > 0) {
