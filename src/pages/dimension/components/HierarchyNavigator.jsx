@@ -23,8 +23,8 @@ class HierarchyNavigator extends Component {
         const pathname = this.props.location.pathname;
 
         return (
-            <div>
-                <h1 className="margin-top margin-bottom">Customise location</h1>
+            <div className="margin-bottom--8">
+                <h1 className="margin-top margin-bottom--double">How do you want to customise?</h1>
                 <div>
                     <h2><Link to={{pathname, query: {action: 'search'}}}>Search</Link></h2>
                     Search for specific location
