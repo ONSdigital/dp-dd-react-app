@@ -83,11 +83,13 @@ class Dimension extends Component {
     }
 
     render() {
+
         if (!this.props.hasDimensions || !this.props.isReady) {
             return null;
         }
         if (this.props.isReady && !this.props.isEdited) {
             return null;
+
         }
 
         const parentPath = this.state.currentPath;
@@ -167,7 +169,7 @@ function mapStateToProps(state, ownProps) {
             dimensionName: dimension.name,
             type: dimension.type || 'default',
             isEdited: dimension.edited || false,
-            isReady: dimension.hierarchyReady || false,
+            isReady: !dimension.hierarchical ? true : dimension.hierarchyReady || false,
             isHierarchical: dimension.hierarchical || false,
             optionsCount: dimension.optionsCount,
             selectedCount: dimension.selectedCount
