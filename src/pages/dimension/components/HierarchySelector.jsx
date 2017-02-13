@@ -9,28 +9,39 @@ export default class HierarchySelector extends Component {
             cachedOptions: []
         }
 
-        this.cacheSelection = this.cacheSelection.bind(this);
+        this.cacheSelectedOption = this.cacheSelectedOption.bind(this);
     }
 
-    cacheSelection({id, checked = true}) {
-        console.log(id, checked);
+    cacheSelectedOption({id, checked = true}) {
+        const cachedOptions = this.state.cachedOptions.slice(0);
+        const index = cachedOptions.indexOf(id);
+        const cached = index > -1;
+
+        if (cached && !checked) {
+            cachedOptions.splice(index, 1);
+        }
+        if (!cached && checked) {
+            cachedOptions.push(id);
+        }
+
+        this.setState({ cachedOptions });
     }
 
     renderElement(option) {
         const key = option.id;
+        const cachedOptions = this.state.cachedOptions;
         const checkboxProps = {
             id: option.id,
             label: option.name,
             value: option.name,
-            onChange: this.cacheSelection,
-            checked: option.selected,
+            onChange: this.cacheSelectedOption,
+            checked: cachedOptions.indexOf(option.id) > - 1,
             key
         }
 
         return (
             <li className={"hierarchy--" + (option.options ? "children" : "option")} key={key}>
                 <Checkbox {...checkboxProps} />
-
 
                 {!option.options || (
                     <ul className="hierarchy">
