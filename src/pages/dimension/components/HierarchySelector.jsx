@@ -9,13 +9,13 @@ export default class HierarchySelector extends Component {
         const key = option.id;
         const id = option.id;
         return (
-            <li className="nested-list--option" key={key}>
+            <li className={"hierarchy--" + (option.options ? "children" : "option")} key={key}>
                 <input className="checkbox__input" type="checkbox" id={id} name="checkbox" value="value-01" />
                 <label className="font-size--19 checkbox__label" htmlFor={id}>
                     {option.name}
                 </label>
                 {!option.options || (
-                    <ul className="nested-list">
+                    <ul className="hierarchy">
                         {option.options.map(option => {
                             return this.renderElement(option)
                         })}
@@ -29,9 +29,9 @@ export default class HierarchySelector extends Component {
         const option = this.props.option;
 
         return (
-            <fieldset className="hierarchy">
+            <fieldset>
                 <legend>Select {option.name}</legend>
-                <ul className="nested-list">
+                <ul className="hierarchy">
                     {option.options.map(option => {
                         return this.renderElement(option)
                     })}
