@@ -154,7 +154,7 @@ export function renderFlatHierarchy ({ hierarchy, filter = {}, depth = 0 }) {
 
 export function renderFlatListOfOptions ({ hierarchy, filter = {} }) {
     const list = [];
-    if (!hierarchy instanceof Array) {
+    if (!(hierarchy instanceof Array)) {
         hierarchy = [hierarchy];
     }
 
