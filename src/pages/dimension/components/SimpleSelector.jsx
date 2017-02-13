@@ -22,7 +22,7 @@ const propTypes = {
     onSave: PropTypes.func.isRequired
 };
 
-class DimensionSelector extends Component {
+class SimpleSelector extends Component {
     constructor(props) {
         super(props);
 
@@ -149,7 +149,7 @@ class DimensionSelector extends Component {
     }
 }
 
-DimensionSelector.propTypes = propTypes;
+SimpleSelector.propTypes = propTypes;
 
 function mapStateToProps(state, ownProps) {
     const dimension = state.dataset.dimensions.find((dimension) => {
@@ -164,4 +164,4 @@ function mapStateToProps(state, ownProps) {
     }
 }
 
-export default connect(mapStateToProps)(DimensionSelector)
+export default connect(mapStateToProps)(SimpleSelector)
