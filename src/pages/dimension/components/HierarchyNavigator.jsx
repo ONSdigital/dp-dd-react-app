@@ -21,10 +21,11 @@ class HierarchyNavigator extends Component {
 
     render () {
         const pathname = this.props.location.pathname;
+        const dimensionName = this.props.dimensionName;
 
         return (
             <div className="margin-bottom--8">
-                <h1 className="margin-top margin-bottom--double">How do you want to customise?</h1>
+                <h2 className="margin-top margin-bottom--double">Customise {dimensionName}</h2>
                 <div>
                     <h2><Link to={{pathname, query: {action: 'search'}}}>Search</Link></h2>
                     Search for specific location
@@ -44,15 +45,4 @@ class HierarchyNavigator extends Component {
     }
 }
 
-function mapStateToProps(state, ownProps) {
-    const dimension = state.dataset.dimensions.find((dimension) => {
-        return dimension.id === ownProps.dimensionID;
-    });
-
-    return {
-        hasDimension: state.dataset.hasDimensions,
-        dimension
-    }
-}
-
-export default connect(mapStateToProps)(HierarchyNavigator)
+export default connect(null)(HierarchyNavigator);
