@@ -111,7 +111,7 @@ class Dimension extends Component {
             datasetID: this.props.params.id,
             dimensionID: this.props.params.dimensionID,
             location: this.props.location
-        }
+        };
         const action = this.props.location.query.action;
         const componentProps = Object.assign({}, this.props, defaultProps);
 
@@ -162,7 +162,7 @@ function mapStateToProps(state, ownProps) {
         dimensionID: ownProps.router.params.dimensionID,
         hasDimensions: dataset.hasDimensions,
         hasMetadata: dataset.hasMetadata
-    }
+    };
 
     if (dimension) {
         Object.assign(props, {
