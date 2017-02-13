@@ -38,6 +38,15 @@ class Search extends Component {
         )
     }
 
+    renderNoResults() {
+        return (
+            <div>
+                <h1 className="margin-top margin-bottom">No results found</h1>
+                <p>Please try <Link to={this.props.location.pathname + `?action=search`}>searching again</Link> using different words.</p>
+            </div>
+        )
+    }
+
     renderSearchInput() {
         return (
             <div>
@@ -57,6 +66,10 @@ class Search extends Component {
     renderDimensionSelector() {
         if (!this.props.hasDimensions) {
             return null;
+        }
+
+        if (!this.props.options.length) {
+            return this.renderNoResults();
         }
 
         const selectorProps = {
