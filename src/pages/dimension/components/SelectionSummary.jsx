@@ -7,7 +7,7 @@ import { saveDimensionOptions } from '../../dataset/actions';
 
 class Summary extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.removeOptions = this.removeOptions.bind(this);
     }
 
@@ -19,16 +19,16 @@ class Summary extends Component {
             options = options.map(option => {
                 option.selected = false;
                 return option;
-            })
+            });
             dispatch(saveDimensionOptions({ dimensionID, options }));
         }
     }
 
     render () {
-        const dimensionID = this.props.dimensionID;
+        const datasetID = this.props.datasetID;
         const options = this.props.options;
         const currentPath = this.props.location.pathname;
-        const dimensionsPath = `${config.BASE_PATH}/datasets/${dimensionID}/dimensions`;
+        const dimensionsPath = `${config.BASE_PATH}/datasets/${datasetID}/dimensions`;
 
         return (
             <div className="margin-bottom--8">
