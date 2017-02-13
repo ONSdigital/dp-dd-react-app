@@ -9,10 +9,11 @@
     }
 
     &--children {
+        padding: 0;
 
-        padding-top: 0;
-        padding-bottom: 0;
-        padding-left: 0;
+        & .hierarchy--children {
+            padding: 6px 0 10px 16px;
+        }
 
         ul {
             border-left: 3px solid #D0D2D3;

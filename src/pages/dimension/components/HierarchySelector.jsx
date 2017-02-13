@@ -84,6 +84,45 @@ class HierarchySelector extends Component {
         }
     }
 
+    render() {
+
+        const option = this.props.option;
+        const {allEnabled, allDisabled} = this.getEnabledStatus();
+        const errorMessage = this.state.errorMessage;
+        const errorClass = (errorMessage.length > 0) && "error__group";
+
+
+        return (
+            <form className="form margin-bottom--8">
+                <h1 className="margin-top--half margin-bottom">Select {option.name}</h1>
+                <div className="margin-bottom--2">
+                    <ToggleLink label="Enable all" enabled={!allEnabled} onClick={this.toggleAll(true)} />
+                    <ToggleLink label="Disable all" enabled={!allDisabled} onClick={this.toggleAll(false)} />
+                </div>
+
+                <div className={`${errorClass}`}>
+                    <div className={(errorMessage.length > 0) && "error__message"}>{errorMessage}</div>
+
+                </div>
+
+                <div>
+                    <ul className="hierarchy">{this.renderElementList(option)}</ul>
+                    <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
+                       onClick={this.saveSelectedOptions}>Save selection</a>
+                    <a className="btn btn--secondary btn--thick btn--wide btn--big" onClick={hashHistory.goBack}>Cancel</a>
+                </div>
+            </form>
+        )
+    }
+
+    renderElementList(options) {
+        if (!(options instanceof Array)) {
+            options = [options]
+        }
+
+        return options.map(option => this.renderElement(option));
+    }
+
     renderElement(option) {
         const key = option.id;
         const cachedOption = this.state.cachedOptions.find((optionItem) => {
@@ -104,49 +143,13 @@ class HierarchySelector extends Component {
                 <Checkbox {...checkboxProps} />
 
                 {!option.options || (
-                    <ul className="hierarchy">
+                    <ul>
                         {option.options.map(option => {
                             return this.renderElement(option)
                         })}
                     </ul>
                 )}
             </li>
-        )
-    }
-
-    render() {
-        const option = this.props.option;
-        const {allEnabled, allDisabled} = this.getEnabledStatus();
-        const errorMessage = this.state.errorMessage;
-        const errorClass = (errorMessage.length > 0) && "error__group";
-
-
-        return (
-            <form className="form margin-bottom--8">
-                <h1 className="margin-top--half margin-bottom">Select {option.name}</h1>
-                <div className="margin-bottom--2">
-                    <ToggleLink label="Enable all" enabled={!allEnabled} onClick={this.toggleAll(true)} />
-                    <ToggleLink label="Disable all" enabled={!allDisabled} onClick={this.toggleAll(false)} />
-                </div>
-
-                <div className={`${errorClass}`}>
-                    <div className={(errorMessage.length > 0) && "error__message"}>{errorMessage}</div>
-
-                </div>
-
-                <div >
-
-                    <ul className="hierarchy">
-                        {option.options.map(option => {
-                            return this.renderElement(option)
-                        })}
-                    </ul>
-
-                    <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
-                       onClick={this.saveSelectedOptions}>Save selection</a>
-                    <a className="btn btn--secondary btn--thick btn--wide btn--big" onClick={hashHistory.goBack}>Cancel</a>
-                </div>
-            </form>
         )
     }
 }
