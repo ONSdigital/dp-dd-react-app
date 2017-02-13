@@ -1,5 +1,7 @@
 .hierarchy {
 
+    padding-left: 0;
+
     li {
         list-style: none;
         margin: 0;
@@ -10,12 +12,14 @@
 
         padding-top: 0;
         padding-bottom: 0;
+        padding-left: 22px;
 
         ul {
             border-left: 3px solid #D0D2D3;
             margin-bottom: 0;
             margin-top: 0;
-            padding-top: 16px
+            padding-top: 16px;
+            padding-left: 16px;
         }
     }
 }
