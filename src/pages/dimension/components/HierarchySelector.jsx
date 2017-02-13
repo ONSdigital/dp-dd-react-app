@@ -2,40 +2,56 @@ import React, {Component} from 'react';
 import { hashHistory } from 'react-router';
 import Checkbox from '../../../components/elements/Checkbox';
 import ToggleLink from '../../../components/elements/ToggleLink';
+import { renderFlatListOfOptions } from '../utils';
 
 export default class HierarchySelector extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            cachedOptions: [],
             allEnabled: false,
-            allDisabled: false
+            allDisabled: false,
+            cachedOptions: renderFlatListOfOptions({
+                hierarchy: props.option,
+                filter: {}
+            })
         }
 
         this.cacheSelectedOption = this.cacheSelectedOption.bind(this);
     }
 
     cacheSelectedOption({id, checked = true}) {
-        const cachedOptions = this.state.cachedOptions.slice(0);
-        const index = cachedOptions.indexOf(id);
-        const cached = index > -1;
+        const cachedOptions = this.state.cachedOptions.map((option) => {
+            if (option.id === id) {
+                option.selected = checked;
+            }
+            return option;
+        });
 
-        if (cached && !checked) {
-            cachedOptions.splice(index, 1);
-        }
-        if (!cached && checked) {
-            cachedOptions.push(id);
-        }
-
-        this.setState({ cachedOptions });
+        const errorMessage = this.isSelectionValid() ? "" : this.state.errorMessage;
+        const {allEnabled, allDisabled} = this.getEnabledStatus();
+        this.setState({ cachedOptions, allEnabled, allDisabled, errorMessage })
     }
 
     getEnabledStatus() {
-        let allEnabled = false;
-        let allDisabled = allDisabled = this.state.cachedOptions.length === 0;
+        let allEnabled = true;
+        let allDisabled = true;
+
+        this.state.cachedOptions.forEach((option) => {
+            if (option.selected) {
+                allDisabled = false;
+            } else {
+                allEnabled = false;
+            }
+        });
 
         return {allEnabled, allDisabled}
+    }
+
+    isSelectionValid() {
+        return (this.state.cachedOptions).some(option => {
+            return option.selected;
+        });
     }
 
     toggleAll(state) {
@@ -51,13 +67,16 @@ export default class HierarchySelector extends Component {
 
     renderElement(option) {
         const key = option.id;
-        const cachedOptions = this.state.cachedOptions;
+        const cachedOption = this.state.cachedOptions.find((optionItem) => {
+            if (option.id === optionItem.id) return option;
+        });
+
         const checkboxProps = {
             id: option.id,
             label: option.name,
             value: option.name,
             onChange: this.cacheSelectedOption,
-            checked: cachedOptions.indexOf(option.id) > - 1,
+            checked: cachedOption.selected,
             key
         }
 
