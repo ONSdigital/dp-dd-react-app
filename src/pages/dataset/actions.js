@@ -147,7 +147,7 @@ export function saveDimensionOptions({dimensionID, options}) {
 }
 
 export function requestDimensions(datasetID) {
-    const url = `${API_URL}/datasets/${datasetID}/dimensions`
+    const url = `${API_URL}/versions/${datasetID}/dimensions`
 
     return (dispatch) => {
         dispatch({
@@ -221,7 +221,7 @@ function parseDimensions(datasetID, dimensionsJSON) {
 }
 
 export function requestHierarchical(datasetID, dimensionID) {
-    const url = `${API_URL}/datasets/${datasetID}/dimensions/${dimensionID}?view=hierarchy`;
+    const url = `${API_URL}/versions/${datasetID}/dimensions/${dimensionID}?view=hierarchy`;
 
     return (dispatch) => {
         dispatch({
@@ -249,7 +249,7 @@ function requestHierarchicalSuccess(datasetID, responseData) {
 }
 
 export function requestMetadata(id) {
-    const url = `${API_URL}/datasets/${id}`;
+    const url = `${API_URL}/versions/${id}`;
 
     return dispatch => {
         dispatch({
