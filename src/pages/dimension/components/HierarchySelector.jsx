@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { hashHistory } from 'react-router';
 
@@ -6,6 +6,11 @@ import Checkbox from '../../../components/elements/Checkbox';
 import ToggleLink from '../../../components/elements/ToggleLink';
 import { renderFlatListOfOptions } from '../utils';
 import { saveDimensionOptions } from '../../dataset/actions';
+
+
+const propTypes = {
+    option: PropTypes.object
+}
 
 class HierarchySelector extends Component {
     constructor(props) {
@@ -153,5 +158,5 @@ class HierarchySelector extends Component {
         )
     }
 }
-
+HierarchySelector.propTypes = propTypes;
 export default connect(null)(HierarchySelector);
