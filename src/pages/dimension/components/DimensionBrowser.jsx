@@ -48,26 +48,28 @@ class DimensionBrowser extends Component {
     }
 
     render () {
-        const options = this.props.options;
+        const options = this.props.option ? this.props.option.options : this.props.options;
         const optionsAreParents = options instanceof Array && options.length > 0 && !!options[0].options;
         const isNested = !!this.props.location.query.id;
+        const isGeography = this.props.type && this.props.type === 'geography' || false;
 
-        if (!this.props.hasDimensions) {
+        if (!this.props.hasDimensions || !options) {
             return null;
         }
 
-        if (optionsAreParents) {
-            if (!isNested) {
-                return this.renderOptions();
-            } else {
-
-                // render this for geography
-                // this.renderDimensionSelector()
-                return this.renderHierarchySelector();
-            }
+        if (!isNested) {
+            return this.renderOptionLinks();
         }
 
-        return null;
+        if (!optionsAreParents) {
+            return this.renderSimpleSelector();
+        }
+
+        if (isGeography) {
+            return this.renderOptionLinks();
+        }
+
+        return this.renderHierarchySelector();
     }
 
     renderHierarchySelector() {
@@ -76,16 +78,15 @@ class DimensionBrowser extends Component {
         return <HierarchySelector {...hierarchyProps} />
     }
 
-    renderDimensionSelector() {
+    renderSimpleSelector() {
         const selectorProps = this.getChildComponentProps();
-        selectorProps.options = this.props.options;
         return <SimpleSelector {...selectorProps} />
     }
 
-    renderOptions () {
+    renderOptionLinks () {
         const pathname = this.props.location.pathname;
         const action = this.props.location.query.action;
-        const options = this.props.options;
+        const options = this.props.option ? this.props.option.options : this.props.options;
 
         const optionElements = options.map((option, index) => {
             const query = {
@@ -121,6 +122,7 @@ class DimensionBrowser extends Component {
             router: this.props.router,
             datasetID: this.props.params.id,
             dimensionID: this.props.params.dimensionID,
+            options: this.props.option ? this.props.option.options : this.props.options,
             onSave: () => {
                 this.props.router.push({
                     pathname: this.props.location.pathname,
