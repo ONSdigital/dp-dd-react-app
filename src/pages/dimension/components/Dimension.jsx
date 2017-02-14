@@ -27,11 +27,11 @@ const propTypes = {
     isEdited: PropTypes.bool,
     isReady: PropTypes.bool,
     isHierarchical: PropTypes.bool
-}
+};
 
 class Dimension extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             parentPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/`,
             currentPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/dimensions`,
@@ -75,7 +75,7 @@ class Dimension extends Component {
             return;
         }
 
-        if (isReady && !isEdited && !state.requestedDeselectAll) {
+        if (isReady && !isEdited && !state.requestedDeselectAll && isHierarchical) {
             state.requestedDeselectAll = true;
             dispatch(deselectAllOptions(this.props.dimensionID));
             return;
@@ -87,9 +87,8 @@ class Dimension extends Component {
         if (!this.props.hasDimensions || !this.props.isReady) {
             return null;
         }
-        if (this.props.isReady && !this.props.isEdited) {
+        if (this.props.isReady && !this.props.isEdited && this.props.isHierarchical) {
             return null;
-
         }
 
         const parentPath = this.state.currentPath;
