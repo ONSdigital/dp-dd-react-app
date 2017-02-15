@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { Link, hashHistory } from 'react-router';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { deselectAllOptions, selectAllOptions } from '../../dataset/actions';
+import { selectAllOptions } from '../../dataset/actions';
 
 class HierarchyNavigator extends Component {
     constructor(props) {
@@ -9,7 +9,8 @@ class HierarchyNavigator extends Component {
         this.selectAll = this.selectAll.bind(this);
     }
 
-    selectAll() {
+    selectAll(e) {
+        e.preventDefault();
         this.props.dispatch(selectAllOptions(this.props.dimensionID));
         this.props.router.push({
             pathname: this.props.location.pathname,
@@ -37,7 +38,7 @@ class HierarchyNavigator extends Component {
                 </div>
 
                 <div className="margin-top--3">
-                    <h2><a href="" onClick={this.selectAll}>Add all</a></h2>
+                    <h2><a onClick={this.selectAll}>Add all</a></h2>
                     Add all locations in the dataset
                 </div>
             </div>
