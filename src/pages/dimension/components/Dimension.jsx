@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { hashHistory } from 'react-router';
+
 import config from '../../../config';
 import DocumentTitle from '../../../components/elements/DocumentTitle';
 
@@ -91,12 +92,11 @@ class Dimension extends Component {
             return null;
         }
 
-        const parentPath = this.state.currentPath;
         return (
             <div className="wrapper">
                 <DocumentTitle title={"Customise " + this.props.dimensionName} />
                 <div className="margin-top--2">
-                    <Link to={parentPath} className="btn--everything">Back</Link>
+                    <a className="btn--everything" onClick={hashHistory.goBack}>Back</a>
                 </div>
                 <div>
                     { this.renderDimensionScreen() }
