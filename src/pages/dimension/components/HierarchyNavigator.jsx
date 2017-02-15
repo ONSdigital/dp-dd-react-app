@@ -34,12 +34,12 @@ class HierarchyNavigator extends Component {
 
                 <div className="margin-top--3">
                     <h2><Link to={{pathname: pathname, query: {action: 'browse'}}}>Browse</Link></h2>
-                    Select locations from the list
+                    Select values from the list
                 </div>
 
                 <div className="margin-top--3">
                     <h2><a onClick={this.selectAll}>Add all</a></h2>
-                    Add all locations in the dataset
+                    Add all dimension values
                 </div>
             </div>
         )
