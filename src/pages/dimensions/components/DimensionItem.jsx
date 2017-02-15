@@ -16,11 +16,8 @@ export default class DimensionItem extends Component {
 
     render() {
         const props = this.props;
-        //const postfix =  props.type && props.type === 'geography' ? '/customise' : '';
-        const action = props.type && props.type === 'geography' ? 'customise' : null;
         const destination = {
             pathname: `${config.BASE_PATH}/datasets/${props.datasetID}/dimensions/${props.id}`,
-            query: action ? { action } : {}
         }
 
         return (
