@@ -76,7 +76,8 @@ export function filterOptions({options, filter = {}}) {
 export function searchOptions({options, term = ''}) {
     let list = [];
     options.forEach(option => {
-        if (option.name.toLowerCase().indexOf(term.toLowerCase()) > -1) {
+        const termIndex = option.name.toLowerCase().indexOf(term.toLowerCase()) > -1;
+        if (termIndex && !option.empty) {
             list.push({
                 id: option.id,
                 name: option.name,
@@ -85,13 +86,16 @@ export function searchOptions({options, term = ''}) {
         }
 
         if (option.options) {
-            let optionsType = option.optionsType;
+            let parentName = option.name;
+            if (option.levelType) {
+                parentName = option.levelType.name;
+            }
             let matchingOptions = searchOptions({
                 options: option.options,
                 term
             }).map(option => Object.assign({}, option, {
-                // todo: should have own type
-                name: !option.found ? `${option.name} (found in ${optionsType})` : option.name,
+                name: !option.found ? `${option.name}` : option.name,
+                note: `found in ${parentName}`,
                 found: true
             }));
             Array.prototype.push.apply(list, matchingOptions);

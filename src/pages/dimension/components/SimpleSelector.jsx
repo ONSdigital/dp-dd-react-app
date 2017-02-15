@@ -139,11 +139,13 @@ class SimpleSelector extends Component {
             const checkboxProps = {
                 id: optionItem.id,
                 label: optionItem.name,
+                note: optionItem.note,
                 value: optionItem.id,
                 onChange: this.cacheSelection,
                 checked: cachedOption.selected,
                 key
             }
+
             return <Checkbox {...checkboxProps} />
         });
     }

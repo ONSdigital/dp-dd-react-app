@@ -4,12 +4,14 @@ const propTypes = {
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
+    note: PropTypes.string,
     checked: PropTypes.bool,
     onChange: PropTypes.func
 };
 
 const defaultProps = {
     checked: false,
+    note: null
 }
 
 export default class Checkbox extends Component {
@@ -53,6 +55,9 @@ export default class Checkbox extends Component {
                 <label className="checkbox__label" htmlFor={this.props.id}>
                     {this.props.label}
                 </label>
+                {!this.props.note || (
+                    <small className="btn--small">({this.props.note})</small>
+                )}
             </div>
         )
     }
