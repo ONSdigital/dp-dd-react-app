@@ -47,11 +47,13 @@ export default class Checkbox extends Component {
     }
 
     render() {
+        const disabled = this.props.disabled ? 'disabled' : '';
+        const checkboxClass = "checkbox" + (this.props.disabled ? ' disabled' : '');
         return (
-            <div className="checkbox">
+            <div className={checkboxClass}>
                 <input className={"checkbox__input" + (this.props.checked ? " selected" : "") + (this.state.focused ? " focused" : "")} type="checkbox"
                        id={this.props.id} name={this.props.id} value={this.props.value} checked={this.props.checked}
-                       onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} />
+                       onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} disabled={disabled} />
                 <label className="checkbox__label" htmlFor={this.props.id}>
                     {this.props.label}
                 </label>

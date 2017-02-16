@@ -24,7 +24,8 @@ class Download extends Component {
                 id: 'xls',
                 label: 'XLS',
                 value: 'XLS',
-                selected: false
+                selected: false,
+                disabled: true
             }, {
                 id: 'csv',
                 label: 'CSV',
@@ -34,7 +35,8 @@ class Download extends Component {
                 id: 'json',
                 label: 'JSON',
                 value: 'JSON',
-                selected: false
+                selected: false,
+                disabled: true
             }],
             selectedOptions: [],
             parentPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/dimensions/`,
@@ -124,6 +126,9 @@ class Download extends Component {
                         options.map((props, index) => {
                             props['key'] = index;
                             props['checked'] = props.selected;
+                            if (props.disabled) {
+                                props['disabled'] = true;
+                            }
                             return <Checkbox {...props} onChange={this.cacheOption}/>
                         })
                     }

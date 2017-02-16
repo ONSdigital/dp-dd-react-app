@@ -52,6 +52,17 @@
         cursor: pointer; // Encourage clicking on block labels
     }
 
+    &.disabled {
+        input[disabled] {
+            &:before {
+                border: 2px solid $iron;
+            }
+        }
+        label {
+            color: $iron;
+        }
+    }
+
     .selected:after {
         @include opacity(1);
     }
