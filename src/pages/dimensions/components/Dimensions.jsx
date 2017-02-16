@@ -57,8 +57,7 @@ class Dimension extends Component {
 
         return (
             <div className="wrapper">
-                <div className="margin-top--2">
-                    <Link to={parentPath} className="btn--everything">Back</Link>
+                <div className="margin-top--double">
                     <DocumentTitle title={`Customise ${this.props.title}`}>
                         <h2 className="margin-top--half margin-bottom">Customise this dataset</h2>
                     </DocumentTitle>

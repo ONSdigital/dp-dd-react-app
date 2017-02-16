@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { hashHistory } from 'react-router';
 
 import config from '../../../config';
 import DocumentTitle from '../../../components/elements/DocumentTitle';
@@ -94,9 +93,8 @@ class Dimension extends Component {
 
         return (
             <div className="wrapper">
-                <DocumentTitle title={"Customise " + this.props.dimensionName} />
-                <div className="margin-top--2">
-                    <a className="btn--everything" onClick={hashHistory.goBack}>Back</a>
+                <div className="margin-top--double">
+                    <DocumentTitle title={"Customise " + this.props.dimensionName} />
                 </div>
                 <div>
                     { this.renderDimensionScreen() }
