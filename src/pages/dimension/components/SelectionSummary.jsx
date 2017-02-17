@@ -33,7 +33,7 @@ class Summary extends Component {
         return (
             <div className="margin-bottom--8">
                 <div>
-                    <h2 className="margin-top margin-bottom--double">Your selection</h2>
+                    <h2 className="margin-top margin-bottom--double">Selection summary</h2>
                     <ul className="list--neutral">
                     {options.map(option => {
                         return this.renderSummaryItemParent(option);
@@ -47,7 +47,7 @@ class Summary extends Component {
                 </div>
                 <div className="margin-bottom--double">
                     <Link to={dimensionsPath}
-                          className="btn btn--primary btn--thick btn--wide btn--big margin-right--half">Save selection</Link>
+                          className="btn btn--primary btn--thick btn--wide btn--big margin-right--half">Continue</Link>
                 </div>
             </div>
         )
