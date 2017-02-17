@@ -3,12 +3,20 @@ import { Link, hashHistory } from 'react-router';
 import { connect } from 'react-redux';
 import config from '../../../config';
 import { renderFlatHierarchy } from '../utils';
-import { saveDimensionOptions } from '../../dataset/actions';
+import { saveDimensionOptions, deselectAllOptions } from '../../dataset/actions';
 
 class Summary extends Component {
     constructor(props) {
         super(props);
         this.removeOptions = this.removeOptions.bind(this);
+        this.removeAllOptios = this.removeAllOptios.bind(this);
+    }
+
+    removeAllOptios(e) {
+        e.preventDefault();
+        const dispatch = this.props.dispatch;
+        const dimensionID = this.props.dimensionID;
+        dispatch(deselectAllOptions(dimensionID));
     }
 
     removeOptions(options) {
@@ -41,9 +49,11 @@ class Summary extends Component {
                     </ul>
                 </div>
 
-                <div className="margin-bottom">
+                <div className="margin-bottom width-lg--39">
                     <Link to={{pathname: currentPath, query: { action: 'customise' }}}
                           className="btn--everything">Add more</Link>
+                    <a onClick={this.removeAllOptios}
+                          className="btn--everything float-right">Remove all selections</a>
                 </div>
                 <div className="margin-bottom--double">
                     <Link to={dimensionsPath}
