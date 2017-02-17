@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 const PATH = {
     BASE:  '../',
@@ -43,6 +44,12 @@ config.module = {
         loaders: ["style-loader", "css-loader", "sass-loader"]
     }]
 };
+
+config.plugins = [
+    new webpack.DefinePlugin({
+        GA_TRACKING_CODE: JSON.stringify('UA-52416772-2')
+    })
+];
 
 config.resolve = {
     // implicitly tell babel to load jsx

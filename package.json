@@ -33,6 +33,7 @@
     "css-loader": "^0.26.1",
     "enzyme": "^2.7.0",
     "es6-promise": "^4.0.5",
+    "ga-react-router": "^2.1.1",
     "jsdom": "^9.9.1",
     "mocha": "^3.2.0",
     "mocha-loader": "^1.1.0",
