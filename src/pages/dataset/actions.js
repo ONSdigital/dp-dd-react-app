@@ -72,15 +72,19 @@ export function saveDownloadOptions(options) {
             options
         });
 
+        const dimensions = state.dataset.dimensions.map(dimension => {
+            return {
+                id: dimension.id,
+                options: flattenSelectedOptions(dimension.options)
+            }
+        }).filter(dimension => {
+            return dimension.options.length > 0;
+        })
+
         const body = JSON.stringify({
             id: state.dataset.id,
             fileFormats: options,
-            dimensions: state.dataset.dimensions.map(dimension => {
-                return {
-                    id: dimension.id,
-                    options: flattenSelectedOptions(dimension.options)
-                }
-            })
+            dimensions
         });
 
         return request.post(url, {body: body}).then(json => {
