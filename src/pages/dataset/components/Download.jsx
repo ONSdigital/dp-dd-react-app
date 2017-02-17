@@ -5,8 +5,10 @@ import config from '../../../config';
 import FileTypesHelp from '../../../components/elements/FileTypesHelp';
 import Checkbox from '../../../components/elements/Checkbox';
 import SupportingFilesList from '../../../components/elements/SupportingFilesList';
+
 import {
     saveDownloadOptions,
+    requestMetadata,
     requestDownloadProgress,
     cancelDownload
 } from '../actions';
@@ -87,9 +89,18 @@ class Download extends Component {
         }
     }
 
+    componentWillMount() {
+        if (!this.props.hasMetadata) {
+            this.props.dispatch(requestMetadata(this.props.params.id));
+            return;
+        }
+    }
+
     componentWillUnmount() {
         const download = this.props.download;
         const dispatch = this.props.dispatch;
+
+
         if (!download.completed && download.inProgress) {
             dispatch(cancelDownload(), 500);
         }
@@ -174,15 +185,18 @@ class Download extends Component {
                 <SupportingFilesList/>
 
                 <Link className="btn btn--primary btn--thick btn--wide btn--big">Download all as a ZIP</Link>
-
             </div>
         )
     }
 }
 
 function mapStateToProps(state) {
+    const dataset = state.dataset;
+
     return {
-        download: state.dataset.download
+        download: state.dataset.download,
+        hasMetadata: dataset.hasMetadata,
+        hasDimensions: dataset.hasDimensions
     }
 }
 
