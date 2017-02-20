@@ -33,6 +33,17 @@ class Summary extends Component {
     }
 
     render () {
+        const options = this.props.options;
+        const hasOptions = options.reduce((sum, option) => option.selected ? 1 : 0, 0) > 0;
+
+        if (!hasOptions) {
+            return this.renderEmptySummary();
+        }
+
+        return this.renderSummary();
+    }
+
+    renderSummary() {
         const datasetID = this.props.datasetID;
         const options = this.props.options;
         const currentPath = this.props.location.pathname;
@@ -42,22 +53,42 @@ class Summary extends Component {
             <div className="margin-bottom--8">
                 <div>
                     <h2 className="margin-top margin-bottom--double">Selection summary</h2>
+                    <div className="margin-bottom width-lg--39">
+                        <a onClick={this.removeAllOptios}
+                           className="btn--everything">Remove all selections</a>
+                    </div>
                     <ul className="list--neutral">
-                    {options.map(option => {
-                        return this.renderSummaryItemParent(option);
-                    })}
+                        {options.map(option => {
+                            return this.renderSummaryItemParent(option);
+                        })}
                     </ul>
                 </div>
 
                 <div className="margin-bottom width-lg--39">
                     <Link to={{pathname: currentPath, query: { action: 'customise' }}}
                           className="btn--everything">Add more</Link>
-                    <a onClick={this.removeAllOptios}
-                          className="btn--everything float-right">Remove all selections</a>
                 </div>
                 <div className="margin-bottom--double">
                     <Link to={dimensionsPath}
-                          className="btn btn--primary btn--thick btn--wide btn--big margin-right--half">Continue</Link>
+                              className="btn btn--primary btn--thick btn--wide btn--big margin-right--half">Continue</Link>
+                </div>
+            </div>
+        )
+    }
+
+    renderEmptySummary() {
+        const currentPath = this.props.location.pathname;
+        return (
+            <div className="margin-bottom--8">
+                <div>
+                    <h2 className="margin-top margin-bottom--double">Selection summary</h2>
+                    <div className="margin-bottom width-lg--39">
+                        Nothing selected
+                    </div>
+                </div>
+                <div className="margin-bottom--double">
+                    <Link to={{pathname: currentPath, query: { action: 'customise' }}}
+                          className="btn btn--primary btn--thick btn--wide btn--big margin-right--half">Add more</Link>
                 </div>
             </div>
         )
