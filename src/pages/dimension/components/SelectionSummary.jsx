@@ -9,10 +9,10 @@ class Summary extends Component {
     constructor(props) {
         super(props);
         this.removeOptions = this.removeOptions.bind(this);
-        this.removeAllOptios = this.removeAllOptios.bind(this);
+        this.removeAllOptions = this.removeAllOptions.bind(this);
     }
 
-    removeAllOptios(e) {
+    removeAllOptions(e) {
         e.preventDefault();
         const dispatch = this.props.dispatch;
         const dimensionID = this.props.dimensionID;
@@ -55,7 +55,7 @@ class Summary extends Component {
                 <div>
                     <h2 className="margin-top margin-bottom--double">Selection summary</h2>
                     <div className="margin-bottom width-lg--39">
-                        <a onClick={this.removeAllOptios}
+                        <a onClick={this.removeAllOptions}
                            className="btn--everything">Remove all selections</a>
                     </div>
                     <ul className="list--neutral">
@@ -104,8 +104,8 @@ class Summary extends Component {
             <li key={id} className="margin-left--0 margin-left--0 padding-bottom--2 col-wrap width-lg--39">
 
                 <div className="col margin-left--0 width-lg--39 border-bottom--gallery-md padding-bottom--2">
-                    <h3 className="col col--md-34 col--lg-34">{name} ({options.length})</h3>
-                    <div className="col col--md-5 col--lg-5 float-right">
+                    <h3 className="col col--md-33 col--lg-33">{name} ({options.length})</h3>
+                    <div className="col col--md-6 col--lg-6 float-right">
                         <a onClick={this.removeOptions(options)}>Remove group</a>
                     </div>
                 </div>
@@ -121,10 +121,10 @@ class Summary extends Component {
     renderSummaryItemChild({ name, id }) {
         return (
             <li key={id} className="margin-left--0 col width-lg--39 border-bottom--gallery-md padding-bottom--2">
-                    <div className="col col--md-34 col--lg-34">
+                    <div className="col col--md-33 col--lg-33">
                         <span>{name}</span>
                     </div>
-                    <div className="col col--md-5 col--lg-5 float-right">
+                    <div className="col col--md-6 col--lg-6 float-right">
                         <a onClick={this.removeOptions({id})}>Remove</a>
                     </div>
             </li>
