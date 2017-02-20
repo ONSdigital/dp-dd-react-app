@@ -22,7 +22,8 @@ class Summary extends Component {
     removeOptions(options) {
         const dispatch = this.props.dispatch;
         const dimensionID = this.props.dimensionID;
-        return function () {
+        return function (e) {
+            e.preventDefault();
             options = options instanceof Array ? options : [options];
             options = options.map(option => {
                 option.selected = false;
