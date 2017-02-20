@@ -34,7 +34,7 @@ class Summary extends Component {
 
     render () {
         const options = this.props.options;
-        const hasOptions = options.reduce((sum, option) => option.selected ? 1 : 0, 0) > 0;
+        const hasOptions = options.reduce((sum, option) => sum + option.selected ? 1 : 0, 0) > 0;
 
         if (!hasOptions) {
             return this.renderEmptySummary();
