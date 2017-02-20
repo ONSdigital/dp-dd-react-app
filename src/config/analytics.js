@@ -14,4 +14,13 @@ export default class analytics {
         ga.pageview(path);
     }
 
+    static logGoalCompleted() {
+        ga.event({
+            category: 'Download',
+            action: 'Click',
+            label: 'CSV',
+            value: 1
+        })
+    }
+
 }
