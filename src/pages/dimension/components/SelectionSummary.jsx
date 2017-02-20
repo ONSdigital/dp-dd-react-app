@@ -56,7 +56,7 @@ class Summary extends Component {
                     <h2 className="margin-top margin-bottom--double">Selection summary</h2>
                     <div className="margin-bottom width-lg--39">
                         <a onClick={this.removeAllOptions}
-                           className="btn--everything">Remove all selections</a>
+                           className="btn-remove-all">Remove all selections</a>
                     </div>
                     <ul className="list--neutral">
                         {options.map(option => {
@@ -67,7 +67,7 @@ class Summary extends Component {
 
                 <div className="margin-bottom width-lg--39">
                     <Link to={{pathname: currentPath, query: { action: 'customise' }}}
-                          className="btn--everything">Add more</Link>
+                          className="btn-add-more">Add more</Link>
                 </div>
                 <div className="margin-bottom--double">
                     <Link to={dimensionsPath}
