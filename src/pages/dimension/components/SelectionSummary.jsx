@@ -106,7 +106,7 @@ class Summary extends Component {
                 <div className="col margin-left--0 width-lg--39 border-bottom--gallery-md padding-bottom--2">
                     <h3 className="col col--md-34 col--lg-34">{name} ({options.length})</h3>
                     <div className="col col--md-5 col--lg-5 float-right">
-                        <a onClick={this.removeOptions(options)}>Remove all</a>
+                        <a onClick={this.removeOptions(options)}>Remove group</a>
                     </div>
                 </div>
                 <ul className="list--neutral col width-lg--39 margin-left--0 margin-top--0 border-bottom--gallery-md">
