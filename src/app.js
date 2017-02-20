@@ -10,11 +10,11 @@ import CSS from "./scss/main.scss";
 
 function init() {
 
-    analytics.initialise();
-
     initStore(browserHistory, {
         // for alpha we will persist state in local storage
     });
+
+    analytics.initialise();
 
     ReactDOM.render(
         React.createElement(App),
