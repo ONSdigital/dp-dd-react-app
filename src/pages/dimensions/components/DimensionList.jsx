@@ -7,7 +7,8 @@ const propTypes = {
         name: PropTypes.string.isRequired,
         selectedCount: PropTypes.number.isRequired,
         optionsCount: PropTypes.number.isRequired
-    })).isRequired
+    })).isRequired,
+    pathname: PropTypes.string.isRequired
 }
 
 export default class DimensionList extends Component {
@@ -27,6 +28,7 @@ export default class DimensionList extends Component {
                 selectionLabel = `Nothing selected`
             }
 
+            item.pathname = this.props.pathname;
             return <DimensionItem key={key} label={selectionLabel} {...item}/>
         })
     }

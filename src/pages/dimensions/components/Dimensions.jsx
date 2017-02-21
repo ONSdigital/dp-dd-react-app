@@ -56,8 +56,11 @@ class Dimension extends Component {
         if (!this.props.hasMetadata || !props.hasDimensions) {
             return null;
         }
-        const parentPath = this.state.parentPath;
-        const dimensions = this.props.dimensions;
+
+        const componentProps = {
+            dimensions: this.props.dimensions,
+            pathname: this.props.location.pathname
+        }
 
         return (
             <div className="wrapper">
@@ -67,7 +70,7 @@ class Dimension extends Component {
                     </DocumentTitle>
                 </div>
                 <div>
-                    <DimensionList dimensions={dimensions} />
+                    <DimensionList {...componentProps} />
                     <div className="margin-top--4 margin-bottom--8">
                         <Link className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
                               to={this.state.downloadPath}>Choose a download format</Link>

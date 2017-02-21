@@ -229,7 +229,7 @@ function parseDimensions(datasetID, dimensionsJSON) {
     }
 }
 
-export function requestHierarchical(datasetID, dimensionID) {
+export function requestHierarchical(datasetID, edition, version, dimensionID) {
     return (dispatch) => {
         dispatch({
             type: REQUEST_HIERARCHICAL,
@@ -237,7 +237,7 @@ export function requestHierarchical(datasetID, dimensionID) {
         });
 
         return request
-            .get(api.getDimensionHierarchyURL(datasetID, dimensionID))
+            .get(api.getDimensionHierarchyURL(datasetID, edition, version, dimensionID))
             .then(function (json) {
                 dispatch(requestHierarchicalSuccess(datasetID, json));
                 dispatch(parseDimensions(datasetID, json));

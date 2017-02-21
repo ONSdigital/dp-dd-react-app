@@ -5,6 +5,8 @@ import config from '../../../config';
 const propTypes = {
     id: PropTypes.string,
     datasetID: PropTypes.string,
+    edition: PropTypes.string,
+    version: PropTypes.string,
     name: PropTypes.string,
     label: PropTypes.string
 }
@@ -15,11 +17,7 @@ export default class DimensionItem extends Component {
     }
 
     render() {
-        const props = this.props;
-        const destination = {
-            pathname: `${config.BASE_PATH}/datasets/${props.datasetID}/dimensions/${props.id}`,
-        }
-
+        const pathname = `${this.props.pathname}/${this.props.id}`;
         return (
             <li className="margin-left--0 padding-bottom--2 padding-top--2 border-top--gallery-md border-bottom--gallery-md col-wrap width-lg--39">
                 <div className="col col--md-8 col--lg-8">
@@ -29,7 +27,7 @@ export default class DimensionItem extends Component {
                     {this.props.label}
                 </div>
                 <div className="col col--md-6 col--lg-6">
-                    <Link to={destination} className="float-right">Customise</Link>
+                    <Link to={pathname} className="float-right">Customise</Link>
                 </div>
             </li>
 
@@ -37,4 +35,4 @@ export default class DimensionItem extends Component {
     }
 }
 
-DimensionItem.propTypes = propTypes;
+DimensionItem.propTypes = propTypes

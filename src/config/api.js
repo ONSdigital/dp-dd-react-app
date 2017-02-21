@@ -26,12 +26,12 @@ const getDimensionsURL = function(id, edition, version) {
     return `${API_URL}/datasets/${id}/editions/${edition}/versions/${version}/dimensions`;
 }
 
-const getDimensionURL = function(datasetID, dimensionID) {
-    return `${API_URL}/versions/${datasetID}/dimensions/${dimensionID}`;
+const getDimensionURL = function(id, edition, version, dimensionID) {
+    return `${API_URL}/datasets/${id}/editions/${edition}/versions/${version}/dimensions/${dimensionID}`;
 }
 
-const getDimensionHierarchyURL = function(datasetID, dimensionID) {
-    return `${API_URL}/versions/${datasetID}/dimensions/${dimensionID}?view=hierarchy`;
+const getDimensionHierarchyURL = function(id, edition, version, dimensionID) {
+    return `${API_URL}/datasets/${id}/editions/${edition}/versions/${version}/dimensions/${dimensionID}?view=hierarchy`;
 }
 
 const getJobCreatorURL = function() {

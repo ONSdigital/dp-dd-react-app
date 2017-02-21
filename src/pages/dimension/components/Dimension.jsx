@@ -56,22 +56,24 @@ class Dimension extends Component {
         const isHierarchical = props.isHierarchical;
         const dispatch = props.dispatch;
         const datasetID = props.datasetID;
+        const edition = props.params.edition;
+        const version = props.params.version;
         const dimensionID = props.dimensionID;
         const state = this.state;
 
         if (!props.hasMetadata) {
-            dispatch(requestVersionMetadata(this.props.params.id));
+            dispatch(requestVersionMetadata(datasetID, edition, version));
             return;
         }
 
         if (!props.hasDimensions) {
-            dispatch(requestDimensions(this.props.params.id));
+            dispatch(requestDimensions(datasetID, edition, version));
             return;
         }
 
         if (!isReady && isHierarchical && !state.requestedOptionsUpdate) {
             state.requestedOptionsUpdate = true;
-            dispatch(requestHierarchical(datasetID, dimensionID));
+            dispatch(requestHierarchical(datasetID, edition, version, dimensionID));
             return;
         }
 
@@ -157,6 +159,8 @@ function mapStateToProps(state, ownProps) {
         title: dataset.title,
         datasetID: ownProps.router.params.id,
         dimensionID: ownProps.router.params.dimensionID,
+        version: ownProps.params.version,
+        edition: ownProps.params.edition,
         hasDimensions: dataset.hasDimensions,
         hasMetadata: dataset.hasMetadata
     };
