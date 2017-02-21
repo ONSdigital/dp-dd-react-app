@@ -281,16 +281,16 @@ export function parseDatasetMetadata(json) {
     }
 }
 
-export function requestVersionMetadata(resourceID) {
+export function requestVersionMetadata(datasetID, edition, version) {
 
     return dispatch => {
         dispatch({
             type: REQUEST_VERSION_METADATA,
-            id: resourceID
+            id: datasetID
         })
 
         return request
-            .get(api.getVersionURL(resourceID))
+            .get(api.getDatasetVersionURL(datasetID, edition, version))
             .then(function (json) {
                 dispatch(parseVersionMetadata(json));
             }).catch(function (err) {

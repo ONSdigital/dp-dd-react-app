@@ -15,6 +15,7 @@ const propTypes = {
 class DatasetVersion extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             downloadPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/download`,
             customisePath: `${config.BASE_PATH}/datasets/${this.props.params.id}/dimensions`,
@@ -22,9 +23,11 @@ class DatasetVersion extends Component {
     }
 
     componentWillMount() {
-        if (this.props.params.id !== this.props.id) {
-            const dispatch = this.props.dispatch;
-            dispatch(requestVersionMetadata(this.props.params.id));
+        const dispatch = this.props.dispatch;
+        const params = this.props.params;
+
+        if (params.id !== this.props.id) {
+            dispatch(requestVersionMetadata(params.id, params.edition, params.version));
         }
     }
 
