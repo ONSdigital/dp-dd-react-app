@@ -1,5 +1,6 @@
 import { Request } from './utils';
 import config from '../../config/index';
+import api from '../../config/api';
 import { updateOption, toggleSelectedOptions } from '../dimension/utils';   // todo: move to dimension
 
 export const REQUEST_METADATA = 'REQUEST_METADATA';
@@ -63,7 +64,6 @@ export function selectAllOptions(dimensionID) {
 }
 
 export function saveDownloadOptions(options) {
-    const url = `${config.JOB_API_URL}/job`;
     return (dispatch, getState) => {
         const state = getState();
 
@@ -87,11 +87,13 @@ export function saveDownloadOptions(options) {
             dimensions
         });
 
-        return request.post(url, {body: body}).then(json => {
-            dispatch(requestDownloadProgress(json.id));
-        }).catch(err => {
-            throw(err);
-        });
+        return request
+            .post(api.getJobCreatorURL(), { body })
+            .then(json => {
+                dispatch(requestDownloadProgress(json.id));
+            }).catch(err => {
+                throw(err);
+            });
     }
 
     function flattenSelectedOptions(options) {
@@ -111,11 +113,12 @@ export function saveDownloadOptions(options) {
     }
 }
 
-export function requestDownloadProgress(id) {
-    const url = `${config.JOB_API_URL}/job/${id}`;
-    return dispatch => request.get(url).then(json => {
-        dispatch(saveDownloadProgress(json));
-    })
+export function requestDownloadProgress(jobID) {
+    return dispatch => request
+        .get(api.getJobStatusURL(jobID))
+        .then(json => {
+            dispatch(saveDownloadProgress(json));
+        })
 }
 
 function saveDownloadProgress(json) {
@@ -151,20 +154,20 @@ export function saveDimensionOptions({dimensionID, options}) {
 }
 
 export function requestDimensions(datasetID) {
-    const url = `${API_URL}/versions/${datasetID}/dimensions`
-
     return (dispatch) => {
         dispatch({
             type: REQUEST_DIMENSIONS,
             id: datasetID
         });
 
-        request.get(url).then(function (json) {
-            dispatch(requestDimensionsSuccess(datasetID, json));
-            dispatch(parseDimensions(datasetID, json));
-        }).catch(function (err) {
-            throw(err);
-        })
+        request
+            .get(api.getDimensionsURL(datasetID))
+            .then(function (json) {
+                dispatch(requestDimensionsSuccess(datasetID, json));
+                dispatch(parseDimensions(datasetID, json));
+            }).catch(function (err) {
+                throw(err);
+            })
     }
 }
 
@@ -225,20 +228,20 @@ function parseDimensions(datasetID, dimensionsJSON) {
 }
 
 export function requestHierarchical(datasetID, dimensionID) {
-    const url = `${API_URL}/versions/${datasetID}/dimensions/${dimensionID}?view=hierarchy`;
-
     return (dispatch) => {
         dispatch({
             type: REQUEST_HIERARCHICAL,
             id: datasetID
         });
 
-        request.get(url).then(function (json) {
-            dispatch(requestHierarchicalSuccess(datasetID, json));
-            dispatch(parseDimensions(datasetID, json));
-        }).catch(function (err) {
-            throw(err);
-        })
+        return request
+            .get(api.getDimensionHierarchyURL(datasetID, dimensionID))
+            .then(function (json) {
+                dispatch(requestHierarchicalSuccess(datasetID, json));
+                dispatch(parseDimensions(datasetID, json));
+            }).catch(function (err) {
+                throw(err);
+            })
     }
 }
 
@@ -252,20 +255,21 @@ function requestHierarchicalSuccess(datasetID, responseData) {
     }
 }
 
-export function requestMetadata(id) {
-    const url = `${API_URL}/versions/${id}`;
+export function requestMetadata(resourceID) {
 
     return dispatch => {
         dispatch({
             type: REQUEST_METADATA,
-            id: id
+            id: resourceID
         })
 
-        return request.get(url).then(function (json) {
-            dispatch(parseMetadata(json));
-        }).catch(function (err) {
-            throw(err);
-        })
+        return request
+            .get(api.getVersionURL(resourceID))
+            .then(function (json) {
+                dispatch(parseMetadata(json));
+            }).catch(function (err) {
+                throw(err);
+            })
     }
 }
 
