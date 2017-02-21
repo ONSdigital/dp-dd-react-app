@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { selectAllOptions } from '../../dataset/actions';
+import analytics from '../../../config/analytics';
 
 class HierarchyNavigator extends Component {
     constructor(props) {
@@ -11,6 +12,7 @@ class HierarchyNavigator extends Component {
 
     selectAll(e) {
         e.preventDefault();
+        analytics.logHierarchyAddAll();
         this.props.dispatch(selectAllOptions(this.props.dimensionID));
         this.props.router.push({
             pathname: this.props.location.pathname,
