@@ -45,10 +45,9 @@ class Summary extends Component {
     }
 
     renderSummary() {
-        const datasetID = this.props.datasetID;
         const options = this.props.options;
         const currentPath = this.props.location.pathname;
-        const dimensionsPath = `${config.BASE_PATH}/datasets/${datasetID}/dimensions`;
+        const dimensionsPath = currentPath.replace(/\/\w+\/?$/, ''); //drop the last bit
 
         return (
             <div className="margin-bottom--8">
