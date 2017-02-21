@@ -16,9 +16,12 @@ class DatasetVersion extends Component {
     constructor(props) {
         super(props);
 
+        const params = this.props.params;
+        const baseURL = `${config.BASE_PATH}/datasets/${params.id}/editions/${params.edition}/versions/${params.version}`;
+
         this.state = {
-            downloadPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/download`,
-            customisePath: `${config.BASE_PATH}/datasets/${this.props.params.id}/dimensions`,
+            downloadPath: `${baseURL}/download`,
+            customisePath: `${baseURL}/dimensions`,
         }
     }
 
