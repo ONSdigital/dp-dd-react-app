@@ -185,6 +185,8 @@ class Download extends Component {
                         return (
                             <div key={index} className="margin-top--1">
                                <Link
+                                   target="_blank"
+                                   rel="noopener noreferrer"
                                    onClick={analytics.logGoalCompleted}
                                    to={file.url}
                                    className="btn btn--primary btn--thick btn--wide btn--big uppercase"
