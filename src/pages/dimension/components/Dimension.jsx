@@ -12,7 +12,7 @@ import DimensionBrowser from './DimensionBrowser';
 import DimensionSearch from './DimensionSearch';
 import SelectionSummary from './SelectionSummary';
 
-import { requestMetadata, requestDimensions } from '../../dataset/actions';
+import { requestVersionMetadata, requestDimensions } from '../../dataset/actions';
 import { requestHierarchical } from '../../dataset/actions';
 import { deselectAllOptions, selectAllOptions } from '../../dataset/actions';
 
@@ -60,7 +60,7 @@ class Dimension extends Component {
         const state = this.state;
 
         if (!props.hasMetadata) {
-            dispatch(requestMetadata(this.props.params.id));
+            dispatch(requestVersionMetadata(this.props.params.id));
             return;
         }
 

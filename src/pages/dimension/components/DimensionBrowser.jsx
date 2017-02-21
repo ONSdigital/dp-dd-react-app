@@ -6,7 +6,7 @@ import SimpleSelector from './SimpleSelector';
 import HierarchySelector from './HierarchySelector';
 
 import {
-    requestMetadata,
+    requestVersionMetadata,
     requestDimensions
 } from '../../dataset/actions';
 
@@ -30,7 +30,7 @@ class DimensionBrowser extends Component {
         const dispatch = this.props.dispatch;
         if (!this.props.hasMetadata) {
             this.state.initialFetchRequired = true;
-            return dispatch(requestMetadata(this.props.params.id));
+            return dispatch(requestVersionMetadata(this.props.params.id));
         }
         if (!this.props.hasDimensions) {
             dispatch(requestDimensions(this.props.params.id));

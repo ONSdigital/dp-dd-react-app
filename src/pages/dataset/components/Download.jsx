@@ -10,7 +10,7 @@ import SupportingFilesList from '../../../components/elements/SupportingFilesLis
 
 import {
     saveDownloadOptions,
-    requestMetadata,
+    requestVersionMetadata,
     requestDownloadProgress,
     cancelDownload
 } from '../actions';
@@ -93,7 +93,7 @@ class Download extends Component {
 
     componentWillMount() {
         if (!this.props.hasMetadata) {
-            this.props.dispatch(requestMetadata(this.props.params.id));
+            this.props.dispatch(requestVersionMetadata(this.props.params.id));
             return;
         }
     }

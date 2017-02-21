@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import config from '../../../config';
 import {
-    requestMetadata,
+    requestVersionMetadata,
     requestDimensions
 } from '../../dataset/actions';
 
@@ -31,7 +31,7 @@ class Dimension extends Component {
         const dispatch = this.props.dispatch;
         if (!this.props.hasMetadata) {
             this.state.initialFetchRequired = true;
-            return dispatch(requestMetadata(this.props.params.id));
+            return dispatch(requestVersionMetadata(this.props.params.id));
         }
         if (!this.props.hasDimensions) {
             dispatch(requestDimensions(this.props.params.id));
