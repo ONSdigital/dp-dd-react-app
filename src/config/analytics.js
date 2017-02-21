@@ -1,8 +1,11 @@
 import ga from 'react-ga';
 
+const analyticsID = `UA-56892037-14`;
+
 export default class analytics {
+
     static initialise() {
-        ga.initialize('UA-52416772-2');
+        ga.initialize(analyticsID);
     }
 
     static logPageView() {
