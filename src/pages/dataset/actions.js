@@ -1,5 +1,4 @@
 import { Request } from './utils';
-import config from '../../config/index';
 import api from '../../config/api';
 import { updateOption, toggleSelectedOptions } from '../dimension/utils';   // todo: move to dimension
 
@@ -24,7 +23,6 @@ export const SAVE_DOWNLOAD_PROGRESS = 'SAVE_DOWNLOAD_PROGRESS';
 export const SAVE_DOWNLOAD_OPTIONS_SUCCESS = 'SAVE_DOWNLOAD_OPTIONS_SUCCESS';
 export const CANCEL_DOWNLOAD = 'CANCEL_DOWNLOAD';
 
-const API_URL = config.API_URL;
 const request = new Request();
 
 export function cancelDownload() {
