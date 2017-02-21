@@ -5,8 +5,17 @@ const getVersionsURL = function() {
     return `${API_URL}/versions`;
 }
 
-const getVersionURL = function(resourceID) {
-    return `${API_URL}/versions/${resourceID}`;
+const getVersionURL = function(dimensionID) {
+    return `${API_URL}/versions/${dimensionID}`;
+}
+
+
+const getDatasetsURL = function() {
+    return `${API_URL}/datasets/`;
+}
+
+const getDatasetURL = function(resourceID) {
+    return `${API_URL}/datasets/${resourceID}`;
 }
 
 const getDimensionsURL = function(datasetID) {
@@ -30,6 +39,8 @@ const getJobStatusURL = function(jobID) {
 }
 
 export default {
+    getDatasetsURL,
+    getDatasetURL,
     getVersionURL,
     getVersionsURL,
     getDimensionsURL,
