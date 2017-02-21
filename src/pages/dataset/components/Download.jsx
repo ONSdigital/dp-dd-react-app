@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import config from '../../../config';
+import analytics from '../../../config/analytics';
 import FileTypesHelp from '../../../components/elements/FileTypesHelp';
 import DocumentTitle from '../../../components/elements/DocumentTitle';
 import Checkbox from '../../../components/elements/Checkbox';
@@ -184,8 +185,8 @@ class Download extends Component {
                         return (
                             <div key={index} className="margin-top--1">
                                <Link
+                                   onClick={analytics.logGoalCompleted}
                                    to={file.url}
-                                   target="_blank"
                                    className="btn btn--primary btn--thick btn--wide btn--big uppercase"
                                >{file.name.slice(-3).toUpperCase()}</Link>
                             </div>

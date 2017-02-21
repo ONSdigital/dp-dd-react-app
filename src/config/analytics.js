@@ -14,4 +14,21 @@ export default class analytics {
         ga.pageview(path);
     }
 
+    static logHierarchyAddAll() {
+        ga.event({
+            category: 'Hierarchy selector',
+            action: 'Click',
+            label: 'Add all'
+        })
+    }
+
+    static logGoalCompleted() {
+        ga.event({
+            category: 'Download',
+            action: 'Click',
+            label: 'CSV',
+            value: 1
+        })
+    }
+
 }
