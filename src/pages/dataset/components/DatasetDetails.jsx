@@ -26,7 +26,7 @@ class DatasetDetails extends Component {
         }
 
         router.push({
-            pathname: `/dd/datasets/${dataset.id}/editions/${dataset.version}/versions/${dataset.edition}`
+            pathname: `/dd/datasets/${dataset.id}/editions/${dataset.edition}/versions/${dataset.version}`
         });
     }
 
