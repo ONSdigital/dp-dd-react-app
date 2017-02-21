@@ -2,9 +2,13 @@ import { Request } from './utils';
 import api from '../../config/api';
 import { updateOption, toggleSelectedOptions } from '../dimension/utils';   // todo: move to dimension
 
-export const REQUEST_METADATA = 'REQUEST_METADATA';
-export const REQUEST_METADATA_SUCCESS = 'REQUEST_METADATA_SUCCESS';
-export const REQUEST_METADATA_FAILURE = 'REQUEST_METADATA_FAILURE';
+export const REQUEST_DATASET_METADATA = 'REQUEST_DATASET_METADATA';
+export const REQUEST_DATASET_METADATA_SUCCESS = 'REQUEST_DATASET_METADATA_SUCCESS';
+export const REQUEST_DATASET_METADATA_FAILURE = 'REQUEST_DATASET_METADATA_FAILURE';
+
+export const REQUEST_VERSION_METADATA = 'REQUEST_VERSION_METADATA';
+export const REQUEST_VERSION_METADATA_SUCCESS = 'REQUEST_VERSION_METADATA_SUCCESS';
+export const REQUEST_VERSION_METADATA_FAILURE = 'REQUEST_VERSION_METADATA_FAILURE';
 
 export const REQUEST_DIMENSIONS = 'REQUEST_DIMENSIONS';
 export const REQUEST_DIMENSIONS_SUCCESS = 'REQUEST_DIMENSIONS_SUCCESS';
@@ -253,27 +257,51 @@ function requestHierarchicalSuccess(datasetID, responseData) {
     }
 }
 
-export function requestMetadata(resourceID) {
-
+export function requestDatasetMetadata(datasetID) {
     return dispatch => {
         dispatch({
-            type: REQUEST_METADATA,
-            id: resourceID
+            type: REQUEST_DATASET_METADATA,
+            id: datasetID
         })
 
         return request
-            .get(api.getVersionURL(resourceID))
+            .get(api.getDatasetURL(datasetID))
             .then(function (json) {
-                dispatch(parseMetadata(json));
+                dispatch(parseDatasetMetadata(json));
             }).catch(function (err) {
                 throw(err);
             })
     }
 }
 
-export function parseMetadata(json) {
+export function parseDatasetMetadata(json) {
     return {
-        type: REQUEST_METADATA_SUCCESS,
+        type: REQUEST_DATASET_METADATA_SUCCESS,
+        dataset: json
+    }
+}
+
+export function requestVersionMetadata(resourceID) {
+
+    return dispatch => {
+        dispatch({
+            type: REQUEST_VERSION_METADATA,
+            id: resourceID
+        })
+
+        return request
+            .get(api.getVersionURL(resourceID))
+            .then(function (json) {
+                dispatch(parseVersionMetadata(json));
+            }).catch(function (err) {
+                throw(err);
+            })
+    }
+}
+
+export function parseVersionMetadata(json) {
+    return {
+        type: REQUEST_VERSION_METADATA_SUCCESS,
         dataset: json
     }
 }

@@ -1,5 +1,6 @@
 import {
-    REQUEST_METADATA_SUCCESS,
+    REQUEST_DATASET_METADATA_SUCCESS,
+    REQUEST_VERSION_METADATA_SUCCESS,
     PARSE_DIMENSIONS,
     SAVE_DOWNLOAD_PROGRESS,
     CANCEL_DOWNLOAD,
@@ -10,6 +11,8 @@ const defaultState = {
     id: null,
     title: null,
     info: null,
+    edition: null,
+    version: null,
     dimensions: [],
     metadata: {},
     download: {
@@ -25,7 +28,23 @@ const defaultState = {
 export default function (state = defaultState, action) {
     switch (action.type) {
 
-        case REQUEST_METADATA_SUCCESS:
+        case REQUEST_DATASET_METADATA_SUCCESS:
+            const dataset = action.dataset;
+            const metadata = dataset.latest.metadata || {};
+            const hasMetadata = !!dataset.latest.metadata;
+            const title = action.dataset.title;
+
+            state = Object.assign({}, state, {
+                id: dataset.datasetId,
+                edition: dataset.latest.edition,
+                version: dataset.latest.version,
+                title,
+                metadata,
+                hasMetadata
+            });
+            break;
+
+        case REQUEST_VERSION_METADATA_SUCCESS:
             state = Object.assign({}, state, action.dataset, {
                 hasMetadata: true
             });
