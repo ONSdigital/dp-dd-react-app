@@ -155,7 +155,7 @@ export function saveDimensionOptions({dimensionID, options}) {
     }
 }
 
-export function requestDimensions(datasetID) {
+export function requestDimensions(datasetID, edition, version) {
     return (dispatch) => {
         dispatch({
             type: REQUEST_DIMENSIONS,
@@ -163,7 +163,7 @@ export function requestDimensions(datasetID) {
         });
 
         request
-            .get(api.getDimensionsURL(datasetID))
+            .get(api.getDimensionsURL(datasetID, edition, version))
             .then(function (json) {
                 dispatch(requestDimensionsSuccess(datasetID, json));
                 dispatch(parseDimensions(datasetID, json));

@@ -22,8 +22,8 @@ const getDatasetVersionURL = function(id, edition, version) {
     return `${API_URL}/datasets/${id}/editions/${edition}/versions/${version}`;
 }
 
-const getDimensionsURL = function(datasetID) {
-    return `${API_URL}/versions/${datasetID}/dimensions`;
+const getDimensionsURL = function(id, edition, version) {
+    return `${API_URL}/datasets/${id}/editions/${edition}/versions/${version}/dimensions`;
 }
 
 const getDimensionURL = function(datasetID, dimensionID) {
