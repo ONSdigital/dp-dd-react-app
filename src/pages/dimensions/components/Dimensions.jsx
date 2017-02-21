@@ -19,11 +19,12 @@ const propTypes = {
 class Dimension extends Component {
     constructor(props) {
         super(props)
+        const pathname = props.location.pathname;
         this.state = {
             initialFetchRequired: false,
-            parentPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/`,
-            currentPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/dimensions`,
-            downloadPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/download`
+            parentPath: pathname.replace(/\/\w+\/?$/, ''),            // drop last bit
+            currentPath: pathname,
+            downloadPath: pathname.replace(/\/\w+\/?$/, '/download')  // replace last bit with /download
         }
     }
 
