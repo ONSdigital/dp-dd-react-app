@@ -18,6 +18,10 @@ const getDatasetURL = function(resourceID) {
     return `${API_URL}/datasets/${resourceID}`;
 }
 
+const getDatasetVersionURL = function(id, edition, version) {
+    return `${API_URL}/datasets/${id}/editions/${edition}/versions/${version}`;
+}
+
 const getDimensionsURL = function(datasetID) {
     return `${API_URL}/versions/${datasetID}/dimensions`;
 }
@@ -39,10 +43,11 @@ const getJobStatusURL = function(jobID) {
 }
 
 export default {
+    getVersionURL,      // legacy API
+    getVersionsURL,     // legacy API
     getDatasetsURL,
     getDatasetURL,
-    getVersionURL,
-    getVersionsURL,
+    getDatasetVersionURL,
     getDimensionsURL,
     getDimensionURL,
     getDimensionHierarchyURL,
