@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import api from '../../../config/api';
 import { connect } from 'react-redux';
 import { requestDatasetMetadata } from '../actions';
 
