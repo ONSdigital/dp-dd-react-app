@@ -3,7 +3,7 @@ import api from '../../../config/api';
 import { connect } from 'react-redux';
 import { requestDatasetMetadata } from '../actions';
 
-class DatasetDetailsContainer extends Component {
+class DatasetDetails extends Component {
 
     constructor(props) {
         super(props);
@@ -25,10 +25,9 @@ class DatasetDetailsContainer extends Component {
         if (params.id !== dataset.id || !dataset.edition || !dataset.version) {
             return null;
         }
-        console.log(api);
-debugger;
+
         router.push({
-            pathname: api.getDatasetVersionURL()
+            pathname: `/dd/datasets/${dataset.id}/editions/${dataset.version}/versions/${dataset.edition}`
         });
     }
 
@@ -37,5 +36,11 @@ debugger;
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        dataset: state.dataset
+    };
+}
 
-export default connect(state => ({ dataset: state.dataset }))(DatasetDetailsContainer);
+
+export default connect(mapStateToProps)(DatasetDetails);

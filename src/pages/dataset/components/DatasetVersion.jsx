@@ -79,11 +79,11 @@ class DatasetVersion extends Component {
     }
 }
 
-Component.propTypes = propTypes;
+DatasetVersion.propTypes = propTypes;
 
 function mapStateToProps(state) {
     return state.dataset;
 }
 
 
-export default connect(mapStateToProps)(Details)
+export default connect(mapStateToProps)(DatasetVersion)
