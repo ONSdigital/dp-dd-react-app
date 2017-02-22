@@ -57,14 +57,14 @@ class DatasetVersion extends Component {
 
                         <h3>About this dataset</h3>
                         <p className="page-intro__content font-size--14 margin-bottom--0">{description}</p>
-                        <Link to={this.state.downloadPath}
-                              className="btn btn--primary btn--thick btn--big btn--wide margin-top--2 font-size--17">
-                                Download the complete dataset
-                        </Link>
-                        <br />
                         <Link to={this.state.customisePath}
                               className="btn btn--primary btn--thick btn--big btn--wide margin-top--2 font-size--17">
                                 Customise this dataset
+                        </Link>
+                        <br/>
+                        <Link to={this.state.downloadPath}
+                              className="inline-block margin-top--4 font-size--17">
+                            Download the complete dataset
                         </Link>
 
                         <SupportingFilesList/>
