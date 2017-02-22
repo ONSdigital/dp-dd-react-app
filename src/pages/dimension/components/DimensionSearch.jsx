@@ -41,7 +41,7 @@ class Search extends Component {
     renderNoResults() {
         return (
             <div>
-                <h1 className="margin-top--4 margin-bottom">No results found</h1>
+                <h1 className="margin-top--4 margin-bottom">No results found for '{this.state.term}'</h1>
                 <p>Please try <Link to={this.props.location.pathname + `?action=search`}>searching again</Link> using different words.</p>
             </div>
         )
