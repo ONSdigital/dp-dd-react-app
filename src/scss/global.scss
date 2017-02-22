@@ -6,6 +6,10 @@
         font-size: 16px;
     }
 
+    a:not(.btn) {
+        text-decoration: underline;
+    }
+
 }
 
 body {
@@ -24,9 +28,7 @@ dfn {
     font-style: normal;
 }
 
-a {
-    text-decoration: underline;
-}
+
 
 .btn {
     font-size: $font-size;

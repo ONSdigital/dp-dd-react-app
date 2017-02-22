@@ -62,7 +62,7 @@ class Dimension extends Component {
         const componentProps = {
             dimensions: this.props.dimensions,
             pathname: this.props.location.pathname
-        }
+        };
 
         return (
             <div className="wrapper">
@@ -77,7 +77,7 @@ class Dimension extends Component {
                         <Link className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
                               to={this.state.downloadPath}>Choose a download format</Link>
                         <br/>
-                        <a className="inline-block margin-top--4 font-size--17" onClick={browserHistory.goBack}>Cancel</a>
+                        <Link className="inline-block margin-top--4 font-size--17" to={this.state.parentPath}>Cancel</Link>
                     </div>
                 </div>
             </div>

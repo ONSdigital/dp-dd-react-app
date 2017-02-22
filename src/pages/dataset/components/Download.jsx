@@ -184,13 +184,13 @@ class Download extends Component {
                     this.props.download.files.map((file, index) => {
                         return (
                             <div key={index} className="margin-top--1">
-                               <Link
-                                   target="_blank"
-                                   rel="noopener noreferrer"
+                               <a
+                                   //{/*target="_blank"*/}
+                                   //{/*rel="noopener noreferrer"*/}
                                    onClick={analytics.logGoalCompleted}
-                                   to={file.url}
+                                   href={file.url}
                                    className="btn btn--primary btn--thick btn--wide btn--big uppercase"
-                               >{file.name.slice(-3).toUpperCase()}</Link>
+                               >{file.name.slice(-3).toUpperCase()}</a>
                             </div>
                         )
                     })
