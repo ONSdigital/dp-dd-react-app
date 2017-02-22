@@ -115,9 +115,16 @@ class Dimension extends Component {
         };
         const action = this.props.location.query.action;
         const componentProps = Object.assign({}, this.props, defaultProps);
+        componentProps.router = this.props.router;
+        componentProps.onSave =() => {
+            this.props.router.push(this.state.parentPath);
+        }
 
         if (action) switch (action) {
             case 'browse':
+                if (this.props.isFlat) {
+                    return <SimpleSelector {...componentProps} />;
+                }
                 return <DimensionBrowser {...componentProps} />;
             case 'search':
                 return <DimensionSearch {...componentProps} />;
@@ -135,11 +142,6 @@ class Dimension extends Component {
                 screen = <HierarchyNavigator {...componentProps} />;
                 break;
             default:
-                const parentPath = this.state.parentPath;
-                componentProps.router = this.props.router;
-                componentProps.onSave =() => {
-                    this.props.router.push(parentPath);
-                }
                 screen = <SimpleSelector {...componentProps} />;
         }
 
@@ -152,6 +154,18 @@ class Dimension extends Component {
 }
 
 Dimension.propTypes = propTypes;
+
+// todo: move to utils
+function hasFlatHierarchy(options) {
+    let hierarchical = true;
+    const length = options.length;
+    let index = 0;
+    while (index < length && hierarchical) {
+        return true;
+        index++;
+    }
+    return !hierarchical;
+}
 
 function mapStateToProps(state, ownProps) {
     const dataset = state.dataset;
@@ -177,6 +191,7 @@ function mapStateToProps(state, ownProps) {
             isEdited: dimension.edited || false,
             isReady: !dimension.hierarchical ? true : dimension.hierarchyReady || false,
             isHierarchical: dimension.hierarchical || false,
+            isFlat: hasFlatHierarchy(dimension.options),
             optionsCount: dimension.optionsCount,
             selectedCount: dimension.selectedCount
         });
@@ -184,5 +199,6 @@ function mapStateToProps(state, ownProps) {
 
     return props;
 }
+
 
 export default connect(mapStateToProps)(Dimension);
