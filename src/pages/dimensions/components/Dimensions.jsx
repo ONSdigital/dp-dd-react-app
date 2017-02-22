@@ -34,6 +34,7 @@ class Dimension extends Component {
         if (!this.props.hasMetadata) {
             this.state.initialFetchRequired = true;
             dispatch(requestVersionMetadata(params.id, params.edition, params.version));
+            return;
         }
 
         if (!this.props.hasDimensions) {
