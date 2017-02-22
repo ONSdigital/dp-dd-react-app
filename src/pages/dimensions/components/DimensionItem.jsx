@@ -20,14 +20,14 @@ export default class DimensionItem extends Component {
         const pathname = `${this.props.pathname}/${this.props.id}`;
         return (
             <li className="margin-left--0 padding-bottom--2 padding-top--2 border-top--gallery-md border-bottom--gallery-md col-wrap width-lg--39">
-                <div className="col col--md-8 col--lg-8">
+                <div className="col col--md-24 col--lg-19">
                     <strong>{this.props.name}</strong>
                 </div>
-                <div className="col col--md-33 col--lg-25">
+                <div className="col col--md-17 col--lg-14">
                     {this.props.label}
                 </div>
                 <div className="col col--md-6 col--lg-6">
-                    <Link to={pathname} className="float-right">Customise</Link>
+                    <Link to={pathname} className="float-right underline-link">Customise</Link>
                 </div>
             </li>
 
