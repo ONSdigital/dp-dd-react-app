@@ -47,7 +47,7 @@ class Summary extends Component {
     renderSummary() {
         const options = this.props.options;
         const currentPath = this.props.location.pathname;
-        const dimensionsPath = currentPath.replace(/\/[\w\%]+\/?$/, ''); //drop the last bit
+        const dimensionsPath = currentPath.replace(/\/[\w\s%]+\/?$/, ''); //drop the last bit
 
         return (
             <div className="margin-bottom--8">
@@ -78,7 +78,7 @@ class Summary extends Component {
 
     renderEmptySummary() {
         const currentPath = this.props.location.pathname;
-        const dimensionsPath = currentPath.replace(/\/\w+\/?$/, ''); //drop the last bit
+        const dimensionsPath = currentPath.replace(/\/[\w\s%]+\/?$/, ''); //drop the last bit
         return (
             <div className="margin-bottom--8">
                 <div>

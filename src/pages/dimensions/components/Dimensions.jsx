@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
-import config from '../../../config';
 import {
     requestVersionMetadata,
     requestDimensions
@@ -23,9 +22,9 @@ class Dimension extends Component {
         const pathname = props.location.pathname;
         this.state = {
             initialFetchRequired: false,
-            parentPath: pathname.replace(/\/\w+\/?$/, ''),            // drop last bit
+            parentPath: pathname.replace(/\/[\w\s%]+\/?$/, ''),            // drop last bit
             currentPath: pathname,
-            downloadPath: pathname.replace(/\/\w+\/?$/, '/download')  // replace last bit with /download
+            downloadPath: pathname.replace(/\/[\w\s%]+\/?$/, '/download')  // replace last bit with /download
         }
     }
 
