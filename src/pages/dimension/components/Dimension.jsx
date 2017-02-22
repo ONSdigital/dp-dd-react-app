@@ -31,11 +31,13 @@ const propTypes = {
 
 class Dimension extends Component {
     constructor(props) {
+        const pathname = props.location.pathname;
+
         super(props);
         this.state = {
-            parentPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/`,
-            currentPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/dimensions`,
-            downloadPath: `${config.BASE_PATH}/datasets/${this.props.params.id}/download`,
+            parentPath: pathname.replace(/\/\w+\/?$/, ''),
+            currentPath: pathname,
+            downloadPath: pathname.replace(/\/\w+\/?$/, '/download'),
             requestedOptionsUpdate: false,
             requestedDeselectAll: false
 
@@ -133,8 +135,11 @@ class Dimension extends Component {
                 screen = <HierarchyNavigator {...componentProps} />;
                 break;
             default:
+                const parentPath = this.state.parentPath;
                 componentProps.router = this.props.router;
-                componentProps.onSave =() => this.props.router.push(this.state.currentPath);
+                componentProps.onSave =() => {
+                    this.props.router.push(parentPath);
+                }
                 screen = <SimpleSelector {...componentProps} />;
         }
 

@@ -34,7 +34,6 @@ class SimpleSelector extends Component {
                 return { id: option.id, selected: option.selected }
             }),
             errorMessage: "",
-            parentPath: `${config.BASE_PATH}/datasets/${this.props.datasetID}/dimensions/`,
             allEnabled: false,
             allDisabled: false
         }

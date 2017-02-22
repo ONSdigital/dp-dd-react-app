@@ -47,7 +47,7 @@ class Summary extends Component {
     renderSummary() {
         const options = this.props.options;
         const currentPath = this.props.location.pathname;
-        const dimensionsPath = currentPath.replace(/\/\w+\/?$/, ''); //drop the last bit
+        const dimensionsPath = currentPath.replace(/\/[\w\%]+\/?$/, ''); //drop the last bit
 
         return (
             <div className="margin-bottom--8">
@@ -78,6 +78,7 @@ class Summary extends Component {
 
     renderEmptySummary() {
         const currentPath = this.props.location.pathname;
+        const dimensionsPath = currentPath.replace(/\/\w+\/?$/, ''); //drop the last bit
         return (
             <div className="margin-bottom--8">
                 <div>
@@ -87,7 +88,7 @@ class Summary extends Component {
                     </p>
                 </div>
                 <div className="margin-bottom--double">
-                    <Link to={{pathname: currentPath, query: { action: 'customise' }}}
+                    <Link to={{pathname: dimensionsPath, query: { action: 'customise' }}}
                           className="btn btn--primary btn--thick btn--wide btn--big margin-right--half font-size--17">Add more</Link>
                 </div>
             </div>
