@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Link, hashHistory } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { findOptionByID, findOptionsByType } from '../utils';
 import SimpleSelector from './SimpleSelector';
@@ -102,17 +102,19 @@ class DimensionBrowser extends Component {
             }
             let info = option.options && option.options.length > 0 ?`For example ${option.options[0].name}` : '';
             return (
-                <div key={index} className="margin-top">
+                <p key={index} className="margin-top">
                     <Link to={{ pathname, query }}>{label}</Link><br />
                     <span>{info}</span>
-                </div>
+                </p>
             )
         })
 
         return (
             <div className="margin-bottom--8">
-                <h2 className="margin-top margin-bottom">Customise location</h2>
+                <h1 className="margin-top--4 margin-bottom">Customise location</h1>
                 {optionElements}
+                <br/>
+                <a className="inline-block font-size--17" onClick={browserHistory.goBack}>Cancel</a>
             </div>
         )
     }
