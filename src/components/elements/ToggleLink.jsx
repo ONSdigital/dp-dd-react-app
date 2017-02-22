@@ -27,7 +27,7 @@ export default class ToggleSelectAll extends Component {
     render() {
         if (this.props.enabled) {
             return (
-                <a className="btn btn--link margin-right"
+                <a className="margin-right"
                    onClick={this.handleOnClick}>{this.props.label}</a>
             )
         }
