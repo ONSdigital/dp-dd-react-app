@@ -2,7 +2,7 @@
 
 #app {
 
-    p, li, label {
+    p, li, label, dt, dd, input {
         font-size: 16px;
     }
 
@@ -50,6 +50,7 @@ a:hover {
         color: $poppy;
         font-weight: 600;
         margin-bottom: $baseline;
+        font-size: 16px;
     }
 
     &__group {
