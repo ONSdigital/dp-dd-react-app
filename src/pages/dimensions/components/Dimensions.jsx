@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import config from '../../../config';
 import {
     requestVersionMetadata,
     requestDimensions
 } from '../../dataset/actions';
+
 
 import DimensionList from './DimensionList';
 import DocumentTitle from '../../../components/elements/DocumentTitle';
@@ -75,8 +76,8 @@ class Dimension extends Component {
                     <div className="margin-top--4 margin-bottom--8">
                         <Link className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
                               to={this.state.downloadPath}>Choose a download format</Link>
-                        <Link className="btn btn--secondary btn--thick btn--wide btn--big"
-                              to={this.state.parentPath}>Cancel</Link>
+                        <br/>
+                        <a className="inline-block margin-top--4 font-size--17" onClick={browserHistory.goBack}>Cancel</a>
                     </div>
                 </div>
             </div>

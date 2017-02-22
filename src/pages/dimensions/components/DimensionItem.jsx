@@ -27,7 +27,7 @@ export default class DimensionItem extends Component {
                     {this.props.label}
                 </div>
                 <div className="col col--md-6 col--lg-6">
-                    <Link to={pathname} className="float-right underline-link">Customise</Link>
+                    <Link to={pathname} className="float-right">Customise</Link>
                 </div>
             </li>
 
@@ -35,4 +35,4 @@ export default class DimensionItem extends Component {
     }
 }
 
-DimensionItem.propTypes = propTypes
+DimensionItem.propTypes = propTypes;
