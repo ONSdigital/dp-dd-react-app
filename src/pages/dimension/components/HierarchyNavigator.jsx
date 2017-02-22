@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { selectAllOptions } from '../../dataset/actions';
 import analytics from '../../../config/analytics';
+import config from '../../../config';
 
 class HierarchyNavigator extends Component {
     constructor(props) {
@@ -25,6 +26,7 @@ class HierarchyNavigator extends Component {
     render () {
         const pathname = this.props.location.pathname;
         const dimensionName = this.props.dimensionName;
+        const parentPath = `${config.BASE_PATH}/datasets/${this.props.params.id}/editions/${this.props.params.edition}/versions/${this.props.params.version}/dimensions`;
 
         return (
             <div className="margin-bottom--8">
@@ -44,7 +46,7 @@ class HierarchyNavigator extends Component {
                     <p className="flush">Add all dimension values</p>
                 </div>
                 <br/>
-                <a className="inline-block margin-top--4 font-size--17" onClick={browserHistory.goBack}>Cancel</a>
+                <Link className="inline-block margin-top--4 font-size--17" to={parentPath} >Cancel</Link>
             </div>
         )
     }
