@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { selectAllOptions } from '../../dataset/actions';
 import analytics from '../../../config/analytics';
@@ -28,7 +28,7 @@ class HierarchyNavigator extends Component {
 
         return (
             <div className="margin-bottom--8">
-                <h2 className="margin-top margin-bottom--double">Customise {dimensionName}</h2>
+                <h1 className="margin-top--4 margin-bottom">{dimensionName}</h1>
                 <div>
                     <h2><Link to={{pathname, query: {action: 'search'}}}>Search</Link></h2>
                     Search for specific location
@@ -43,6 +43,8 @@ class HierarchyNavigator extends Component {
                     <h2><a onClick={this.selectAll}>Add all</a></h2>
                     Add all dimension values
                 </div>
+                <br/>
+                <a className="inline-block margin-top--4 font-size--17" onClick={browserHistory.goBack}>Cancel</a>
             </div>
         )
     }

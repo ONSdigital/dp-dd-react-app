@@ -41,7 +41,7 @@ class Search extends Component {
     renderNoResults() {
         return (
             <div>
-                <h1 className="margin-top margin-bottom">No results found</h1>
+                <h1 className="margin-top--4 margin-bottom">No results found</h1>
                 <p>Please try <Link to={this.props.location.pathname + `?action=search`}>searching again</Link> using different words.</p>
             </div>
         )
@@ -50,7 +50,7 @@ class Search extends Component {
     renderSearchInput() {
         return (
             <div>
-                <h1 className="margin-top margin-bottom">Search</h1>
+                <h1 className="margin-top--4 margin-bottom">Search</h1>
                 <form onSubmit={this.search}>
                     <label className="block baseline">Search for a location</label>
                     <input className="keyword-search__input" value={this.state.value} type="search"

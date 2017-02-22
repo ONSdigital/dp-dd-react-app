@@ -99,7 +99,7 @@ class HierarchySelector extends Component {
 
         return (
             <form className="form margin-bottom--8">
-                <h1 className="margin-top--half margin-bottom">Select {option.name}</h1>
+                <h1 className="margin-top--4 margin-bottom">Select {option.name}</h1>
                 <div className="margin-bottom--2">
                     <ToggleLink label="Select all" enabled={!allEnabled} onClick={this.toggleAll(true)} />
                     <ToggleLink label="Deselect all" enabled={!allDisabled} onClick={this.toggleAll(false)} />
