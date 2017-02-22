@@ -35,9 +35,9 @@ class Dimension extends Component {
 
         super(props);
         this.state = {
-            parentPath: pathname.replace(/\/\w+\/?$/, ''),
+            parentPath: pathname.replace(/\/[\w\%]+\/?$/, ''),
             currentPath: pathname,
-            downloadPath: pathname.replace(/\/\w+\/?$/, '/download'),
+            downloadPath: pathname.replace(/\/[\w\%]+\/?$/, '/download'),
             requestedOptionsUpdate: false,
             requestedDeselectAll: false
 

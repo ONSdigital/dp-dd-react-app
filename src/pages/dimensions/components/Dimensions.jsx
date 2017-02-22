@@ -22,9 +22,9 @@ class Dimension extends Component {
         const pathname = props.location.pathname;
         this.state = {
             initialFetchRequired: false,
-            parentPath: pathname.replace(/\/\w+\/?$/, ''),            // drop last bit
+            parentPath: pathname.replace(/\/[\w\%]+\/?$/, ''),            // drop last bit
             currentPath: pathname,
-            downloadPath: pathname.replace(/\/\w+\/?$/, '/download')  // replace last bit with /download
+            downloadPath: pathname.replace(/\/[\w\%]+\/?$/, '/download')  // replace last bit with /download
         }
     }
 
