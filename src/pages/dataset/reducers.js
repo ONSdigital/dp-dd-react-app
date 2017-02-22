@@ -31,16 +31,16 @@ export default function (state = defaultState, action) {
         case REQUEST_DATASET_METADATA_SUCCESS:
             const dataset = action.dataset;
             const metadata = dataset.latest.metadata || {};
-            const hasMetadata = !!dataset.latest.metadata;
+            const hasDatasetMetadata = !!dataset.latest.metadata;
             const title = action.dataset.title;
 
             state = Object.assign({}, state, {
                 id: dataset.datasetId,
                 edition: dataset.latest.edition,
                 version: dataset.latest.version,
+                hasDatasetMetadata,
                 title,
-                metadata,
-                hasMetadata
+                metadata
             });
             break;
 
