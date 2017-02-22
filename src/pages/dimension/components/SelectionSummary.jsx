@@ -52,10 +52,10 @@ class Summary extends Component {
         return (
             <div className="margin-bottom--8">
                 <div>
-                    <h2 className="margin-top margin-bottom--double">Selection summary</h2>
-                    <div className="margin-bottom width-lg--39">
+                    <h1 className="margin-top--4 margin-bottom--double">Selection summary</h1>
+                    <div className="margin-bottom--4 width-lg--39">
                         <a onClick={this.removeAllOptions}
-                           className="btn-remove-all">Remove all selections</a>
+                           className="btn-remove-all font-size--17">Remove all selections</a>
                     </div>
                     <ul className="list--neutral">
                         {options.map(option => {
@@ -64,9 +64,9 @@ class Summary extends Component {
                     </ul>
                 </div>
 
-                <div className="margin-bottom width-lg--39">
+                <div className="margin-bottom--4 width-lg--39">
                     <Link to={{pathname: currentPath, query: { action: 'customise' }}}
-                          className="btn-add-more">Add more</Link>
+                          className="btn-add-more font-size--17">Add more</Link>
                 </div>
                 <div className="margin-bottom--double">
                     <Link to={dimensionsPath}
@@ -82,13 +82,13 @@ class Summary extends Component {
             <div className="margin-bottom--8">
                 <div>
                     <h2 className="margin-top margin-bottom--double">Selection summary</h2>
-                    <div className="margin-bottom width-lg--39">
+                    <p className="margin-bottom width-lg--39">
                         Nothing selected
-                    </div>
+                    </p>
                 </div>
                 <div className="margin-bottom--double">
                     <Link to={{pathname: currentPath, query: { action: 'customise' }}}
-                          className="btn btn--primary btn--thick btn--wide btn--big margin-right--half">Add more</Link>
+                          className="btn btn--primary btn--thick btn--wide btn--big margin-right--half font-size--17">Add more</Link>
                 </div>
             </div>
         )
@@ -103,8 +103,8 @@ class Summary extends Component {
             <li key={id} className="margin-left--0 margin-left--0 padding-bottom--2 col-wrap width-lg--39">
 
                 <div className="col margin-left--0 width-lg--39 border-bottom--gallery-md padding-bottom--2">
-                    <h3 className="col col--md-33 col--lg-33">{name} ({options.length})</h3>
-                    <div className="col col--md-6 col--lg-6 float-right">
+                    <h3 className="col col--md-31 col--lg-31">{name} ({options.length})</h3>
+                    <div className="col col--md-8 col--lg-8 float-right">
                         <a onClick={this.removeOptions(options)}>Remove group</a>
                     </div>
                 </div>
@@ -120,10 +120,10 @@ class Summary extends Component {
     renderSummaryItemChild({ name, id }) {
         return (
             <li key={id} className="margin-left--0 col width-lg--39 border-bottom--gallery-md padding-bottom--2">
-                    <div className="col col--md-33 col--lg-33">
+                    <div className="col col--md-31 col--lg-31">
                         <span>{name}</span>
                     </div>
-                    <div className="col col--md-6 col--lg-6 float-right">
+                    <div className="col col--md-8 col--lg-8 float-right">
                         <a onClick={this.removeOptions({id})}>Remove</a>
                     </div>
             </li>

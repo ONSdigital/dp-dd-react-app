@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, hashHistory } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import SimpleSelector from './SimpleSelector';
 import { searchOptions } from '../utils';
@@ -41,7 +41,7 @@ class Search extends Component {
     renderNoResults() {
         return (
             <div>
-                <h1 className="margin-top margin-bottom">No results found</h1>
+                <h1 className="margin-top--4 margin-bottom">No results found</h1>
                 <p>Please try <Link to={this.props.location.pathname + `?action=search`}>searching again</Link> using different words.</p>
             </div>
         )
@@ -50,13 +50,15 @@ class Search extends Component {
     renderSearchInput() {
         return (
             <div>
-                <h1 className="margin-top margin-bottom">Search</h1>
+                <h1 className="margin-top--4 margin-bottom">Search</h1>
                 <form onSubmit={this.search}>
                     <label className="block baseline">Search for a location</label>
                     <input className="keyword-search__input" value={this.state.value} type="search"
                            onChange={this.onChange}/>
                     <div className="margin-top--2 margin-bottom--4">
                         <button type="submit" className="btn btn--primary btn--thick btn--wide btn--big margin-right--half">Search</button>
+                        <br/>
+                        <a className="inline-block margin-top--4 font-size--17" onClick={browserHistory.goBack}>Cancel</a>
                     </div>
                 </form>
             </div>

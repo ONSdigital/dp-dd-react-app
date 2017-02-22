@@ -63,7 +63,7 @@ class DatasetVersion extends Component {
                         </Link>
                         <br/>
                         <Link to={this.state.downloadPath}
-                              className="inline-block margin-top--3 font-size--17 underline-link">
+                              className="inline-block margin-top--3 font-size--17">
                             Download the complete dataset
                         </Link>
 

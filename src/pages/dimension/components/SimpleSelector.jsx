@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { hashHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
 import config from '../../../config';
@@ -113,10 +113,10 @@ class SimpleSelector extends Component {
 
         return (
             <form className="form">
-                <h1 className="margin-top--half margin-bottom">What do you want to include?</h1>
+                <h1 className="margin-top--4 margin-bottom">{this.props.dimensionID}</h1>
                 <div className="margin-bottom--2">
-                    <ToggleLink label="Enable all" enabled={!allEnabled} onClick={this.toggleAll(true)} />
-                    <ToggleLink label="Disable all" enabled={!allDisabled} onClick={this.toggleAll(false)} />
+                    <ToggleLink label="Select all" enabled={!allEnabled} onClick={this.toggleAll(true)} />
+                    <ToggleLink label="Deselect all" enabled={!allDisabled} onClick={this.toggleAll(false)} />
                 </div>
                 <div className={(errorMessage.length > 0) && "error__group"}>
                     <div className={(errorMessage.length > 0) && "error__message"}>{errorMessage}</div>
@@ -125,7 +125,8 @@ class SimpleSelector extends Component {
                 <div className="margin-top--4 margin-bottom--8">
                     <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
                        onClick={this.saveSelections}>Save selection</a>
-                    <a className="btn btn--secondary btn--thick btn--wide btn--big" onClick={hashHistory.goBack}>Cancel</a>
+                    <br/>
+                    <a className="inline-block margin-top--4 font-size--17" onClick={browserHistory.goBack}>Cancel</a>
                 </div>
             </form>
         )
