@@ -20,6 +20,7 @@ class DatasetVersion extends Component {
         const baseURL = `${config.BASE_PATH}/datasets/${params.id}/editions/${params.edition}/versions/${params.version}`;
 
         this.state = {
+            metadataRequested: false,
             downloadPath: `${baseURL}/download`,
             customisePath: `${baseURL}/dimensions`,
         }
@@ -29,7 +30,8 @@ class DatasetVersion extends Component {
         const dispatch = this.props.dispatch;
         const params = this.props.params;
 
-        if (params.id !== this.props.id) {
+        if (params.id !== this.props.id || !this.state.metadataRequested) {
+            this.state.metadataRequested = true;
             dispatch(requestVersionMetadata(params.id, params.edition, params.version));
         }
     }
