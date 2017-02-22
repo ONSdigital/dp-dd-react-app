@@ -56,7 +56,7 @@ class DatasetVersion extends Component {
                     <div className="col--lg-two-thirds">
 
                         <h3>About this dataset</h3>
-                        <p className="page-intro__content font-size--14 margin-bottom--0">{description}</p>
+                        <p className="page-intro__content margin-bottom--0">{description}</p>
                         <Link to={this.state.downloadPath}
                               className="btn btn--primary btn--thick btn--big btn--wide margin-top--2 font-size--17">
                                 Download the complete dataset
@@ -71,13 +71,13 @@ class DatasetVersion extends Component {
                     </div>
 
                     <Foldable header="Selected customisations of this dataset" id="expandable-1" expanded={true} >
-                        <div className="margin-bottom">Lorem ipsum</div>
+                        <p className="margin-top--0">Lorem ipsum</p>
                     </Foldable>
                     <Foldable header="Guide to quality" id="expandable-2">
-                        <div className="margin-bottom">Lorem ipsum</div>
+                        <p className="margin-top--0">Lorem ipsum</p>
                     </Foldable>
                     <Foldable header="Previous versions" id="expandable-3">
-                        <div className="margin-bottom">Lorem ipsum</div>
+                        <p className="margin-top--0">Lorem ipsum</p>
                     </Foldable>
                 </div>
             </div>
