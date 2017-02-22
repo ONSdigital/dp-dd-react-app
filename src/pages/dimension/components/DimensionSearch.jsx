@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import SimpleSelector from './SimpleSelector';
 import { searchOptions } from '../utils';
@@ -58,7 +58,7 @@ class Search extends Component {
                     <div className="margin-top--2 margin-bottom--4">
                         <button type="submit" className="btn btn--primary btn--thick btn--wide btn--big margin-right--half">Search</button>
                         <br/>
-                        <a className="inline-block margin-top--4 font-size--17" onClick={browserHistory.goBack}>Cancel</a>
+                        <Link className="inline-block margin-top--4 font-size--17" to={this.props.location.pathname}>Cancel</Link>
                     </div>
                 </form>
             </div>
