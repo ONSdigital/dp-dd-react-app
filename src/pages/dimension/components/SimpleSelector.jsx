@@ -46,7 +46,8 @@ class SimpleSelector extends Component {
         });
     }
 
-    saveSelections() {
+    saveSelections(e) {
+        e.preventDefault();
         if (!this.isSelectionValid()) {
             this.setState({errorMessage: "Select at least one option"});
             return;

@@ -65,8 +65,8 @@ class Download extends Component {
         });
     }
 
-    saveOptions() {
-
+    saveOptions(e) {
+        e.preventDefault();
         if (!this.isSelectionValid()) {
             this.setState({errorMessage: "Select at least one option"});
             return;
