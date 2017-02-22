@@ -67,7 +67,7 @@ class Dimension extends Component {
             <div className="wrapper">
                 <div className="margin-top--double">
                     <DocumentTitle title={`Customise ${this.props.title}`}>
-                        <h2 className="margin-top--half margin-bottom">Customise this dataset</h2>
+                        <h1 className="margin-top--half margin-bottom">Customise this dataset</h1>
                     </DocumentTitle>
                 </div>
                 <div>
