@@ -66,6 +66,7 @@ export function selectAllOptions(dimensionID) {
 }
 
 export function saveDownloadOptions(options) {
+
     return (dispatch, getState) => {
         const state = getState();
 
@@ -81,10 +82,10 @@ export function saveDownloadOptions(options) {
             }
         }).filter(dimension => {
             return dimension.options.length > 0;
-        })
+        });
 
         const body = JSON.stringify({
-            id: state.dataset.id,
+            id: state.dataset.versionID,
             fileFormats: options,
             dimensions
         });

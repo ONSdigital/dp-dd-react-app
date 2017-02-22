@@ -46,13 +46,13 @@ export default function (state = defaultState, action) {
 
         case REQUEST_VERSION_METADATA_SUCCESS:
             state = Object.assign({}, state, action.dataset, {
+                versionID: action.dataset.id,
                 hasMetadata: true
             });
             break;
 
         case PARSE_DIMENSIONS:
             state = Object.assign({}, state, {
-                id: action.dataset.id,
                 dimensions: action.dataset.dimensions.length > 1
                     ? action.dataset.dimensions
                     : state.dimensions.map(dimension => {
