@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import config from '../../../config';
 
 const propTypes = {
     id: PropTypes.string,
@@ -30,7 +29,6 @@ export default class DimensionItem extends Component {
                     <Link to={pathname} className="float-right">Customise</Link>
                 </div>
             </li>
-
         )
     }
 }
