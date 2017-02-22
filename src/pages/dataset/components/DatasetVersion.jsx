@@ -53,32 +53,42 @@ class DatasetVersion extends Component {
                     <IntroBlock {...metadata} {...{title}} />
                 }
                 <div className="wrapper margin-bottom--double">
-                    <div className="col--lg-two-thirds">
+                    <div className="col--lg-two-thirds margin-bottom--6">
 
                         <h3>About this dataset</h3>
-                        <p className="page-intro__content font-size--14 margin-bottom--0">{description}</p>
-                        <Link to={this.state.downloadPath}
-                              className="btn btn--primary btn--thick btn--big btn--wide margin-top--2 font-size--17">
-                                Download the complete dataset
-                        </Link>
-                        <br />
+                        <p className="page-intro__content margin-bottom--0">{description}</p>
                         <Link to={this.state.customisePath}
                               className="btn btn--primary btn--thick btn--big btn--wide margin-top--2 font-size--17">
                                 Customise this dataset
                         </Link>
+                        <br/>
+                        <Link to={this.state.downloadPath}
+                              className="inline-block margin-top--3 font-size--17">
+                            Download the complete dataset
+                        </Link>
 
-                        <SupportingFilesList/>
+                        {/*<SupportingFilesList/>*/}
                     </div>
 
-                    <Foldable header="Selected customisations of this dataset" id="expandable-1" expanded={true} >
-                        <div className="margin-bottom">Lorem ipsum</div>
-                    </Foldable>
-                    <Foldable header="Guide to quality" id="expandable-2">
-                        <div className="margin-bottom">Lorem ipsum</div>
-                    </Foldable>
-                    <Foldable header="Previous versions" id="expandable-3">
-                        <div className="margin-bottom">Lorem ipsum</div>
-                    </Foldable>
+                    <h3>Supporting information</h3>
+                    <p className="margin-top--0 margin-bottom">
+                        This section will provide detailed metadata. It will describe the content and dimensions of this dataset.
+                    </p>
+
+                    <h3>Selected customisations of this dataset</h3>
+                    <p className="margin-top--0 margin-bottom">
+                        This section will contain pre-generated subsets of this dataset. The statistician responsible will create these to highlight key areas.
+                    </p>
+
+                    <h3>Guide to quality</h3>
+                    <p className="margin-top--0 margin-bottom">
+                        This section will contain details around the statistical accuracy of this dataset. It will also contain any important considerations for interpreting and using this data.
+                    </p>
+
+                    <h3>Previous versions</h3>
+                    <p className="margin-top--0 margin-bottom">
+                        This section will provide access to previous versions of the dataset.
+                    </p>
                 </div>
             </div>
         )

@@ -97,7 +97,7 @@ class Dimension extends Component {
 
         return (
             <div className="wrapper">
-                <div className="margin-top--double">
+                <div>
                     <DocumentTitle title={"Customise " + this.props.dimensionName} />
                 </div>
                 <div>

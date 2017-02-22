@@ -128,10 +128,10 @@ class Download extends Component {
 
         return (
             <div className="wrapper margin-bottom--8">
-                <div className="margin-top--double">
+                <div>
                     <DocumentTitle title={"Download " + this.props.title} />
                 </div>
-                <h1 className="margin-top--2 margin-bottom--half">Download options</h1>
+                <h1 className="margin-top--4 margin-bottom">Download options</h1>
                 <p className="flush">Choose the file type(s) you want to download.</p>
 
                 <FileTypesHelp/>
@@ -151,8 +151,8 @@ class Download extends Component {
                 </div>
 
                 <div className="margin-top--3 margin-bottom--8">
-                    <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half" onClick={this.saveOptions}>Generate files</a>
-                    <a className="btn btn--secondary btn--thick btn--wide btn--big" onClick={browserHistory.goBack}>Cancel</a>
+                    <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half" onClick={this.saveOptions}>Generate files</a><br/>
+                    <a className="inline-block margin-top--4 font-size--17" onClick={browserHistory.goBack}>Cancel</a>
                 </div>
             </div>
         )
@@ -164,7 +164,7 @@ class Download extends Component {
                 <div className="margin-top--double">
                     <DocumentTitle title={"Download " + this.props.title} />
                 </div>
-                <h1 className="margin-top--2 margin-bottom--half">Download options</h1>
+                <h1 className="margin-top--4 margin-bottom">Download options</h1>
                 <p className="margin-top--0 margin-bottom--8 font-size--17 loading">Your file is being generated</p>
             </div>
         )
@@ -177,7 +177,7 @@ class Download extends Component {
                     <DocumentTitle title={"Download " + this.props.title} />
                 </div>
 
-                <h1 className="margin-top--2 margin-bottom--half">Download options</h1>
+                <h1 className="margin-top--4 margin-bottom">Download options</h1>
 
                 <p className="margin-top--0 margin-bottom--1">These files are available for you to download.</p>
                 {
