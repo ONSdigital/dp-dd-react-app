@@ -56,10 +56,11 @@ export default class Checkbox extends Component {
                        onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} disabled={disabled} />
                 <label className="checkbox__label" htmlFor={this.props.id}>
                     {this.props.label}
+
+                    {!this.props.note || (
+                        <span> ({this.props.note})</span>
+                    )}
                 </label>
-                {!this.props.note || (
-                    <small className="btn--small">({this.props.note})</small>
-                )}
             </div>
         )
     }
