@@ -20,13 +20,13 @@ export default class TimeRangeSelector extends Component {
         const groupedOptions = {};
         options.forEach(option => {
             const levelType = option.levelType;
-            if (!groupedOptions[levelType.code]) {
-                groupedOptions[levelType.code]={
+            if (!groupedOptions[levelType.name]) {
+                groupedOptions[levelType.name]={
                     levelType,
                     options: []
                 };
             }
-            groupedOptions[levelType.code].options.push(option);
+            groupedOptions[levelType.name].options.push(option);
         });
         return groupedOptions;
     }
