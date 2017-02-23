@@ -24,8 +24,6 @@ class Dimension extends Component {
             currentPath: pathname,
             downloadPath: appendPathComponent(dropLastPathComponent(pathname), '/download')
         }
-
-        console.log(this.state.downloadPath);
     }
 
     componentWillMount() {
