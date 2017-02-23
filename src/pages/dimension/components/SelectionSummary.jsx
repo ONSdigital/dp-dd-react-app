@@ -88,7 +88,7 @@ class Summary extends Component {
                     </p>
                 </div>
                 <div className="margin-bottom--double">
-                    <Link to={{pathname: dimensionsPath, query: { action: 'customise' }}}
+                    <Link to={{pathname: currentPath, query: { action: 'customise' }}}
                           className="btn btn--primary btn--thick btn--wide btn--big margin-right--half font-size--17">Add more</Link>
                 </div>
             </div>
