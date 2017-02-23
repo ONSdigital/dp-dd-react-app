@@ -52,7 +52,7 @@ class Search extends Component {
             <div>
                 <h1 className="margin-top--4 margin-bottom">Search</h1>
                 <form onSubmit={this.search}>
-                    <label className="block baseline">Search for a location</label>
+                    <label className="block baseline">Search in {this.props.dimensionID}</label>
                     <input className="keyword-search__input" value={this.state.value} type="search"
                            onChange={this.onChange}/>
                     <div className="margin-top--2 margin-bottom--4">
