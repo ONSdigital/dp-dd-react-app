@@ -14,7 +14,7 @@ class TimeSelector extends Component {
         this.state = {
             requestedOptionsUpdate: false,
             requestedDeselectAll: false,
-            selectedInterval: 'month',
+            selectedInterval: this.getIntervalValue(),
             selectedOptions: [] // should either contain 1 item for single date of 2 for range
         };
         this.onIntervalRadioChange = this.onIntervalRadioChange.bind(this);
@@ -101,15 +101,33 @@ class TimeSelector extends Component {
         })
     }
 
+    getIntervalValue() {
+        const options = this.props.options;
+        let intervalLabel;
+
+        if (options[0].options) {
+            intervalLabel = options[0].options[0].levelType.name;
+        } else {
+            intervalLabel = options[0].levelType.name;
+        }
+
+        return intervalLabel;
+    }
+
     render() {
         if (!this.props.isReady || !this.props.isEdited) {
             return null;
         }
         const selectedInterval = this.state.selectedInterval;
+        const intervalLabel = this.getIntervalValue();
         const intervalSelector = [
-            { id: 'month', value: 'month', label: 'Single month' },
+            { id: intervalLabel, value: intervalLabel, label: 'Single ' + intervalLabel },
             { id: 'range', value: 'range', label: 'Range' }
         ];
+
+        this.getIntervalValue();
+
+        console.log(this.props.options);
 
         return (
             <form className="form">
