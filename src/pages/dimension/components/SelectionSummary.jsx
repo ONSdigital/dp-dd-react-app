@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Link, hashHistory } from 'react-router';
 import { connect } from 'react-redux';
-import config from '../../../config';
+
+import { dropLastPathComponent } from '../../../common/helpers';
 import { renderFlatHierarchy } from '../utils';
 import { saveDimensionOptions, deselectAllOptions } from '../../dataset/actions';
 
@@ -47,7 +48,7 @@ class Summary extends Component {
     renderSummary() {
         const options = this.props.options;
         const currentPath = this.props.location.pathname;
-        const dimensionsPath = currentPath.replace(/\/[\w\s%]+\/?$/, ''); //drop the last bit
+        const dimensionsPath = dropLastPathComponent(currentPath);
 
         return (
             <div className="margin-bottom--8">
@@ -78,7 +79,8 @@ class Summary extends Component {
 
     renderEmptySummary() {
         const currentPath = this.props.location.pathname;
-        const dimensionsPath = currentPath.replace(/\/[\w\s%]+\/?$/, ''); //drop the last bit
+        const dimensionsPath = dropLastPathComponent(currentPath);
+        
         return (
             <div className="margin-bottom--8">
                 <div>

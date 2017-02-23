@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import config from '../../../config';
 import DocumentTitle from '../../../components/elements/DocumentTitle';
 
 import HierarchyNavigator from '../../dimension/components/HierarchyNavigator';
@@ -12,9 +11,10 @@ import DimensionBrowser from './DimensionBrowser';
 import DimensionSearch from './DimensionSearch';
 import SelectionSummary from './SelectionSummary';
 
+import { replaceLastPathComponent, dropLastPathComponent } from '../../../common/helpers';
 import { requestVersionMetadata, requestDimensions } from '../../dataset/actions';
 import { requestHierarchical } from '../../dataset/actions';
-import { deselectAllOptions, selectAllOptions } from '../../dataset/actions';
+import { deselectAllOptions } from '../../dataset/actions';
 
 const propTypes = {
     datasetID: PropTypes.string.isRequired,
@@ -35,9 +35,9 @@ class Dimension extends Component {
 
         super(props);
         this.state = {
-            parentPath: pathname.replace(/\/[\w\s%]+\/?$/, ''),
+            parentPath: dropLastPathComponent(pathname),
             currentPath: pathname,
-            downloadPath: pathname.replace(/\/[\w\s%]+\/?$/, '/download'),
+            downloadPath: replaceLastPathComponent(pathname, '/download'),
             requestedOptionsUpdate: false,
             requestedDeselectAll: false
 

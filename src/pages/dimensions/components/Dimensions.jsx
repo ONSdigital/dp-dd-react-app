@@ -1,11 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Link, browserHistory } from 'react-router';
-import {
-    requestVersionMetadata,
-    requestDimensions
-} from '../../dataset/actions';
+import { Link } from 'react-router';
 
+import { appendPathComponent, dropLastPathComponent } from '../../../common/helpers';
+import { requestVersionMetadata, requestDimensions } from '../../dataset/actions';
 
 import DimensionList from './DimensionList';
 import DocumentTitle from '../../../components/elements/DocumentTitle';
@@ -22,10 +20,12 @@ class Dimension extends Component {
         const pathname = props.location.pathname;
         this.state = {
             initialFetchRequired: false,
-            parentPath: pathname.replace(/\/[\w\s%]+\/?$/, ''),            // drop last bit
+            parentPath: dropLastPathComponent(pathname),
             currentPath: pathname,
-            downloadPath: pathname.replace(/\/[\w\s%]+\/?$/, '/download')  // replace last bit with /download
+            downloadPath: appendPathComponent(dropLastPathComponent(pathname), '/download')
         }
+
+        console.log(this.state.downloadPath);
     }
 
     componentWillMount() {
