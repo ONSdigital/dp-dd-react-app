@@ -1,14 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { findOptionByID, findOptionsByType } from '../utils';
+
 import SimpleSelector from './SimpleSelector';
 import HierarchySelector from './HierarchySelector';
 
-import {
-    requestVersionMetadata,
-    requestDimensions
-} from '../../dataset/actions';
+import { findOptionByID } from '../utils';
+import { requestVersionMetadata, requestDimensions } from '../../dataset/actions';
 
 const propTypes = {
     dimensionID: PropTypes.string.isRequired,
