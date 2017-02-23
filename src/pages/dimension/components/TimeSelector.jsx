@@ -150,13 +150,14 @@ class TimeSelector extends Component {
         const selectedInterval = this.state.selectedInterval;
         switch(selectedInterval) {
             case 'month':
-                return this.renderMonthSelector();
+            case 'year':
+                return this.renderSingleSelector();
             default:
                 return this.renderRangeSelector();
         }
     }
 
-    renderMonthSelector() {
+    renderSingleSelector() {
         return <TimeRangeSelector options={this.props.options} onChange={this.onRangeChange(0)} />
     }
 
