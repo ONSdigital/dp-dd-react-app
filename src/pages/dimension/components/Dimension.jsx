@@ -79,7 +79,7 @@ class Dimension extends Component {
             return;
         }
 
-        if (isReady && !isEdited && !state.requestedDeselectAll && isHierarchical) {
+        if (isReady && !isEdited && !state.requestedDeselectAll) {
             state.requestedDeselectAll = true;
             dispatch(deselectAllOptions(this.props.dimensionID));
             return;
