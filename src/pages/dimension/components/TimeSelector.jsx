@@ -125,10 +125,6 @@ class TimeSelector extends Component {
             { id: 'range', value: 'range', label: 'Range' }
         ];
 
-        this.getIntervalValue();
-
-        console.log(this.props.options);
-
         return (
             <form className="form">
                 <h1 className="margin-top--4 margin-bottom">Add a single month or range</h1>
