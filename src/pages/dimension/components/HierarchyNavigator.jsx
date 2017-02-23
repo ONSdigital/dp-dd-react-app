@@ -33,7 +33,7 @@ class HierarchyNavigator extends Component {
                 <h1 className="margin-top--4 margin-bottom">{dimensionName}</h1>
                 <div>
                     <h2><Link to={{pathname, query: {action: 'search'}}}>Search</Link></h2>
-                    <p className="flush">Search for specific location</p>
+                    <p className="flush">Search in {this.props.dimensionID}</p>
                 </div>
 
                 <div className="margin-top--3">
