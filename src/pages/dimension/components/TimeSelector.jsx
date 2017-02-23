@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { hashHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import Radio from '../../../components/elements/RadioButton';
 import TimeRangeSelector from './TimeRangeSelector';
 
@@ -113,7 +113,7 @@ class TimeSelector extends Component {
 
         return (
             <form className="form">
-                <h2 className="margin-top--half margin-bottom">Add a single month or range</h2>
+                <h1 className="margin-top--4 margin-bottom">Add a single month or range</h1>
                 <div className="margin-top-md--1 margin-bottom-md--2">
                 {intervalSelector.map((radio, index) => {
                     return <Radio key={index}  {...radio} onChange={this.onIntervalRadioChange}
@@ -125,7 +125,8 @@ class TimeSelector extends Component {
 
                 <div className="margin-top--4 margin-bottom--8">
                     <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half" onClick={this.onAddButtonClick}>Add</a>
-                    <a className="btn btn--secondary btn--thick btn--wide btn--big" onClick={hashHistory.goBack}>Cancel</a>
+                    <br/>
+                    <a className="inline-block margin-top--4 font-size--17" onClick={browserHistory.goBack}>Cancel</a>
                 </div>
             </form>
         )
