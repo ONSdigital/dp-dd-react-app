@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { hashHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import Radio from '../../../components/elements/RadioButton';
 import TimeRangeSelector from './TimeRangeSelector';
 
@@ -14,7 +14,7 @@ class TimeSelector extends Component {
         this.state = {
             requestedOptionsUpdate: false,
             requestedDeselectAll: false,
-            selectedInterval: 'month',
+            selectedInterval: this.getIntervalValue(),
             selectedOptions: [] // should either contain 1 item for single date of 2 for range
         };
         this.onIntervalRadioChange = this.onIntervalRadioChange.bind(this);
@@ -101,19 +101,33 @@ class TimeSelector extends Component {
         })
     }
 
+    getIntervalValue() {
+        const options = this.props.options;
+        let intervalLabel;
+
+        if (options[0].options) {
+            intervalLabel = options[0].options[0].levelType.name;
+        } else {
+            intervalLabel = options[0].levelType.name;
+        }
+
+        return intervalLabel;
+    }
+
     render() {
         if (!this.props.isReady || !this.props.isEdited) {
             return null;
         }
         const selectedInterval = this.state.selectedInterval;
+        const intervalLabel = this.getIntervalValue();
         const intervalSelector = [
-            { id: 'month', value: 'month', label: 'Single month' },
+            { id: intervalLabel, value: intervalLabel, label: 'Single ' + intervalLabel },
             { id: 'range', value: 'range', label: 'Range' }
         ];
 
         return (
             <form className="form">
-                <h2 className="margin-top--half margin-bottom">Add a single month or range</h2>
+                <h1 className="margin-top--4 margin-bottom">Add a single month or range</h1>
                 <div className="margin-top-md--1 margin-bottom-md--2">
                 {intervalSelector.map((radio, index) => {
                     return <Radio key={index}  {...radio} onChange={this.onIntervalRadioChange}
@@ -125,7 +139,8 @@ class TimeSelector extends Component {
 
                 <div className="margin-top--4 margin-bottom--8">
                     <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half" onClick={this.onAddButtonClick}>Add</a>
-                    <a className="btn btn--secondary btn--thick btn--wide btn--big" onClick={hashHistory.goBack}>Cancel</a>
+                    <br/>
+                    <a className="inline-block margin-top--4 font-size--17" onClick={browserHistory.goBack}>Cancel</a>
                 </div>
             </form>
         )
@@ -135,13 +150,14 @@ class TimeSelector extends Component {
         const selectedInterval = this.state.selectedInterval;
         switch(selectedInterval) {
             case 'month':
-                return this.renderMonthSelector();
+            case 'year':
+                return this.renderSingleSelector();
             default:
                 return this.renderRangeSelector();
         }
     }
 
-    renderMonthSelector() {
+    renderSingleSelector() {
         return <TimeRangeSelector options={this.props.options} onChange={this.onRangeChange(0)} />
     }
 
