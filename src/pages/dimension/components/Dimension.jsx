@@ -155,16 +155,17 @@ class Dimension extends Component {
 
 Dimension.propTypes = propTypes;
 
-// todo: move to utils
-function hasFlatHierarchy(options) {
-    let hierarchical = true;
+function isHierarchyFlat(options) {
+    let flatHierarchy = true;
     const length = options.length;
     let index = 0;
-    while (index < length && hierarchical) {
-        return true;
+    while (index < length && flatHierarchy) {
+        if (options[index].options) {
+            return false;
+        }
         index++;
     }
-    return !hierarchical;
+    return flatHierarchy;
 }
 
 function mapStateToProps(state, ownProps) {
@@ -191,7 +192,7 @@ function mapStateToProps(state, ownProps) {
             isEdited: dimension.edited || false,
             isReady: !dimension.hierarchical ? true : dimension.hierarchyReady || false,
             isHierarchical: dimension.hierarchical || false,
-            isFlat: hasFlatHierarchy(dimension.options),
+            isFlat: isHierarchyFlat(dimension.options),
             optionsCount: dimension.optionsCount,
             selectedCount: dimension.selectedCount
         });

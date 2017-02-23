@@ -61,7 +61,7 @@ class DimensionBrowser extends Component {
             return this.renderOptionLinks();
         }
 
-        if (!optionsAreParents) {
+        if (!optionsAreParents && !this.props.option) {
             return this.renderSimpleSelector();
         }
 
