@@ -46,6 +46,7 @@ export default function (state = defaultState, action) {
 
         case REQUEST_VERSION_METADATA_SUCCESS:
             state = Object.assign({}, state, action.dataset, {
+                title: state.title || action.dataset.title,
                 versionID: action.dataset.id,
                 hasMetadata: true
             });
