@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
 import Radio from '../../../components/elements/RadioButton';
 import TimeRangeSelector from './TimeRangeSelector';
+import { Link } from 'react-router';
 
+import { dropLastPathComponent } from '../../../common/helpers';
 import { saveDimensionOptions } from '../../dataset/actions';
 import { renderFlatListOfOptions } from '../utils';
 
@@ -118,6 +119,8 @@ class TimeSelector extends Component {
         if (!this.props.isReady) {
             return null;
         }
+
+        const parentPathname = dropLastPathComponent(this.props.location.pathname);
         const selectedInterval = this.state.selectedInterval;
         const intervalLabel = this.getIntervalValue();
         const intervalSelector = [
@@ -140,7 +143,7 @@ class TimeSelector extends Component {
                 <div className="margin-top--4 margin-bottom--8">
                     <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half" onClick={this.onAddButtonClick}>Add</a>
                     <br/>
-                    <a className="inline-block margin-top--4 font-size--17" onClick={browserHistory.goBack}>Cancel</a>
+                    <Link className="inline-block margin-top--4 font-size--17" to={parentPathname}>Cancel</Link>
                 </div>
             </form>
         )
