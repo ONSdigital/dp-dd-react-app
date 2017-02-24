@@ -101,8 +101,9 @@ class Dimension extends Component {
     }
 
     requestSelectAllOptions() {
-        if (this.props.selectedCount === 0) {
-            this.props.dispatch(selectAllOptions(this.props.dimensionID, true));
+        const props = this.props;
+        if (props.selectedCount === 0 && props.isHierarchical) {
+            props.dispatch(selectAllOptions(props.dimensionID, true));
         }
     }
 
