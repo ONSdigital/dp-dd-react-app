@@ -132,6 +132,9 @@ class Dimension extends Component {
         };
         const action = this.props.location.query.action;
         const componentProps = Object.assign({}, this.props, defaultProps);
+        const selectedCount = this.props.selectedCount;
+        const isHierarchical = this.props.isHierarchical;
+
         componentProps.router = this.props.router;
         componentProps.onSave =() => {
             this.props.router.push(this.state.parentPath);
@@ -162,7 +165,7 @@ class Dimension extends Component {
                 screen = <SimpleSelector {...componentProps} />;
         }
 
-        if (this.props.selectedCount > 0 && action !== 'customise') {
+        if (selectedCount > 0 && action !== 'customise' && isHierarchical) {
             return <SelectionSummary {...componentProps} />;
         }
         return screen;
