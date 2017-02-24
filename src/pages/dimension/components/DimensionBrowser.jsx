@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
 import SimpleSelector from './SimpleSelector';
 import HierarchySelector from './HierarchySelector';
 
 import { findOptionByID } from '../utils';
+import { dropLastPathComponent } from '../../../common/helpers';
 import { requestVersionMetadata, requestDimensions } from '../../dataset/actions';
 
 const propTypes = {
@@ -85,6 +86,7 @@ class DimensionBrowser extends Component {
         const pathname = this.props.location.pathname;
         const action = this.props.location.query.action;
         const options = this.props.option ? this.props.option.options : this.props.options;
+        const parentPath = dropLastPathComponent(pathname);
 
         const optionElements = options.map((option, index) => {
             const query = {
@@ -112,7 +114,7 @@ class DimensionBrowser extends Component {
                 <h1 className="margin-top--4 margin-bottom">Customise location</h1>
                 {optionElements}
                 <br/>
-                <a className="inline-block font-size--17" onClick={browserHistory.goBack}>Cancel</a>
+                <Link className="inline-block font-size--17" to={parentPath}>Cancel</Link>
             </div>
         )
     }

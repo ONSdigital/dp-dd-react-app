@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { selectAllOptions } from '../../dataset/actions';
+import { dropLastPathComponent } from '../../../common/helpers';
 import analytics from '../../../config/analytics';
-import config from '../../../config';
 
 class HierarchyNavigator extends Component {
     constructor(props) {
@@ -26,7 +26,7 @@ class HierarchyNavigator extends Component {
     render () {
         const pathname = this.props.location.pathname;
         const dimensionName = this.props.dimensionName;
-        const parentPath = `${config.BASE_PATH}/datasets/${this.props.params.id}/editions/${this.props.params.edition}/versions/${this.props.params.version}/dimensions`;
+        const parentPath = dropLastPathComponent(this.props.location.pathname);
 
         return (
             <div className="margin-bottom--8">
