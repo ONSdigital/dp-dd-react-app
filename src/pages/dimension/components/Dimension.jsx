@@ -44,14 +44,17 @@ class Dimension extends Component {
         this.onBrowserBackButtonEvent = this.onBrowserBackButtonEvent.bind(this);
     }
 
-
     onBrowserBackButtonEvent (e) {
         e.preventDefault();
-        this.requestSelectAllOptions();
+        if (this.props.selectedCount === 0) {
+            this.props.dispatch(selectAllOptions(this.props.dimensionID, true));
+        }
     }
 
     componentWillUnmount() {
-        this.requestSelectAllOptions();
+        if (this.props.selectedCount === 0 && this.props.isHierarchical) {
+            this.props.dispatch(selectAllOptions(this.props.dimensionID, true));
+        }
     }
 
     componentDidMount() {
@@ -100,12 +103,6 @@ class Dimension extends Component {
         }
     }
 
-    requestSelectAllOptions() {
-        const props = this.props;
-        if (props.selectedCount === 0 && props.isHierarchical) {
-            props.dispatch(selectAllOptions(props.dimensionID, true));
-        }
-    }
 
     render() {
         if (!this.props.hasDimensions || !this.props.isReady) {
