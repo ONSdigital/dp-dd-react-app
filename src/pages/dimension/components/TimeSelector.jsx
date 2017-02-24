@@ -52,7 +52,7 @@ class TimeSelector extends Component {
                     if (startIndex === -1) {
                         startIndex = index;
                         retOptions.push({ id: item.id, selected: true });
-                    } else if (startIndex > 1) {
+                    } else if (startIndex > -1) {
                         endIndex = index;
                         retOptions.push({ id: item.id, selected: true });
                     }
