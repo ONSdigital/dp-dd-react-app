@@ -42,8 +42,9 @@ class TimeSelector extends Component {
 
         list.forEach((item, index) => {
             if (startIndex > -1 && endIndex == -1) {
-                console.log(item.id, item.id, startIndex, endIndex);
-                retOptions.push({ id: item.id, selected: true });
+                if (!item.empty) {
+                    retOptions.push({ id: item.id, selected: true });
+                }
             }
 
             range.forEach((rangeItem) => {
@@ -55,7 +56,6 @@ class TimeSelector extends Component {
                         endIndex = index;
                         retOptions.push({ id: item.id, selected: true });
                     }
-                    console.log(item.id, rangeItem.id, startIndex, endIndex);
                 }
             });
         });
@@ -65,7 +65,7 @@ class TimeSelector extends Component {
     }
 
     onAddButtonClick() {
-        // todo: store it, allright? No need to re-iterate over it again and again
+
         let options = [];
         const selectedOptions = this.state.selectedOptions;
 
