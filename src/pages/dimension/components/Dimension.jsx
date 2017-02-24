@@ -14,7 +14,7 @@ import SelectionSummary from './SelectionSummary';
 import { replaceLastPathComponent, dropLastPathComponent } from '../../../common/helpers';
 import { requestVersionMetadata, requestDimensions } from '../../dataset/actions';
 import { requestHierarchical } from '../../dataset/actions';
-import { deselectAllOptions } from '../../dataset/actions';
+import { deselectAllOptions, selectAllOptions } from '../../dataset/actions';
 
 const propTypes = {
     datasetID: PropTypes.string.isRequired,
@@ -31,17 +31,31 @@ const propTypes = {
 
 class Dimension extends Component {
     constructor(props) {
+        super(props);
         const pathname = props.location.pathname;
 
-        super(props);
         this.state = {
             parentPath: dropLastPathComponent(pathname),
             currentPath: pathname,
             downloadPath: replaceLastPathComponent(pathname, '/download'),
-            requestedOptionsUpdate: false,
-            requestedDeselectAll: false
-
+            requestedOptionsUpdate: false
         }
+
+        this.onBrowserBackButtonEvent = this.onBrowserBackButtonEvent.bind(this);
+    }
+
+
+    onBrowserBackButtonEvent (e) {
+        e.preventDefault();
+        this.requestSelectAllOptions();
+    }
+
+    componentWillUnmount() {
+        this.requestSelectAllOptions();
+    }
+
+    componentDidMount() {
+        window.onpopstate = this.onBrowserBackButtonEvent;
     }
 
     componentWillMount() {
@@ -53,9 +67,10 @@ class Dimension extends Component {
     }
 
     requestDimensionUpdate(props = this.props) {
-        const isEdited = props.isEdited;
         const isReady = props.isReady;
         const isHierarchical = props.isHierarchical;
+        const autoDeselected = props.autoDeselected;
+        const allSelected = props.selectedCount === props.optionsCount;
         const dispatch = props.dispatch;
         const datasetID = props.datasetID;
         const edition = props.params.edition;
@@ -79,19 +94,20 @@ class Dimension extends Component {
             return;
         }
 
-        if (isReady && !isEdited && !state.requestedDeselectAll) {
-            state.requestedDeselectAll = true;
-            dispatch(deselectAllOptions(this.props.dimensionID));
+        if (isReady && allSelected && !autoDeselected) {
+            dispatch(deselectAllOptions(this.props.dimensionID, true));
             return;
         }
     }
 
-    render() {
-
-        if (!this.props.hasDimensions || !this.props.isReady) {
-            return null;
+    requestSelectAllOptions() {
+        if (this.props.selectedCount === 0) {
+            this.props.dispatch(selectAllOptions(this.props.dimensionID, true));
         }
-        if (this.props.isReady && !this.props.isEdited && this.props.isHierarchical) {
+    }
+
+    render() {
+        if (!this.props.hasDimensions || !this.props.isReady) {
             return null;
         }
 
@@ -145,10 +161,9 @@ class Dimension extends Component {
                 screen = <SimpleSelector {...componentProps} />;
         }
 
-        if (this.props.isEdited && this.props.selectedCount > 0 && action !== 'customise') {
+        if (this.props.selectedCount > 0 && action !== 'customise') {
             return <SelectionSummary {...componentProps} />;
         }
-
         return screen;
     }
 }
@@ -188,8 +203,8 @@ function mapStateToProps(state, ownProps) {
     if (dimension) {
         Object.assign(props, {
             dimensionName: dimension.name,
+            autoDeselected: dimension.autoDeselected,
             type: dimension.type || 'default',
-            isEdited: dimension.edited || false,
             isReady: !dimension.hierarchical ? true : dimension.hierarchyReady || false,
             isHierarchical: dimension.hierarchical || false,
             isFlat: isHierarchyFlat(dimension.options),

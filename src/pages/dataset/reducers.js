@@ -4,6 +4,7 @@ import {
     PARSE_DIMENSIONS,
     SAVE_DOWNLOAD_PROGRESS,
     CANCEL_DOWNLOAD,
+    SELECT_ALL_OPTIONS,
     DESELECT_ALL_OPTIONS
 } from './actions';
 
@@ -26,6 +27,8 @@ const defaultState = {
 };
 
 export default function (state = defaultState, action) {
+    let dimensions;
+
     switch (action.type) {
 
         case REQUEST_DATASET_METADATA_SUCCESS:
@@ -68,7 +71,6 @@ export default function (state = defaultState, action) {
                 }),
                 hasDimensions: true
             });
-
             break;
 
         case SAVE_DOWNLOAD_PROGRESS:
@@ -95,13 +97,28 @@ export default function (state = defaultState, action) {
             break;
 
         case DESELECT_ALL_OPTIONS:
-            const dimensions = state.dimensions.map(dimension => {
+            dimensions =  Object.assign({}, state.dimensions);
+            dimensions = state.dimensions.map(dimension => {
                 if (dimension.id !== action.dimensionID) {
                     return dimension;
                 }
-                dimension.edited = true;
+                dimension.autoDeselected = action.autoDeselected;
                 return dimension;
             })
+            state = Object.assign({}, state, { dimensions });
+            break;
+
+        case SELECT_ALL_OPTIONS:
+            dimensions =  Object.assign({}, state.dimensions);
+            dimensions = state.dimensions.map(dimension => {
+                if (dimension.id !== action.dimensionID) {
+                    return dimension;
+                }
+                if (action.resetAutoDeselected) {
+                    dimension.autoDeselected = false;
+                }
+                return dimension;
+            });
             state = Object.assign({}, state, { dimensions });
             break;
     }

@@ -35,14 +35,15 @@ export function cancelDownload() {
     }
 }
 
-export function deselectAllOptions(dimensionID) {
+export function deselectAllOptions(dimensionID, autoDeselected = false) {
     return (dispatch, getState) => {
         const state = getState();
         const dimension = Object.assign({}, state.dataset.dimensions.find(dimension => dimension.id === dimensionID));
 
         dispatch({
             type: DESELECT_ALL_OPTIONS,
-            dimensionID
+            dimensionID,
+            autoDeselected
         });
 
         const options = toggleSelectedOptions({ options: dimension.options, selected: false});
@@ -50,14 +51,15 @@ export function deselectAllOptions(dimensionID) {
     }
 }
 
-export function selectAllOptions(dimensionID) {
+export function selectAllOptions(dimensionID, resetAutoDeselected = false) {
     return (dispatch, getState) => {
         const state = getState();
         const dimension = Object.assign({}, state.dataset.dimensions.find(dimension => dimension.id === dimensionID));
 
         dispatch({
             type: SELECT_ALL_OPTIONS,
-            dimensionID
+            dimensionID,
+            resetAutoDeselected
         });
 
         const options = toggleSelectedOptions({ options: dimension.options, selected: true})
@@ -204,6 +206,7 @@ function parseDimensions(datasetID, dimensionsJSON) {
                 dimension.datasetID = datasetID;
                 dimension.optionsCount = optionsCount;
                 dimension.selectedCount = selectedCount;
+                dimension.edited = selectedCount > 0
                 return dimension;
             }),
         }

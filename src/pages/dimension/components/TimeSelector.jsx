@@ -115,7 +115,7 @@ class TimeSelector extends Component {
     }
 
     render() {
-        if (!this.props.isReady || !this.props.isEdited) {
+        if (!this.props.isReady) {
             return null;
         }
         const selectedInterval = this.state.selectedInterval;
