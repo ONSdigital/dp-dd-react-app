@@ -6,7 +6,7 @@ export function findOptionsByType ({options, type}) {
 
 export function toggleSelectedOptions ({options, selected = true}) {
     return options.map(option => {
-        option.selected = option.empty ? false : selected;
+        option.selected = selected;
         if (option.options && option.options.length > 0) {
             option.options = toggleSelectedOptions({ options: option.options, selected });
         }
