@@ -219,7 +219,6 @@ class DimensionBrowser extends Component {
 
     getAllGeographiesByType(type) {
         const options = this.props.dimension.options;
-        //console.log('options:', options);
         let geographies = [];
 
         (function getGeogByType(options) {
@@ -237,7 +236,6 @@ class DimensionBrowser extends Component {
         })(options);
 
         return geographies;
-        console.log(geographies);
 
     }
 
