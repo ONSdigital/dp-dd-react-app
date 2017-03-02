@@ -73,7 +73,7 @@ class Dimension extends Component {
         const isReady = props.isReady;
         const isHierarchical = props.isHierarchical;
         const autoDeselected = props.autoDeselected;
-        const allSelected = props.selectedCount === props.optionsCount;
+        const allSelected = props.selectedCount === props.selectableCount;
         const dispatch = props.dispatch;
         const datasetID = props.datasetID;
         const edition = props.params.edition;
@@ -210,7 +210,8 @@ function mapStateToProps(state, ownProps) {
             isHierarchical: dimension.hierarchical || false,
             isFlat: isHierarchyFlat(dimension.options),
             optionsCount: dimension.optionsCount,
-            selectedCount: dimension.selectedCount
+            selectedCount: dimension.selectedCount,
+            selectableCount: dimension.selectableCount
         });
     }
 
