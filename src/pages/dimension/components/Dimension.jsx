@@ -137,11 +137,12 @@ class Dimension extends Component {
             this.props.router.push(this.state.parentPath);
         }
 
+        if (this.props.isFlat) {
+            return <SimpleSelector {...componentProps} />;
+        }
+
         if (action) switch (action) {
             case 'browse':
-                if (this.props.isFlat) {
-                    return <SimpleSelector {...componentProps} />;
-                }
                 return <DimensionBrowser {...componentProps} />;
             case 'search':
                 return <DimensionSearch {...componentProps} />;
