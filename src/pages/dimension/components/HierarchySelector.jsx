@@ -114,7 +114,8 @@ class HierarchySelector extends Component {
                     <ul className="hierarchy">{this.renderElementList(option)}</ul>
                     <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
                        onClick={this.saveSelectedOptions}>Save selection</a>
-                    <a className="btn btn--secondary btn--thick btn--wide btn--big" onClick={hashHistory.goBack}>Cancel</a>
+                    <br/>
+                    <a className="inline-block margin-top--4 font-size--17" href="" onClick={hashHistory.goBack}>Cancel</a>
                 </div>
             </form>
         )
