@@ -130,3 +130,13 @@ a:hover {
         width: 16px;
     }
 }
+
+.float-right {
+
+    &--md {
+        @include breakpoint(md) {
+            float: right;
+        }
+    }
+
+}
