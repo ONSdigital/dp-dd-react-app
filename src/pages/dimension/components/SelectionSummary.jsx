@@ -105,13 +105,13 @@ class Summary extends Component {
         return (
             <li key={id} className="margin-left--0 margin-left--0 padding-bottom--2 col-wrap width-lg--39">
 
-                <div className="col margin-left--0 width-lg--39 border-bottom--gallery-md padding-bottom--2">
+                <div className="col margin-left--0 width-lg--39 border-bottom--gallery-sm border-bottom--gallery-md padding-bottom--2">
                     <h3 className="col col--md-31 col--lg-31">{name} ({options.length})</h3>
                     <div className="col col--md-8 col--lg-8 float-right">
                         <a onClick={this.removeOptions(options)}>Remove group</a>
                     </div>
                 </div>
-                <ul className="list--neutral col width-lg--39 margin-left--0 margin-top--0 border-bottom--gallery-md">
+                <ul className="list--neutral col width-lg--39 margin-left--0 margin-top--0 border-bottom--gallery-sm border-bottom--gallery-md">
                 {options.map(option => (
                     this.renderSummaryItemChild(option)
                 ))}
@@ -122,7 +122,7 @@ class Summary extends Component {
 
     renderSummaryItemChild({ name, id }) {
         return (
-            <li key={id} className="margin-left--0 col width-lg--39 border-bottom--gallery-md padding-bottom--2">
+            <li key={id} className="margin-left--0 col width-lg--39 border-bottom--gallery-sm border-bottom--gallery-md padding-bottom--2">
                     <div className="col col--md-31 col--lg-31">
                         <span>{name}</span>
                     </div>
