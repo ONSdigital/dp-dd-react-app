@@ -188,6 +188,7 @@ export function requestDimensionsSuccess(datasetId, responseData) {
 
 function parseDimensions(datasetID, dimensionsJSON) {
     let optionsCount;
+    let selectableCount;
     let selectedCount;
 
     if (!(dimensionsJSON instanceof Array)) {
@@ -201,11 +202,13 @@ function parseDimensions(datasetID, dimensionsJSON) {
             dimensions: dimensionsJSON.map(dimension => {
                 optionsCount = 0;
                 selectedCount = 0;
+                selectableCount = 0;
 
                 dimension.options = parseOptions(dimension.options);
                 dimension.datasetID = datasetID;
                 dimension.optionsCount = optionsCount;
                 dimension.selectedCount = selectedCount;
+                dimension.selectableCount = selectableCount;
                 dimension.edited = selectedCount > 0
                 return dimension;
             }),
@@ -215,15 +218,23 @@ function parseDimensions(datasetID, dimensionsJSON) {
     function parseOptions(options, selectedStatus = true) {
         return options.map(option => {
             optionsCount ++;
+            if (!option.empty) {
+                selectableCount ++;
+            }
 
             // todo: we should always use code, requires refactoring across whole app
             if (option.code) {
                 option.id = option.code;
             } else {
-                console.error('Code is missing');
+                console.error('Code value is missing');
             }
 
-            option.selected = option.selected === false ? false : selectedStatus;
+            if (!option.empty) {
+                option.selected = option.selected === false ? false : selectedStatus;
+            } else {
+                option.selected = false;
+            }
+
             selectedCount += option.selected ? 1 : 0;
             if (option.options && option.options.length > 0) {
                 option.options = parseOptions(option.options, selectedStatus);
