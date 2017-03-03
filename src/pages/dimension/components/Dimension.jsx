@@ -119,8 +119,9 @@ class Dimension extends Component {
         const isReady = props.isReady;
         const ignoredActions = ['summary', 'customise', 'browse', 'search'];
         const canRedirect = ignoredActions.indexOf(action) === -1;
+        const isFlat = props.isFlat;
 
-        if (isReady && isAutoDeselected && isHierarchical && selectedCount > 0 && canRedirect) {
+        if (isReady && isAutoDeselected && isHierarchical && !isFlat && selectedCount > 0 && canRedirect) {
             props.router.push({
                 pathname: props.location.pathname,
                 query: {
