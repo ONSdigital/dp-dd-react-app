@@ -115,7 +115,8 @@ class Dimension extends Component {
         const isHierarchical = props.isHierarchical;
         const isAutoDeselected = props.autoDeselected === true;
         const isReady = props.isReady;
-        const canRedirect = action !== 'summary' && action !== 'customise';
+        const ignoredActions = ['summary', 'customise', 'browse', 'search'];
+        const canRedirect = ignoredActions.indexOf(action) === -1;
 
         if (isReady && isAutoDeselected && isHierarchical && selectedCount > 0 && canRedirect) {
             props.router.push({
