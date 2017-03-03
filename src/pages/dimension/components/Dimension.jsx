@@ -65,8 +65,11 @@ class Dimension extends Component {
         this.requestDimensionUpdate();
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.requestDimensionUpdate(nextProps);
+    shouldComponentUpdate(nextProps) {
+        if (this.requestDimensionUpdate(nextProps)) {
+            return this.requestSummaryScreen(nextProps);
+        }
+        return false;
     }
 
     requestDimensionUpdate(props = this.props) {
@@ -83,26 +86,48 @@ class Dimension extends Component {
 
         if (!props.hasMetadata) {
             dispatch(requestVersionMetadata(datasetID, edition, version));
-            return;
+            return false;
         }
 
         if (!props.hasDimensions) {
             dispatch(requestDimensions(datasetID, edition, version));
-            return;
+            return false;
         }
 
         if (!isReady && isHierarchical && !state.requestedOptionsUpdate) {
             state.requestedOptionsUpdate = true;
             dispatch(requestHierarchical(datasetID, edition, version, dimensionID));
-            return;
+            return false;
         }
 
-        if (isReady && allSelected && !autoDeselected) {
+        if (isReady && allSelected && autoDeselected !== true) {
             dispatch(deselectAllOptions(this.props.dimensionID, true));
-            return;
+            return false;
         }
+
+        return true;
     }
 
+    requestSummaryScreen(props = this.props) {
+        const action = props.location.query.action;
+        const selectedCount = props.selectedCount;
+        const isHierarchical = props.isHierarchical;
+        const isAutoDeselected = props.autoDeselected === true;
+        const isReady = props.isReady;
+        const canRedirect = action !== 'summary' && action !== 'customise';
+
+        if (isReady && isAutoDeselected && isHierarchical && selectedCount > 0 && canRedirect) {
+            props.router.push({
+                pathname: props.location.pathname,
+                query: {
+                    action: 'summary'
+                }
+            });
+            return false;
+        }
+
+        return true;
+    }
 
     render() {
         if (!this.props.hasDimensions || !this.props.isReady) {
@@ -129,8 +154,6 @@ class Dimension extends Component {
         };
         const action = this.props.location.query.action;
         const componentProps = Object.assign({}, this.props, defaultProps);
-        const selectedCount = this.props.selectedCount;
-        const isHierarchical = this.props.isHierarchical;
 
         componentProps.router = this.props.router;
         componentProps.onSave =() => {
@@ -150,23 +173,15 @@ class Dimension extends Component {
                 return <SelectionSummary {...componentProps} />;
         }
 
-        let screen = null;
         switch (this.props.type) {
             case 'time':
-                screen = <TimeSelector {...componentProps} />;
-                break;
+                return <TimeSelector {...componentProps} />;
             case 'classification':
             case 'geography':
-                screen = <HierarchyNavigator {...componentProps} />;
-                break;
+                return <HierarchyNavigator {...componentProps} />;
             default:
-                screen = <SimpleSelector {...componentProps} />;
+                return <SimpleSelector {...componentProps} />;
         }
-
-        if (selectedCount > 0 && action !== 'customise' && isHierarchical) {
-            return <SelectionSummary {...componentProps} />;
-        }
-        return screen;
     }
 }
 

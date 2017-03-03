@@ -102,7 +102,9 @@ export default function (state = defaultState, action) {
                 if (dimension.id !== action.dimensionID) {
                     return dimension;
                 }
-                dimension.autoDeselected = action.autoDeselected;
+                if (action.autoDeselected) {
+                    dimension.autoDeselected = action.autoDeselected;
+                }
                 return dimension;
             })
             state = Object.assign({}, state, { dimensions });
