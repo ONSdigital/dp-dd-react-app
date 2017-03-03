@@ -85,8 +85,9 @@ class DimensionBrowser extends Component {
 
     renderSimpleSelector() {
         const geogTypeCode = this.props.location.query.type;
-        const geogOptions = this.getAllGeographiesByType(geogTypeCode);
+
         if (geogTypeCode) {
+            const geogOptions = this.getAllGeographiesByType(geogTypeCode);
             const selectorProps = {
                 router: this.props.router,
                 datasetID: this.props.params.id,
@@ -222,7 +223,6 @@ class DimensionBrowser extends Component {
         let geographies = [];
 
         (function getGeogByType(options) {
-
             options.map((option, index) => {
 
                 if (option.levelType.id == type) {
@@ -272,6 +272,7 @@ function mapStateToProps(state, ownProps) {
     props.optionsCount = dimension.optionsCount;
     props.options = dimension.options;
     props.option = optionID ? findOptionByID({ options: dimension.options, id: optionID }) : null;
+
     return props;
 }
 
