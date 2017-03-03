@@ -63,7 +63,9 @@ class Dimension extends Component {
     }
 
     componentWillMount() {
-        this.requestDimensionUpdate();
+        if (this.requestDimensionUpdate()) {
+            this.requestSummaryScreen();
+        }
     }
 
     shouldComponentUpdate(nextProps) {
