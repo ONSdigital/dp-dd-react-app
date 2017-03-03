@@ -52,7 +52,8 @@ class Dimension extends Component {
     }
 
     componentWillUnmount() {
-        if (this.props.selectedCount === 0 && this.props.isHierarchical) {
+        const handledFromSimpleSelector = this.props.isHierarchical && !this.props.isFlat;
+        if (this.props.selectedCount === 0 && handledFromSimpleSelector) {
             this.props.dispatch(selectAllOptions(this.props.dimensionID, true));
         }
     }
