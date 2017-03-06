@@ -73,29 +73,8 @@ class HierarchyBrowser extends Component {
     }
 
     renderSimpleSelector() {
-        const geogTypeCode = this.props.location.query.type;
-
-        if (geogTypeCode) {
-            const geogOptions = this.getAllGeographiesByType(geogTypeCode);
-            const selectorProps = {
-                router: this.props.router,
-                datasetID: this.props.params.id,
-                dimensionID: this.props.params.dimensionID,
-                options: geogOptions,
-                onSave: () => {
-                    this.props.router.push({
-                        pathname: this.props.location.pathname,
-                        query: {
-                            action: 'summary'
-                        }
-                    })
-                }
-            };
-            return <SimpleSelector {...selectorProps} />
-        } else {
-            const selectorProps = this.getChildComponentProps();
-            return <SimpleSelector {...selectorProps} />
-        }
+        const selectorProps = this.getChildComponentProps();
+        return <SimpleSelector {...selectorProps} />
     }
 
     renderOptionLinks () {
