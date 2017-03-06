@@ -1,4 +1,4 @@
-import { Request } from './utils';
+import { Request } from '../../common/utils';
 import api from '../../config/api';
 import { updateOption, toggleSelectedOptions } from '../dimension/utils';   // todo: move to dimension
 
