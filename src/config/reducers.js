@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 
 import { routerReducer } from 'react-router-redux';
-import { datasetReducer } from '../pages/dataset';
+import datasetReducers from '../pages/dataset/reducers';
 
 const reducers = combineReducers({
-    dataset: datasetReducer,
+    dataset: datasetReducers,
     routing: routerReducer
 });
 
