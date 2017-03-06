@@ -1,3 +1,46 @@
+export function parseDimension(dimension) {
+    let optionsCount = 0;
+    let selectableCount = 0;
+    let selectedCount = 0;
+
+    dimension.options = parseOptions(dimension.options);
+    dimension.optionsCount = optionsCount;
+    dimension.selectedCount = selectedCount;
+    dimension.selectableCount = selectableCount;
+    dimension.edited = selectedCount > 0
+
+    return dimension;
+
+    function parseOptions(options, selectedStatus = true) {
+
+        return options.map(option => {
+            optionsCount ++;
+            if (!option.empty) {
+                selectableCount ++;
+            }
+
+            // todo: we should always use code, requires refactoring across whole app
+            if (option.code) {
+                option.id = option.code;
+            } else {
+                console.error('Code value is missing');
+            }
+
+            if (!option.empty) {
+                option.selected = option.selected === false ? false : selectedStatus;
+            } else {
+                option.selected = false;
+            }
+
+            selectedCount += option.selected ? 1 : 0;
+            if (option.options && option.options.length > 0) {
+                option.options = parseOptions(option.options, selectedStatus);
+            }
+            return option;
+        });
+    }
+}
+
 export function findOptionsByType ({options, type}) {
     return options.filter(option => {
         return option.type === type
