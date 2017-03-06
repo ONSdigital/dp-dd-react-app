@@ -124,25 +124,20 @@ class GeographyBrowser extends Component {
         const parentPath = dropLastPathComponent(pathname);
 
         const optionElements = options.map((option, index) => {
-            const query = {
-                action,
-                id: option.id
-            };
-            let label = option.name;
-            if (option.optionsType)
-            label = `${option.optionsType} in ${option.name}`;
+            const info = option.options && option.options.length > 0 ?`For example ${option.options[0].name}` : '';
+            const query = { action,  id: option.id };
 
+            let label = !option.optionsType ? option.name : `${option.optionsType} in ${option.name}`;
             if (option.options) {
                 label += ` (${option.options.length})`;
             }
-            let info = option.options && option.options.length > 0 ?`For example ${option.options[0].name}` : '';
 
-                 return (
-                     <p key={index} className="margin-top">
-                         <Link to={{ pathname, query }}>{label}</Link><br />
-                         <span>{info}</span>
-                     </p>
-                 )
+            return (
+                <p key={index} className="margin-top">
+                    <Link to={{ pathname, query }}>{label}</Link><br />
+                    <span>{info}</span>
+                </p>
+            )
         });
 
         return (
@@ -160,18 +155,17 @@ class GeographyBrowser extends Component {
         const areaList = [];
 
         (function buildAreaGroupsList(options, previousID) {
-
             options.map(option => {
-
                 if (!option.empty) {
-
                     const id = option.id;
                     const parentId = previousID;
                     const name = option.levelType.name;
+
                     let code = null;
                     if (option.levelType.level == 5) {
                         code = option.levelType.id
                     }
+
                     const summary = `For example: ${option.name}`;
                     const area = {id, parentId, name, summary, typeCode: code};
                     const found = areaList.some(function (el) {
@@ -195,11 +189,9 @@ class GeographyBrowser extends Component {
 
         (function getGeogByType(options) {
             options.map((option, index) => {
-
                 if (option.levelType.id == type) {
                     geographies.push(option);
                 }
-
                 if (option.options) {
                     getGeogByType(option.options);
                 }
@@ -207,9 +199,7 @@ class GeographyBrowser extends Component {
         })(options);
 
         return geographies;
-
     }
-
 }
 
 GeographyBrowser.propTypes = propTypes;
