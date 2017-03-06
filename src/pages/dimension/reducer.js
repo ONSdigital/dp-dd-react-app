@@ -1,4 +1,5 @@
 import {
+    PARSE_DIMENSION,
     SELECT_DIMENSION,
     DESELECT_DIMENSION,
     SELECT_ALL_OPTIONS,
@@ -23,6 +24,9 @@ export default function (dimension = null, action) {
             return Object.assign({}, dimension, {
                 autoDeselected: action.resetAutoDeselected ? false : dimension.autoDeselected
             });
+
+        case PARSE_DIMENSION:
+            return Object.assign({}, dimension, action.dimension);
     }
 
     return dimension;

@@ -109,7 +109,7 @@ class Dimension extends Component {
             return false;
         }
 
-        if (props.hasDimensions && !props.hasDimension) {
+        if (!props.hasDimension) {
             dispatch(selectDimension(props.dimensionID));
             return false;
         }
@@ -262,6 +262,5 @@ function mapStateToProps(state, ownProps) {
 
     return props;
 }
-
 
 export default connect(mapStateToProps)(Dimension);

@@ -2,8 +2,16 @@ import { Request } from '../../common/utils';
 const request = new Request();
 
 import api from '../../config/api';
-import { parseDimensions } from '../dimensions/actions';
-import { updateOption, toggleSelectedOptions } from '../dimension/utils';
+
+import {
+    parseDimensions as persistDimensions
+} from '../dimensions/actions';
+
+import {
+    updateOption,
+    toggleSelectedOptions,
+    parseDimension as parseSingleDimension
+} from './utils';
 
 export const SAVE_DIMENSION_OPTIONS = 'SAVE_DIMENSION_OPTIONS';
 export const SELECT_DIMENSION = 'SELECT_DIMENSION';
@@ -12,6 +20,7 @@ export const REQUEST_HIERARCHICAL = 'REQUEST_HIERARCHICAL';
 export const REQUEST_HIERARCHICAL_SUCCESS = 'REQUEST_HIERARCHICAL_SUCCESS';
 export const DESELECT_ALL_OPTIONS = 'DESELECT_ALL_OPTIONS';
 export const SELECT_ALL_OPTIONS = 'SELECT_ALL_OPTIONS';
+export const PARSE_DIMENSION = 'PARSE_DIMENSION';
 
 export function selectDimension(dimensionID) {
     return (dispatch, getState) => {
@@ -41,9 +50,10 @@ export function requestHierarchical(datasetID, edition, version, dimensionID) {
 
         return request
             .get(api.getDimensionHierarchyURL(datasetID, edition, version, dimensionID))
-            .then(function (json) {
-                dispatch(requestHierarchicalSuccess(datasetID, json));
-                dispatch(parseDimensions(json));
+            .then(function (data) {
+                data.hierarchyReady = true;
+                dispatch(requestHierarchicalSuccess(datasetID, data));
+                dispatch(parseDimension(data));
             }).catch(function (err) {
                 throw(err);
             })
@@ -63,7 +73,7 @@ function requestHierarchicalSuccess(datasetID, responseData) {
 export function deselectAllOptions(dimensionID, autoDeselected = false) {
     return (dispatch, getState) => {
         const state = getState();
-        const dimension = Object.assign({}, state.dimensions.find(dimension => dimension.id === dimensionID));
+        const dimension = Object.assign({}, state.dimension);
 
         dispatch({
             type: DESELECT_ALL_OPTIONS,
@@ -71,15 +81,15 @@ export function deselectAllOptions(dimensionID, autoDeselected = false) {
             autoDeselected
         });
 
-        const options = toggleSelectedOptions({ options: dimension.options, selected: false});
-        dispatch(saveDimensionOptions({dimensionID, options}));
+        dimension.options = toggleSelectedOptions({ options: dimension.options, selected: false});
+        dispatch(parseDimension(dimension));
     }
 }
 
 export function selectAllOptions(dimensionID, resetAutoDeselected = false) {
     return (dispatch, getState) => {
         const state = getState();
-        const dimension = Object.assign({}, state.dimensions.find(dimension => dimension.id === dimensionID));
+        const dimension = Object.assign({}, state.dimension);
 
         dispatch({
             type: SELECT_ALL_OPTIONS,
@@ -87,8 +97,8 @@ export function selectAllOptions(dimensionID, resetAutoDeselected = false) {
             resetAutoDeselected
         });
 
-        const options = toggleSelectedOptions({ options: dimension.options, selected: true})
-        dispatch(saveDimensionOptions({dimensionID, options}))
+        dimension.options = toggleSelectedOptions({ options: dimension.options, selected: true})
+        dispatch(parseDimension(dimension));
     }
 }
 
@@ -113,6 +123,14 @@ export function saveDimensionOptions({dimensionID, options}) {
         });
 
         dispatch({type: SAVE_DIMENSION_OPTIONS, dimensions });
-        dispatch(parseDimensions(dimensions));
+        dispatch(persistDimensions(dimension));
+    }
+}
+
+export function parseDimension(dimension) {
+    dimension = parseSingleDimension(dimension);
+    return {
+        type: PARSE_DIMENSION,
+        dimension
     }
 }
