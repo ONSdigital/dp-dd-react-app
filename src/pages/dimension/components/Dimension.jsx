@@ -7,7 +7,7 @@ import HierarchyNavigator from '../../dimension/components/HierarchyNavigator';
 import SimpleSelector from './SimpleSelector';
 import TimeSelector from './TimeSelector';
 
-import DimensionBrowser from './DimensionBrowser';
+import HierarchyBrowser from './HierarchyBrowser';
 import DimensionSearch from './DimensionSearch';
 import SelectionSummary from './SelectionSummary';
 
@@ -171,7 +171,7 @@ class Dimension extends Component {
 
         if (action) switch (action) {
             case 'browse':
-                return <DimensionBrowser {...componentProps} />;
+                return <HierarchyBrowser {...componentProps} />;
             case 'search':
                 return <DimensionSearch {...componentProps} />;
             case 'summary':

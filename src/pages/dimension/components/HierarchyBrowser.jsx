@@ -17,7 +17,7 @@ const propTypes = {
     options: PropTypes.array
 }
 
-class DimensionBrowser extends Component {
+class HierarchyBrowser extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -258,7 +258,7 @@ class DimensionBrowser extends Component {
 
 }
 
-DimensionBrowser.propTypes = propTypes;
+HierarchyBrowser.propTypes = propTypes;
 
 function mapStateToProps(state, ownProps) {
     const dataset = state.dataset;
@@ -276,4 +276,4 @@ function mapStateToProps(state, ownProps) {
     return props;
 }
 
-export default connect(mapStateToProps)(DimensionBrowser);
+export default connect(mapStateToProps)(HierarchyBrowser);
