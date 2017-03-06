@@ -3,7 +3,6 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
 import SimpleSelector from './SimpleSelector';
-import HierarchySelector from './HierarchySelector';
 
 import { findOptionByID } from '../utils';
 import { dropLastPathComponent } from '../../../common/helpers';
@@ -47,72 +46,47 @@ class GeographyBrowser extends Component {
     }
 
     render () {
-        const options = this.props.option ? this.props.option.options : this.props.options;
-        const optionsAreParents = options instanceof Array && options.length > 0 && !!options[0].options;
-        const isNested = !!this.props.location.query.id;
         const isGeography = this.props.type && this.props.type === 'geography' || false;
         const renderParam = this.props.location.query.render;
 
-        if (!this.props.hasDimensions || !options) {
+        if (!isGeography) {
             return null;
         }
 
-        if (isGeography && renderParam == 'simple') {
+        if (renderParam == 'simple') {
             return this.renderSimpleSelector();
         }
 
-        if (isGeography) {
-            return this.renderGeographyLinks();
-        }
-
-        if (!isNested) {
-            return this.renderOptionLinks();
-        }
-
-        if (!optionsAreParents) {
-            return this.renderSimpleSelector();
-        }
-
-
-        return this.renderHierarchySelector();
-    }
-
-    renderHierarchySelector() {
-        const hierarchyProps = this.getChildComponentProps();
-        hierarchyProps.option = this.props.option;
-        return <HierarchySelector {...hierarchyProps} />
+        return this.renderGeographyLinks();
     }
 
     renderSimpleSelector() {
         const geogTypeCode = this.props.location.query.type;
+        const selectorProps = {
+            router: this.props.router,
+            datasetID: this.props.params.id,
+            dimensionID: this.props.params.dimensionID,
+            options: this.props.option ? this.props.option.options : this.props.options,
+            onSave: () => {
+                this.props.router.push({
+                    pathname: this.props.location.pathname,
+                    query: {
+                        action: 'summary'
+                    }
+                })
+            }
+        }
 
         if (geogTypeCode) {
-            const geogOptions = this.getAllGeographiesByType(geogTypeCode);
-            const selectorProps = {
-                router: this.props.router,
-                datasetID: this.props.params.id,
-                dimensionID: this.props.params.dimensionID,
-                options: geogOptions,
-                onSave: () => {
-                    this.props.router.push({
-                        pathname: this.props.location.pathname,
-                        query: {
-                            action: 'summary'
-                        }
-                    })
-                }
-            };
-            return <SimpleSelector {...selectorProps} />
-        } else {
-            const selectorProps = this.getChildComponentProps();
-            return <SimpleSelector {...selectorProps} />
+            selectorProps.options = this.getAllGeographiesByType(geogTypeCode);
         }
+
+        return <SimpleSelector {...selectorProps} />
     }
 
     renderGeographyLinks() {
         const pathname = this.props.location.pathname;
         const action = this.props.location.query.action;
-        const options = this.props.option ? this.props.option.options : this.props.options;
         const parentPath = dropLastPathComponent(pathname);
         const areaList = this.buildGeographyBrowseList();
 
@@ -124,13 +98,10 @@ class GeographyBrowser extends Component {
                 type: option.typeCode
             };
 
-            const label = option.name;
-            const info = option.summary;
-
             return (
                 <p key={index} className="margin-top">
-                    <Link to={{ pathname, query }}>{label}</Link><br />
-                    <span>{info}</span>
+                    <Link to={{ pathname, query }}>{option.name}</Link><br />
+                    <span>{option.summary}</span>
                 </p>
             )
         })
@@ -202,7 +173,7 @@ class GeographyBrowser extends Component {
                         code = option.levelType.id
                     }
                     const summary = `For example: ${option.name}`;
-                    const area = {id: id, parentId: parentId, typeCode: code, name: name, summary: summary};
+                    const area = {id, parentId, name, summary, typeCode: code};
                     const found = areaList.some(function (el) {
                         return el.name === area.name;
                     });
@@ -237,23 +208,6 @@ class GeographyBrowser extends Component {
 
         return geographies;
 
-    }
-
-    getChildComponentProps() {
-        return {
-            router: this.props.router,
-            datasetID: this.props.params.id,
-            dimensionID: this.props.params.dimensionID,
-            options: this.props.option ? this.props.option.options : this.props.options,
-            onSave: () => {
-                this.props.router.push({
-                    pathname: this.props.location.pathname,
-                    query: {
-                        action: 'summary'
-                    }
-                })
-            }
-        }
     }
 
 }
