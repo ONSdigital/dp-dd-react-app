@@ -35,7 +35,7 @@ export function requestDimensionsSuccess(datasetId, responseData) {
     }
 }
 
-function parseDimensions(dimensionsJSON) {
+export function parseDimensions(dimensionsJSON) {
     let optionsCount;
     let selectableCount;
     let selectedCount;
@@ -50,7 +50,6 @@ function parseDimensions(dimensionsJSON) {
             optionsCount = 0;
             selectedCount = 0;
             selectableCount = 0;
-
             dimension.options = parseOptions(dimension.options);
             dimension.optionsCount = optionsCount;
             dimension.selectedCount = selectedCount;
