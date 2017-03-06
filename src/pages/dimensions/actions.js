@@ -60,6 +60,7 @@ export function parseDimensions(dimensionsJSON) {
     }
 
     function parseOptions(options, selectedStatus = true) {
+
         return options.map(option => {
             optionsCount ++;
             if (!option.empty) {

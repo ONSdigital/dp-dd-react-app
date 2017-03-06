@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import { appendPathComponent, dropLastPathComponent } from '../../../common/helpers';
-import { requestVersionMetadata, requestDimensions } from '../../dataset/actions';
+import {requestVersionMetadata } from '../../dataset/actions';
+import { requestDimensions } from '../actions';
 
 import DimensionList from './DimensionList';
 import DocumentTitle from '../../../components/elements/DocumentTitle';
@@ -87,10 +88,10 @@ Dimension.propTypes = propTypes;
 
 function mapStateToProps(state) {
     return {
-        dimensions: state.dataset.dimensions,
+        hasMetadata: state.dataset.hasMetadata,
         title: state.dataset.title,
-        hasDimensions: state.dataset.hasDimensions,
-        hasMetadata: state.dataset.hasMetadata
+        dimensions: state.dimensions,
+        hasDimensions: state.dimensions.length > 0
     }
 }
 

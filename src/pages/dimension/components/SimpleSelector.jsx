@@ -2,13 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
-import config from '../../../config';
 import Checkbox from '../../../components/elements/Checkbox';
 import ToggleLink from '../../../components/elements/ToggleLink';
 
-import {
-    saveDimensionOptions
-} from '../../dataset/actions';
+import { saveDimensionOptions, deselectDimension} from '../actions';
 
 const propTypes = {
     datasetID: PropTypes.string.isRequired,
@@ -46,15 +43,22 @@ class SimpleSelector extends Component {
     }
 
     saveSelections(e) {
+        const dispatch = this.props.dispatch;
         e.preventDefault();
+
         if (!this.isSelectionValid()) {
             this.setState({errorMessage: "Select at least one option"});
             return;
         }
 
-        this.props.dispatch(saveDimensionOptions({
+        dispatch(saveDimensionOptions({
             dimensionID: this.props.dimensionID,
             options: this.state.cachedOptions
+        }));
+
+// todo: move to component above
+        dispatch(deselectDimension({
+            dimensionID: this.props.dimensionID
         }));
 
         this.props.onSave();
@@ -155,9 +159,7 @@ class SimpleSelector extends Component {
 SimpleSelector.propTypes = propTypes;
 
 function mapStateToProps(state, ownProps) {
-    const dimension = state.dataset.dimensions.find((dimension) => {
-        return dimension.id === ownProps.dimensionID;
-    });
+    const dimension = state.dimension;
     const options = ownProps.options || dimension.options;
 
     return {

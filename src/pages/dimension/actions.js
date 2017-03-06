@@ -43,7 +43,7 @@ export function requestHierarchical(datasetID, edition, version, dimensionID) {
             .get(api.getDimensionHierarchyURL(datasetID, edition, version, dimensionID))
             .then(function (json) {
                 dispatch(requestHierarchicalSuccess(datasetID, json));
-                dispatch(parseDimensions(datasetID, json));
+                dispatch(parseDimensions(json));
             }).catch(function (err) {
                 throw(err);
             })

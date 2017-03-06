@@ -1,11 +1,8 @@
 import {
     REQUEST_DATASET_METADATA_SUCCESS,
     REQUEST_VERSION_METADATA_SUCCESS,
-    PARSE_DIMENSIONS,
     SAVE_DOWNLOAD_PROGRESS,
     CANCEL_DOWNLOAD,
-    SELECT_ALL_OPTIONS,
-    DESELECT_ALL_OPTIONS
 } from './actions';
 
 const defaultState = {
@@ -14,7 +11,6 @@ const defaultState = {
     info: null,
     edition: null,
     version: null,
-    dimensions: [],
     metadata: {},
     download: {
         id: '',
@@ -27,8 +23,6 @@ const defaultState = {
 };
 
 export default function (state = defaultState, action) {
-    let dimensions;
-
     switch (action.type) {
 
         case REQUEST_DATASET_METADATA_SUCCESS:
@@ -55,24 +49,6 @@ export default function (state = defaultState, action) {
             });
             break;
 
-        case PARSE_DIMENSIONS:
-            state = Object.assign({}, state, {
-                dimensions: action.dataset.dimensions.length > 1
-                    ? action.dataset.dimensions
-                    : state.dimensions.map(dimension => {
-                        const actionDimension = action.dataset.dimensions[0];
-                        if (dimension.id === actionDimension.id) {
-                            // merges parsed hierarchical dimension
-                            return Object.assign({}, dimension, actionDimension, {
-                                hierarchyReady: true
-                            });
-                        }
-                        return dimension
-                }),
-                hasDimensions: true
-            });
-            break;
-
         case SAVE_DOWNLOAD_PROGRESS:
             if (state.download.cancelled) {
                 state = Object.assign({}, state, {
@@ -96,33 +72,6 @@ export default function (state = defaultState, action) {
             });
             break;
 
-        case DESELECT_ALL_OPTIONS:
-            dimensions =  Object.assign({}, state.dimensions);
-            dimensions = state.dimensions.map(dimension => {
-                if (dimension.id !== action.dimensionID) {
-                    return dimension;
-                }
-                if (action.autoDeselected) {
-                    dimension.autoDeselected = action.autoDeselected;
-                }
-                return dimension;
-            })
-            state = Object.assign({}, state, { dimensions });
-            break;
-
-        case SELECT_ALL_OPTIONS:
-            dimensions =  Object.assign({}, state.dimensions);
-            dimensions = state.dimensions.map(dimension => {
-                if (dimension.id !== action.dimensionID) {
-                    return dimension;
-                }
-                if (action.resetAutoDeselected) {
-                    dimension.autoDeselected = false;
-                }
-                return dimension;
-            });
-            state = Object.assign({}, state, { dimensions });
-            break;
     }
 
     return state;

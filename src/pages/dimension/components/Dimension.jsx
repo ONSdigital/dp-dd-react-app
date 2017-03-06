@@ -13,10 +13,20 @@ import GeographyBrowser from './GeographyBrowser';
 import DimensionSearch from './DimensionSearch';
 import SelectionSummary from './SelectionSummary';
 
-import { replaceLastPathComponent, dropLastPathComponent } from '../../../common/helpers';
-import { requestVersionMetadata, requestDimensions } from '../../dataset/actions';
-import { requestHierarchical } from '../../dataset/actions';
-import { deselectAllOptions, selectAllOptions } from '../../dataset/actions';
+import { requestDimensions } from '../../dimensions/actions';
+import { requestVersionMetadata } from '../../dataset/actions';
+
+import {
+    replaceLastPathComponent,
+    dropLastPathComponent
+} from '../../../common/helpers';
+
+import {
+    selectDimension,
+    requestHierarchical,
+    deselectAllOptions,
+    selectAllOptions
+} from '../actions';
 
 const propTypes = {
     datasetID: PropTypes.string.isRequired,
@@ -96,6 +106,11 @@ class Dimension extends Component {
 
         if (!props.hasDimensions) {
             dispatch(requestDimensions(datasetID, edition, version));
+            return false;
+        }
+
+        if (props.hasDimensions && !props.hasDimension) {
+            dispatch(selectDimension(props.dimensionID));
             return false;
         }
 
@@ -213,10 +228,11 @@ function isHierarchyFlat(options) {
 
 function mapStateToProps(state, ownProps) {
     const dataset = state.dataset;
-    const hasDimensions = dataset.hasDimensions;
-    const dimension = !hasDimensions ? null : dataset.dimensions.find((dimension) => {
-        return dimension.id === ownProps.params.dimensionID;
-    });
+    const dimensions = state.dimensions;
+    const dimension = state.dimension;
+
+    const hasDimensions = dimensions.length > 0;
+    const hasDimension = dimension !== null;
 
     const props = {
         title: dataset.title,
@@ -224,18 +240,20 @@ function mapStateToProps(state, ownProps) {
         dimensionID: ownProps.router.params.dimensionID,
         version: ownProps.params.version,
         edition: ownProps.params.edition,
-        hasDimensions: dataset.hasDimensions,
-        hasMetadata: dataset.hasMetadata
+        hasMetadata: dataset.hasMetadata,
+        isReady: false,
+        hasDimensions,
+        hasDimension
     };
 
-    if (dimension) {
+    if (hasDimensions && hasDimension) {
         Object.assign(props, {
             dimensionName: dimension.name,
             autoDeselected: dimension.autoDeselected,
             type: dimension.type || 'default',
             isReady: !dimension.hierarchical ? true : dimension.hierarchyReady || false,
             isHierarchical: dimension.hierarchical || false,
-            isFlat: isHierarchyFlat(dimension.options),
+            isFlat: !dimension.hierarchical ? true : isHierarchyFlat(dimension.options),
             optionsCount: dimension.optionsCount,
             selectedCount: dimension.selectedCount,
             selectableCount: dimension.selectableCount
