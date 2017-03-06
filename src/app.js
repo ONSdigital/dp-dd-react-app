@@ -6,7 +6,7 @@ import { initStore } from './config/store';
 import analytics from './config/analytics';
 
 import App from "./components/App";
-import CSS from "./scss/main.scss";
+import "./scss/main.scss";
 
 function init() {
 
