@@ -8,6 +8,8 @@ import SimpleSelector from './SimpleSelector';
 import TimeSelector from './TimeSelector';
 
 import HierarchyBrowser from './HierarchyBrowser';
+import GeographyBrowser from './GeographyBrowser';
+
 import DimensionSearch from './DimensionSearch';
 import SelectionSummary from './SelectionSummary';
 
@@ -159,6 +161,7 @@ class Dimension extends Component {
         };
         const action = this.props.location.query.action;
         const componentProps = Object.assign({}, this.props, defaultProps);
+        const dimensionType = this.props.type;
 
         componentProps.router = this.props.router;
         componentProps.onSave =() => {
@@ -171,6 +174,9 @@ class Dimension extends Component {
 
         if (action) switch (action) {
             case 'browse':
+                if (dimensionType === 'geography') {
+                    return <GeographyBrowser {...componentProps}/>
+                }
                 return <HierarchyBrowser {...componentProps} />;
             case 'search':
                 return <DimensionSearch {...componentProps} />;
