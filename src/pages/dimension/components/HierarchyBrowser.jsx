@@ -50,19 +50,9 @@ class HierarchyBrowser extends Component {
         const options = this.props.option ? this.props.option.options : this.props.options;
         const optionsAreParents = options instanceof Array && options.length > 0 && !!options[0].options;
         const isNested = !!this.props.location.query.id;
-        const isGeography = this.props.type && this.props.type === 'geography' || false;
-        const renderParam = this.props.location.query.render;
 
         if (!this.props.hasDimensions || !options) {
             return null;
-        }
-
-        if (isGeography && renderParam == 'simple') {
-            return this.renderSimpleSelector();
-        }
-
-        if (isGeography) {
-            return this.renderGeographyLinks();
         }
 
         if (!isNested) {
@@ -72,7 +62,6 @@ class HierarchyBrowser extends Component {
         if (!optionsAreParents) {
             return this.renderSimpleSelector();
         }
-
 
         return this.renderHierarchySelector();
     }
@@ -107,43 +96,6 @@ class HierarchyBrowser extends Component {
             const selectorProps = this.getChildComponentProps();
             return <SimpleSelector {...selectorProps} />
         }
-    }
-
-    renderGeographyLinks() {
-        const pathname = this.props.location.pathname;
-        const action = this.props.location.query.action;
-        const options = this.props.option ? this.props.option.options : this.props.options;
-        const parentPath = dropLastPathComponent(pathname);
-        const areaList = this.buildGeographyBrowseList();
-
-        const optionElements = areaList.map((option, index) => {
-            const query = {
-                action,
-                id: option.parentId,
-                render: 'simple',
-                type: option.typeCode
-            };
-
-            const label = option.name;
-            const info = option.summary;
-
-            return (
-                <p key={index} className="margin-top">
-                    <Link to={{ pathname, query }}>{label}</Link><br />
-                    <span>{info}</span>
-                </p>
-            )
-        })
-
-        return (
-            <div className="margin-bottom--8">
-                <h1 className="margin-top--4 margin-bottom">Customise location</h1>
-                {optionElements}
-                <br/>
-                <Link className="inline-block font-size--17" to={parentPath}>Cancel</Link>
-            </div>
-        )
-
     }
 
     renderOptionLinks () {
@@ -182,61 +134,6 @@ class HierarchyBrowser extends Component {
                 <Link className="inline-block font-size--17" to={parentPath}>Cancel</Link>
             </div>
         )
-    }
-
-    buildGeographyBrowseList() {
-        const options = this.props.option ? this.props.option.options : this.props.options;
-        const areaList = [];
-
-        (function buildAreaGroupsList(options, previousID) {
-
-            options.map(option => {
-
-                if (!option.empty) {
-
-                    const id = option.id;
-                    const parentId = previousID;
-                    const name = option.levelType.name;
-                    let code = null;
-                    if (option.levelType.level == 5) {
-                        code = option.levelType.id
-                    }
-                    const summary = `For example: ${option.name}`;
-                    const area = {id: id, parentId: parentId, typeCode: code, name: name, summary: summary};
-                    const found = areaList.some(function (el) {
-                        return el.name === area.name;
-                    });
-                    if (!found) {areaList.push(area)}
-                }
-
-                if (option.options) {
-                    buildAreaGroupsList(option.options, option.id)
-                }
-            });
-        })(options);
-
-        return areaList;
-    }
-
-    getAllGeographiesByType(type) {
-        const options = this.props.dimension.options;
-        let geographies = [];
-
-        (function getGeogByType(options) {
-            options.map((option, index) => {
-
-                if (option.levelType.id == type) {
-                    geographies.push(option);
-                }
-
-                if (option.options) {
-                    getGeogByType(option.options);
-                }
-            });
-        })(options);
-
-        return geographies;
-
     }
 
     getChildComponentProps() {
