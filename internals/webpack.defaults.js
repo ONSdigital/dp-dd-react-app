@@ -13,7 +13,7 @@ const config = {};
 config.context = path.resolve(__dirname, PATH.BASE, PATH.SOURCE);
 
 // Modules are loaded upon startup. The last one is exported.
-config.entry = ['es6-promise', 'whatwg-fetch','./app.js'];
+config.entry = ['babel-polyfill', 'whatwg-fetch', './app.js'];
 
 config.output = {
     // The output directory as an absolute path (required).
@@ -30,6 +30,7 @@ config.module = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
+            // plugins: ['transform-object-assign'],
             presets: ['es2015']
         }
     },{
@@ -37,6 +38,7 @@ config.module = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
+            // plugins: ['transform-object-assign'],
             presets: ['react', 'es2015']
         }
     },{
