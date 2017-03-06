@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Checkbox from '../../../components/elements/Checkbox';
 import ToggleLink from '../../../components/elements/ToggleLink';
 
-import { saveDimensionOptions, deselectDimension} from '../actions';
+import { saveDimensionOptions } from '../actions';
 
 const propTypes = {
     datasetID: PropTypes.string.isRequired,
@@ -54,11 +54,6 @@ class SimpleSelector extends Component {
         dispatch(saveDimensionOptions({
             dimensionID: this.props.dimensionID,
             options: this.state.cachedOptions
-        }));
-
-// todo: move to component above
-        dispatch(deselectDimension({
-            dimensionID: this.props.dimensionID
         }));
 
         this.props.onSave();

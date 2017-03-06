@@ -123,7 +123,7 @@ export function saveDimensionOptions({dimensionID, options}) {
         });
 
         dispatch({type: SAVE_DIMENSION_OPTIONS, dimensions });
-        dispatch(persistDimensions(dimension));
+        dispatch(persistDimensions(dimensions));
     }
 }
 
