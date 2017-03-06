@@ -11,6 +11,7 @@
     "test": "mocha internals/test.setup.js src/**/*.spec.js",
     "start": "webpack-dev-server --config internals/webpack.development.config.js --content-base dist/ --hot --inline --port $npm_package_config_port  --history-api-fallback",
     "build": "node ./node_modules/webpack/bin/webpack.js --config internals/webpack.production.config.js",
+    "watch": "webpack --watch --config internals/webpack.production.config.js",
     "postinstall": "npm run build"
   },
   "repository": {
