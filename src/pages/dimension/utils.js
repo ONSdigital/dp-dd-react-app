@@ -7,8 +7,6 @@ export function parseDimension(dimension) {
     dimension.optionsCount = optionsCount;
     dimension.selectedCount = selectedCount;
     dimension.selectableCount = selectableCount;
-    dimension.edited = selectedCount > 0
-
     return dimension;
 
     function parseOptions(options, selectedStatus = true) {
@@ -39,12 +37,6 @@ export function parseDimension(dimension) {
             return option;
         });
     }
-}
-
-export function findOptionsByType ({options, type}) {
-    return options.filter(option => {
-        return option.type === type
-    });
 }
 
 export function toggleSelectedOptions ({options, selected = true}) {
