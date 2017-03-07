@@ -132,10 +132,17 @@ class SimpleSelector extends Component {
 
     renderSelector() {
         const { options } = this.props;
-        return options.map((optionItem, key) => {
+        const checkboxes = [];
+
+        options.forEach((optionItem, key) => {
+            if (optionItem.empty) {
+                return;
+            }
+
             const cachedOption = this.state.cachedOptions.find((option) => {
                 if (option.id === optionItem.id) return option;
             });
+
             const checkboxProps = {
                 id: optionItem.id,
                 label: optionItem.name,
@@ -146,8 +153,10 @@ class SimpleSelector extends Component {
                 key
             }
 
-            return <Checkbox {...checkboxProps} />
+            checkboxes.push(<Checkbox {...checkboxProps} />);
         });
+
+        return checkboxes;
     }
 }
 
