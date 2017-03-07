@@ -5,7 +5,7 @@ import { hashHistory } from 'react-router';
 import Checkbox from '../../../components/elements/Checkbox';
 import ToggleLink from '../../../components/elements/ToggleLink';
 import { renderFlatListOfOptions } from '../utils';
-import { saveDimensionOptions } from '../../dataset/actions';
+import { saveDimensionOptions } from '../actions';
 
 
 const propTypes = {
@@ -31,12 +31,14 @@ class HierarchySelector extends Component {
     }
 
     saveSelectedOptions() {
+        const dispatch = this.props.dispatch;
+
         if (!this.isSelectionValid()) {
             this.setState({errorMessage: "Select at least one option"});
             return;
         }
 
-        this.props.dispatch(saveDimensionOptions({
+        dispatch(saveDimensionOptions({
             dimensionID: this.props.dimensionID,
             options: this.state.cachedOptions
         }));
