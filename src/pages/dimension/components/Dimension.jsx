@@ -53,15 +53,6 @@ class Dimension extends Component {
             downloadPath: replaceLastPathComponent(pathname, '/download'),
             requestedOptionsUpdate: false
         }
-
-        this.onBrowserBackButtonEvent = this.onBrowserBackButtonEvent.bind(this);
-    }
-
-    onBrowserBackButtonEvent (e) {
-        e.preventDefault();
-        if (this.props.selectedCount === 0) {
-            this.props.dispatch(selectAllOptions(this.props.dimensionID, true));
-        }
     }
 
     componentWillUnmount() {
