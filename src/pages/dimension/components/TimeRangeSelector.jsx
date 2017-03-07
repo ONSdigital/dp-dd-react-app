@@ -4,7 +4,7 @@ import SelectBox from '../../../components/elements/SelectBox';
 const propTypes = {
     options: PropTypes.array.isRequired,
     onChange: PropTypes.func
-}
+};
 
 export default class TimeRangeSelector extends Component {
     constructor(props) {
@@ -12,7 +12,7 @@ export default class TimeRangeSelector extends Component {
         this.state = {
             selectedCodes: [],
             selectedValues: []
-        }
+        };
         this.onSelectBoxChange = this.onSelectBoxChange.bind(this);
     }
 
@@ -38,6 +38,11 @@ export default class TimeRangeSelector extends Component {
 
             const selectedValues = this.state.selectedValues.slice();
             selectedValues[levelType.level] = data.value;
+
+            // Force update month value if year is re-selected
+            if (levelType.id === 'year' && selectedValues.length > 1) {
+                selectedValues[1] = data.value + '.' + selectedValues[1].split('.')[1];
+            }
 
             this.setState({ selectedCodes, selectedValues });
             if (this.props.onChange) {
@@ -74,7 +79,7 @@ export default class TimeRangeSelector extends Component {
                     value: option.id,
                     label: option.name
                 }))
-            }
+            };
             selectBoxProps.options.unshift({value: null});
             const elements = [
                 <fieldset key={rangeType} className="margin-bottom--half">

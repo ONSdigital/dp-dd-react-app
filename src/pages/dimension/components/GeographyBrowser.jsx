@@ -108,7 +108,7 @@ class GeographyBrowser extends Component {
 
         return (
             <div className="margin-bottom--8">
-                <h1 className="margin-top--4 margin-bottom">Customise location</h1>
+                <h1 className="margin-top--4 margin-bottom">Browse {this.props.dimensionID}</h1>
                 {optionElements}
                 <br/>
                 <Link className="inline-block font-size--17" to={parentPath}>Cancel</Link>
@@ -142,7 +142,7 @@ class GeographyBrowser extends Component {
 
         return (
             <div className="margin-bottom--8">
-                <h1 className="margin-top--4 margin-bottom">Customise location</h1>
+                <h1 className="margin-top--4 margin-bottom">Browse {this.props.dimensionID}</h1>
                 {optionElements}
                 <br/>
                 <Link className="inline-block font-size--17" to={parentPath}>Cancel</Link>

@@ -19,7 +19,7 @@ export default class DimensionItem extends Component {
     render() {
         const pathname = appendPathComponent(this.props.pathname, this.props.id);
         return (
-            <li className="margin-left--0 padding-bottom--2 padding-top--2 border-top--gallery-md border-bottom--gallery-md col-wrap width-lg--39">
+            <li className="margin-left--0 padding-bottom--2 padding-top--2 border-bottom--gallery-sm border-top--gallery-md border-bottom--gallery-md col-wrap width-lg--39 border-top--gallery-sm">
                 <div className="col col--md-24 col--lg-19">
                     <strong>{this.props.name}</strong>
                 </div>
