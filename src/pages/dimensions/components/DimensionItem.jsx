@@ -14,7 +14,6 @@ const propTypes = {
 export default class DimensionItem extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
     }
 
     render() {

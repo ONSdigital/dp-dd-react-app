@@ -60,7 +60,6 @@ class TimeSelector extends Component {
             });
         });
 
-        console.log('Found range:', retOptions);
         return retOptions;
     }
 

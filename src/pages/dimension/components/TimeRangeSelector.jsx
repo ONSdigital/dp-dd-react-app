@@ -41,7 +41,6 @@ export default class TimeRangeSelector extends Component {
 
             // Force update month value if year is re-selected
             if (levelType.id === 'year' && selectedValues.length > 1) {
-                debugger;
                 selectedValues[1] = data.value + '.' + selectedValues[1].split('.')[1];
             }
 
