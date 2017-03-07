@@ -107,6 +107,10 @@ export function saveDimensionOptions({dimensionID, options}) {
         const state = getState();
         const selectedDimension = Object.assign({}, state.dimension);
 
+        if (!options) {
+            options = state.dimension.options;
+        }
+
         dispatch({ type: SAVE_DIMENSION_OPTIONS, options });
 
         options.forEach(option => {
