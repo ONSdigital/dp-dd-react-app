@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { dropLastPathComponent } from '../../../common/helpers';
 import { renderFlatHierarchy } from '../utils';
-import { saveDimensionOptions, deselectAllOptions } from '../../dataset/actions';
+import { saveDimensionOptions, deselectAllOptions } from '../actions';
 
 class Summary extends Component {
     constructor(props) {
@@ -135,11 +135,7 @@ class Summary extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    const dataset = state.dataset;
-    const dimension = dataset.dimensions.find((dimension) => {
-        return dimension.id === ownProps.dimensionID;
-    });
-
+    const dimension = state.dimension;
     const options = renderFlatHierarchy({
         hierarchy: dimension.options,
         filter: {

@@ -205,18 +205,14 @@ class GeographyBrowser extends Component {
 GeographyBrowser.propTypes = propTypes;
 
 function mapStateToProps(state, ownProps) {
-    const dataset = state.dataset;
+    const dimension = state.dimension;
     const optionID = ownProps.location.query.id || null;
-    const dimension = dataset.dimensions.find((dimension) => {
-        return dimension.id === ownProps.dimensionID;
-    });
 
     const props = {};
     props.dimension = dimension;
     props.optionsCount = dimension.optionsCount;
     props.options = dimension.options;
     props.option = optionID ? findOptionByID({ options: dimension.options, id: optionID }) : null;
-
     return props;
 }
 
