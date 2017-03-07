@@ -74,8 +74,14 @@ export function saveDownloadOptions(options) {
 }
 
 export function requestDownloadProgress(jobID) {
+    const headers = new Headers({
+        'Cache-control': 'no-cache, no-store',
+        'Pragma': 'no-cache',
+        'Expires': 0
+    });
+
     return dispatch => request
-        .get(api.getJobStatusURL(jobID))
+        .get(api.getJobStatusURL(jobID), {headers: headers})
         .then(json => {
             dispatch(saveDownloadProgress(json));
         })
