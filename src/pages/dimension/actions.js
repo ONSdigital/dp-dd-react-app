@@ -10,7 +10,7 @@ import {
 import {
     updateOption,
     toggleSelectedOptions,
-    parseDimension as parseSingleDimension
+    parseDimension
 } from './utils';
 
 export const SAVE_DIMENSION_OPTIONS = 'SAVE_DIMENSION_OPTIONS';
@@ -20,7 +20,7 @@ export const REQUEST_HIERARCHICAL = 'REQUEST_HIERARCHICAL';
 export const REQUEST_HIERARCHICAL_SUCCESS = 'REQUEST_HIERARCHICAL_SUCCESS';
 export const DESELECT_ALL_OPTIONS = 'DESELECT_ALL_OPTIONS';
 export const SELECT_ALL_OPTIONS = 'SELECT_ALL_OPTIONS';
-export const PARSE_DIMENSION = 'PARSE_DIMENSION';
+export const UPDATE_DIMENSION = 'UPDATE_DIMENSION';
 
 export function selectDimension(dimensionID) {
     return (dispatch, getState) => {
@@ -53,7 +53,7 @@ export function requestHierarchical(datasetID, edition, version, dimensionID) {
             .then(function (data) {
                 data.hierarchyReady = true;
                 dispatch(requestHierarchicalSuccess(datasetID, data));
-                dispatch(parseDimension(data));
+                dispatch(updateDimension(data));
             }).catch(function (err) {
                 throw(err);
             })
@@ -82,7 +82,7 @@ export function deselectAllOptions(dimensionID, autoDeselected = false) {
         });
 
         dimension.options = toggleSelectedOptions({ options: dimension.options, selected: false});
-        dispatch(parseDimension(dimension));
+        dispatch(updateDimension(dimension));
     }
 }
 
@@ -98,39 +98,43 @@ export function selectAllOptions(dimensionID, resetAutoDeselected = false) {
         });
 
         dimension.options = toggleSelectedOptions({ options: dimension.options, selected: true})
-        dispatch(parseDimension(dimension));
+        dispatch(updateDimension(dimension));
     }
 }
 
 export function saveDimensionOptions({dimensionID, options}) {
     return (dispatch, getState) => {
         const state = getState();
+        const selectedDimension = Object.assign({}, state.dimension);
+
+        dispatch({ type: SAVE_DIMENSION_OPTIONS, options });
+
+        options.forEach(option => {
+            updateOption({
+                id: option.id,
+                options: selectedDimension.options,
+                update: { selected: option.selected  }
+            })
+        });
+
+        // executes synchronously parsing and replacing dimension state
+        dispatch(updateDimension(selectedDimension));
+
         const dimensions = state.dimensions.map((dimension) => {
             if (dimension.id !== dimensionID) {
                 return Object.assign({}, dimension);
             }
-
-            const selectedDimension = Object.assign({}, state.dimension);
-
-            options.forEach(option => {
-                updateOption({
-                    id: option.id,
-                    options: selectedDimension.options,
-                    update: { selected: option.selected  }
-                })
-            });
-
-            return parseSingleDimension(dimension);
+            return state.dimension;
         });
 
         dispatch(persistDimensions(dimensions));
     }
 }
 
-export function parseDimension(dimension) {
-    dimension = parseSingleDimension(dimension);
+export function updateDimension(dimension) {
+    dimension = parseDimension(dimension);
     return {
-        type: PARSE_DIMENSION,
+        type: UPDATE_DIMENSION,
         dimension
     }
 }
