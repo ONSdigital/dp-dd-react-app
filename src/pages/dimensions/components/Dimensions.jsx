@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import { appendPathComponent, dropLastPathComponent } from '../../../common/helpers';
-import {requestVersionMetadata } from '../../dataset/actions';
-import { requestDimensions } from '../actions';
+import { requestVersionMetadata } from '../../dataset/actions';
+import { requestDimensions, resetDimension } from '../actions';
 
 import DimensionList from './DimensionList';
 import DocumentTitle from '../../../components/elements/DocumentTitle';
@@ -28,28 +28,35 @@ class Dimension extends Component {
     }
 
     componentWillMount() {
-        const dispatch = this.props.dispatch;
-        const params = this.props.params;
-        if (!this.props.hasMetadata) {
-            this.state.initialFetchRequired = true;
-            dispatch(requestVersionMetadata(params.id, params.edition, params.version));
-            return;
-        }
-
-        if (!this.props.hasDimensions) {
-            dispatch(requestDimensions(params.id, params.edition, params.version));
-        }
+        this.requestDataUpdate();
     }
 
     shouldComponentUpdate(props) {
+        return !this.requestDataUpdate(props);
+    }
+
+    requestDataUpdate(props = this.props) {
         const dispatch = props.dispatch;
         const params = props.params;
-        if (this.state.initialFetchRequired) {
-            this.state.initialFetchRequired = false;
-            dispatch(requestDimensions(params.id, params.edition, params.version));
-            return false;
+
+        if (!props.hasMetadata) {
+            dispatch(requestVersionMetadata(params.id, params.edition, params.version));
+            return true;
         }
-        return true;
+
+        if (!props.hasDimensions) {
+            dispatch(requestDimensions(params.id, params.edition, params.version));
+            return true;
+        }
+
+        props.dimensions.forEach(dimension => {
+           if (dimension.selectedCount === 0) {
+               dispatch(resetDimension(dimension.id));
+               return true;
+           }
+        });
+
+        return false;
     }
 
     render() {
