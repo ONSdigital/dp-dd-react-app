@@ -2,11 +2,12 @@ import { Request } from '../../common/utils';
 const request = new Request();
 
 import api from '../../config/api';
-import { parseDimension } from '../dimension/utils';
+import { parseDimension, toggleSelectedOptions } from '../dimension/utils';
 
 export const REQUEST_DIMENSIONS = 'REQUEST_DIMENSIONS';
 export const REQUEST_DIMENSIONS_SUCCESS = 'REQUEST_DIMENSIONS_SUCCESS';
 export const PARSE_DIMENSIONS = 'PARSE_DIMENSIONS';
+export const RESET_DIMENSIONS = 'RESET_DIMENSIONS';
 
 export function requestDimensions(datasetID, edition, version) {
     return (dispatch) => {
@@ -32,6 +33,28 @@ export function requestDimensionsSuccess(datasetId, responseData) {
         dataset: {
             datasetId,
             responseData
+        }
+    }
+}
+
+export function resetDimension(dimensionId) {
+    return (dispatch, getState) => {
+        const state = getState();
+        const dimension = state.dimensions.find(dimension => {
+            return dimension.id === dimensionId;
+        });
+
+        delete dimension.autoDeselected;
+        dimension.options = toggleSelectedOptions({ options: dimension.options, selected: true})
+
+        if (dimension) {
+            dispatch({
+                type: RESET_DIMENSIONS,
+                dimensionId,
+                dimension
+            });
+
+            dispatch(parseDimensions(dimension));
         }
     }
 }
