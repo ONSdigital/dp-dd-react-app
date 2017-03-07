@@ -94,10 +94,7 @@ class Search extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    const dataset = state.dataset;
-    const dimension = dataset.dimensions.find((dimension) => {
-        return dimension.id === ownProps.dimensionID;
-    });
+    const dimension = state.dimension;
 
     const term = ownProps.location.query.term || null;
     const options = term  ? searchOptions({ options: dimension.options, term }) : null;

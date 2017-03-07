@@ -106,23 +106,23 @@ export function saveDimensionOptions({dimensionID, options}) {
     return (dispatch, getState) => {
         const state = getState();
         const dimensions = state.dimensions.map((dimension) => {
-            dimension = Object.assign({}, dimension);
             if (dimension.id !== dimensionID) {
-                return dimension;
+                return Object.assign({}, dimension);
             }
+
+            const selectedDimension = Object.assign({}, state.dimension);
 
             options.forEach(option => {
                 updateOption({
                     id: option.id,
-                    options: dimension.options,
+                    options: selectedDimension.options,
                     update: { selected: option.selected  }
                 })
             });
 
-            return dimension;
+            return parseSingleDimension(dimension);
         });
 
-        dispatch({type: SAVE_DIMENSION_OPTIONS, dimensions });
         dispatch(persistDimensions(dimensions));
     }
 }
