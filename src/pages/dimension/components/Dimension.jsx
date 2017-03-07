@@ -13,7 +13,7 @@ import GeographyBrowser from './GeographyBrowser';
 import DimensionSearch from './DimensionSearch';
 import SelectionSummary from './SelectionSummary';
 
-import { deselectDimension } from '../actions';
+import { deselectDimension, saveDimensionOptions } from '../actions';
 import { requestDimensions } from '../../dimensions/actions';
 import { requestVersionMetadata } from '../../dataset/actions';
 
@@ -79,6 +79,7 @@ class Dimension extends Component {
     }
 
     requestDimensionUpdate(props = this.props) {
+        const action = props.location.query.action;
         const isReady = props.isReady;
         const isHierarchical = props.isHierarchical;
         const autoDeselected = props.autoDeselected;
@@ -112,8 +113,12 @@ class Dimension extends Component {
         }
 
         if (isReady && allSelected && autoDeselected !== true) {
-            dispatch(deselectAllOptions(this.props.dimensionID, true));
+            dispatch(deselectAllOptions(dimensionID, true));
             return false;
+        }
+
+        if (action === 'summary' && props.hasDimension) {
+            dispatch(saveDimensionOptions({ dimensionID }));
         }
 
         return true;
