@@ -5,7 +5,7 @@ import TimeRangeSelector from './TimeRangeSelector';
 import { Link } from 'react-router';
 
 import { dropLastPathComponent } from '../../../common/helpers';
-import { saveDimensionOptions } from '../../dataset/actions';
+import { saveDimensionOptions } from '../actions';
 import { renderFlatListOfOptions } from '../utils';
 
 class TimeSelector extends Component {
@@ -180,10 +180,7 @@ class TimeSelector extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    const dataset = state.dataset;
-    const dimension = dataset.dimensions.find((dimension) => {
-        return dimension.id === ownProps.dimensionID;
-    });
+    const dimension = state.dimension;
 
     const props = {
         options: dimension.options,
