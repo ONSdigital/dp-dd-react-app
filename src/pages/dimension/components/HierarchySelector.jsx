@@ -111,7 +111,7 @@ class HierarchySelector extends Component {
                 </div>
 
                 <div>
-                    <ul className="hierarchy">{this.renderElementList(option)}</ul>
+                    <ul className="hierarchy col--lg-two-thirds">{this.renderElementList(option)}</ul>
                     <a className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
                        onClick={this.saveSelectedOptions}>Save selection</a>
                     <br/>
