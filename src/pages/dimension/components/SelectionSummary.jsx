@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Link, hashHistory } from 'react-router';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
 import { dropLastPathComponent } from '../../../common/helpers';
@@ -135,7 +135,10 @@ class Summary extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    const dimension = state.dimension;
+    const dimension = state.dimensions.find((dimension) => {
+        return dimension.id === ownProps.params.dimensionID;
+    });
+
     const options = renderFlatHierarchy({
         hierarchy: dimension.options,
         filter: {
