@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { selectAllOptions } from '../../dataset/actions';
+import { selectAllOptions } from '../actions';
 import { dropLastPathComponent } from '../../../common/helpers';
 import analytics from '../../../config/analytics';
 
