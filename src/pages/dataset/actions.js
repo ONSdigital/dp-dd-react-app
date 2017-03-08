@@ -32,7 +32,7 @@ export function saveDownloadOptions(options) {
             options
         });
 
-        const dimensions = state.dataset.dimensions.map(dimension => {
+        const dimensions = state.dimensions.map(dimension => {
             return {
                 id: dimension.id,
                 options: flattenSelectedOptions(dimension.options)
