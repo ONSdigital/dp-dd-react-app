@@ -51,7 +51,7 @@ class HierarchyBrowser extends Component {
         const optionsAreParents = options instanceof Array && options.length > 0 && !!options[0].options;
         const isNested = !!this.props.location.query.id;
 
-        if (!this.props.hasDimensions || !options) {
+        if (!this.props.hasDimensions) {
             return null;
         }
 
@@ -74,6 +74,9 @@ class HierarchyBrowser extends Component {
 
     renderSimpleSelector() {
         const selectorProps = this.getChildComponentProps();
+        if (!selectorProps.options && this.props.option) {
+            selectorProps.options = [this.props.option];
+        }
         return <SimpleSelector {...selectorProps} />
     }
 
