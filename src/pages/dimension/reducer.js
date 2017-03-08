@@ -2,6 +2,7 @@ import {
     UPDATE_DIMENSION,
     SELECT_DIMENSION,
     DESELECT_DIMENSION,
+    REQUEST_HIERARCHICAL,
     SELECT_ALL_OPTIONS,
     DESELECT_ALL_OPTIONS
 } from './actions';
@@ -14,6 +15,10 @@ export default function (dimension = null, action) {
 
         case DESELECT_DIMENSION:
             return null;
+
+        case REQUEST_HIERARCHICAL:
+            dimension.optionList = dimension.options;
+            return dimension;
 
         case DESELECT_ALL_OPTIONS:
             return Object.assign({}, dimension, {
