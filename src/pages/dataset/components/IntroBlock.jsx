@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import MetaWrapper from './MetaWrapper';
-import DocumentTitle from '../../../../components/elements/DocumentTitle';
+import DocumentTitle from '../../../components/elements/DocumentTitle';
 
 const propTypes = {
     title: PropTypes.string,

@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { requestVersionMetadata } from '../actions';
 import config from '../../../config';
-import IntroBlock from './static/IntroBlock';
+import IntroBlock from './../components/IntroBlock';
 import SupportingFilesList from '../../../components/elements/SupportingFilesList';
 import Foldable from '../../../components/elements/Foldable';
 

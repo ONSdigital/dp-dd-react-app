@@ -1,8 +1,8 @@
 import Home from '../pages/Home';
 
 import config from './';
-import Details from '../pages/dataset/components/DatasetDetails';
-import Version from '../pages/dataset/components/DatasetVersion';
+import Details from '../pages/dataset/containers/DetailsContainer';
+import Version from '../pages/dataset/containers/VersionContainer';
 
 import Dimension from '../pages/dimension/components/Dimension';
 import Dimensions from '../pages/dimensions/components/Dimensions';
