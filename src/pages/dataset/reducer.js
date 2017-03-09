@@ -1,8 +1,6 @@
 import {
     REQUEST_DATASET_METADATA_SUCCESS,
     REQUEST_VERSION_METADATA_SUCCESS,
-    SAVE_DOWNLOAD_PROGRESS,
-    CANCEL_DOWNLOAD,
 } from './actions';
 
 const defaultState = {
@@ -12,12 +10,6 @@ const defaultState = {
     edition: null,
     version: null,
     metadata: {},
-    download: {
-        id: '',
-        inProgress: false,
-        completed: false,
-        cancelled: false
-    },
     hasMetadata: false,
     hasDimensions: false
 };
@@ -48,30 +40,6 @@ export default function (state = defaultState, action) {
                 hasMetadata: true
             });
             break;
-
-        case SAVE_DOWNLOAD_PROGRESS:
-            if (state.download.cancelled) {
-                state = Object.assign({}, state, {
-                    download: Object.assign({}, defaultState.download)
-                });
-            } else {
-                state = Object.assign({}, state, {
-                    download: Object.assign({}, state.download, action.download, {
-                        inProgress: action.download.status === 'Pending',
-                        completed: action.download.status === 'Complete'
-                    })
-                });
-            }
-            break;
-
-        case CANCEL_DOWNLOAD:
-            state = Object.assign({}, state, {
-                download: Object.assign({}, defaultState.download, {
-                    cancelled: true
-                })
-            });
-            break;
-
     }
 
     return state;
