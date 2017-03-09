@@ -40,7 +40,7 @@ class Download extends Component {
 
     componentWillReceiveProps(nextProps) {
         const download = nextProps.download;
-        if (!download.completed && download.inProgress) {
+        if (download.id && !download.completed && download.inProgress) {
             setTimeout(() => nextProps.dispatch(requestDownloadProgress(download.id)), 500);
         }
     }
