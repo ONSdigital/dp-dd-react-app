@@ -40,7 +40,7 @@ class Download extends Component {
 
     componentWillReceiveProps(nextProps) {
         const download = nextProps.download;
-        if (download.completed && download.inProgress) {
+        if (!download.completed && download.inProgress) {
             setTimeout(() => nextProps.dispatch(requestDownloadProgress(download.id)), 500);
         }
     }
@@ -57,11 +57,6 @@ class Download extends Component {
     componentWillUnmount() {
         const dispatch = this.props.dispatch;
         dispatch(cancelDownload());
-        // const download = this.props.download;
-        // if (!download.completed && download.inProgress) {
-        //     dispatch(cancelDownload(), 500);
-        //
-        // }
     }
 
     render() {
