@@ -86,7 +86,12 @@ class HierarchyBrowser extends Component {
         const options = this.props.option ? this.props.option.options : this.props.options;
         const parentPath = dropLastPathComponent(pathname);
 
-        const optionElements = options.map((option, index) => {
+
+        const optionElements = options.sort(function(a, b){
+            if(a.name < b.name) return -1;
+            if(a.name > b.name) return 1;
+            return 0;
+        }).map((option, index) => {
             const query = {
                 action,
                 id: option.id
@@ -100,12 +105,12 @@ class HierarchyBrowser extends Component {
             }
             let info = option.options && option.options.length > 0 ?`For example ${option.options[0].name}` : '';
 
-                 return (
-                     <p key={index} className="margin-top">
-                         <Link to={{ pathname, query }}>{label}</Link><br />
-                         <span>{info}</span>
-                     </p>
-                 )
+             return (
+                 <p key={index} className="margin-top">
+                     <Link to={{ pathname, query }}>{label}</Link><br />
+                     <span>{info}</span>
+                 </p>
+             )
         });
 
         return (
