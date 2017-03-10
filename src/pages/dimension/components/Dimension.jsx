@@ -179,6 +179,7 @@ class Dimension extends Component {
         }
 
         if (this.props.isFlat) {
+            componentProps.sortingAZ = true;
             return <SimpleSelector {...componentProps} />;
         }
 

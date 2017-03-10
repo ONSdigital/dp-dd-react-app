@@ -16,8 +16,13 @@ const propTypes = {
         selected: PropTypes.bool
     })).isRequired,
     optionsCount: PropTypes.number.isRequired,
-    onSave: PropTypes.func.isRequired
+    onSave: PropTypes.func.isRequired,
+    sortingAZ: PropTypes.bool.isRequired
 };
+
+const defaultProps = {
+    sortingAZ: true
+}
 
 class SimpleSelector extends Component {
     constructor(props) {
@@ -131,8 +136,15 @@ class SimpleSelector extends Component {
     }
 
     renderSelector() {
-        const { options } = this.props;
         const checkboxes = [];
+        let { options } = this.props;
+        if (this.props.sortingAZ) {
+            options = options.sort(function(a, b){
+                if(a.name < b.name) return -1;
+                if(a.name > b.name) return 1;
+                return 0;
+            });
+        }
 
         options.forEach((optionItem, key) => {
             if (optionItem.empty) {
@@ -161,6 +173,7 @@ class SimpleSelector extends Component {
 }
 
 SimpleSelector.propTypes = propTypes;
+SimpleSelector.defaultProps = defaultProps;
 
 function mapStateToProps(state, ownProps) {
     const dimension = state.dimension;
