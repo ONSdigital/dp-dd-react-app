@@ -33,6 +33,12 @@ export function parseDimension(dimension) {
             selectedCount += option.selected ? 1 : 0;
             if (option.options && option.options.length > 0) {
                 option.options = parseOptions(option.options, selectedStatus);
+                option.totalSelectables = 1 + option.options.reduce((sum, option) => {
+                    if (option.totalSelectables) {
+                        return sum + option.totalSelectables + 1;
+                    }
+                    return sum + (option.empty ? 0 : 1);
+                }, 0);
             }
             return option;
         });
