@@ -25,8 +25,7 @@ import {
 import {
     selectDimension,
     requestHierarchical,
-    deselectAllOptions,
-    selectAllOptions
+    deselectAllOptions
 } from '../actions';
 
 const propTypes = {
