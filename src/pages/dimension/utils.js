@@ -33,6 +33,11 @@ export function parseDimension(dimension) {
             selectedCount += option.selected ? 1 : 0;
             if (option.options && option.options.length > 0) {
                 option.options = parseOptions(option.options, selectedStatus);
+
+                if (option.totalSelectables !== undefined) {
+                    return option;
+                }
+
                 option.totalSelectables = 1 + option.options.reduce((sum, option) => {
                     if (option.totalSelectables) {
                         return sum + option.totalSelectables + 1;
@@ -74,7 +79,6 @@ export function updateOption ({options, id, update}) {
         }
         index++;
     }
-
 
     return retOption;
 }
