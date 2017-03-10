@@ -143,6 +143,7 @@ class HierarchySelector extends Component {
             value: option.name,
             onChange: this.cacheSelectedOption,
             checked: cachedOption.selected,
+            disabled: option.empty,
             key
         }
 
