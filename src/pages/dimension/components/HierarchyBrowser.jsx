@@ -101,7 +101,7 @@ class HierarchyBrowser extends Component {
             label = `${option.optionsType} in ${option.name}`;
 
             if (option.options) {
-                label += ` (${option.options.length})`;
+                label += ` (${option.totalSelectables})`;
             }
             let info = option.options && option.options.length > 0 ?`For example ${option.options[0].name}` : '';
 
