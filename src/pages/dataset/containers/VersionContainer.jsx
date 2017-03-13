@@ -103,7 +103,7 @@ class DatasetVersion extends Component {
 
                             {datasetLandingPageUrl ?
                                 <a href={datasetLandingPageUrl} className="inline-block font-size--17">
-                                    View previous editions
+                                    View other editions
                                 </a>
                                     : ""}
                         </p>
