@@ -52,12 +52,13 @@ class DatasetVersion extends Component {
         const contactName = contact.name || '';
         const contactEmail = contact.email || '';
         const datasetID = this.props.datasetId;
-        const releaseDate = this.props.metadata.releaseDate || '';
-        const lastUpdated = this.props.metadata.releaseDate || '';
-        const datasetLandingPageUrl = this.props.metadata.datasetLandingPage || null;
+        const releaseDate = metadata.releaseDate || '';
+        const lastUpdated = metadata.releaseDate || '';
+        const datasetLandingPageUrl = metadata.datasetLandingPage || null;
 
         const renderDimensionsList = () => {
             const dimensions = this.props.dimensions;
+            if (!dimensions) return null;
             return dimensions.map((dimension, i) => {
                 return <li key={i} className="flush">{dimension.name}</li>
             })
