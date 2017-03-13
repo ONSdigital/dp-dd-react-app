@@ -150,9 +150,11 @@ export function searchOptions({options, term = ''}) {
 }
 
 /**
- * @param hierarchy dimension options or dimension option options
- * @param filter option field with value
- * @param depth
+ * Renders flattened hierarchy with only single level of depth
+ * @param {Object} params
+ * @param {Object} params.hierarchy - Hierarchy structure
+ * @param {Object} params.filter - Hierarchy entry filter
+ * @param {Object} params.depth - Used to group top level entries
  */
 export function renderFlatHierarchy ({ hierarchy, filter = {}, depth = 0 }) {
     const selectedOptions = [];
