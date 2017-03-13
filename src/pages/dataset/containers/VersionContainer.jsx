@@ -36,23 +36,24 @@ class DatasetVersion extends Component {
     }
 
     render () {
+        const metadata = this.props.metadata || {};
+        const contact = metadata.contact || {};
         if (!this.props.id) {
             return null;
         }
 
-        if (!this.props.metadata) {
+        if (!metadata) {
             return null;
         }
 
-        const metadata = this.props.metadata || { a: 1 };
-        const description =  metadata ? this.props.metadata.description : '';
+        const description =  metadata.description || '';
         const title = this.props.title;
         const edition = this.props.edition;
-        const contactName = this.props.metadata.contact.name;
-        const contactEmail = this.props.metadata.contact.email;
+        const contactName = contact.name || '';
+        const contactEmail = contact.email || '';
         const datasetID = this.props.datasetId;
-        const releaseDate = this.props.metadata.releaseDate;
-        const lastUpdated = this.props.metadata.releaseDate;
+        const releaseDate = this.props.metadata.releaseDate || '';
+        const lastUpdated = this.props.metadata.releaseDate || '';
         const datasetLandingPageUrl = this.props.metadata.datasetLandingPage || null;
 
         const renderDimensionsList = () => {
