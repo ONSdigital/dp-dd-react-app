@@ -17,11 +17,9 @@ export function parseDimension(dimension) {
                 selectableCount ++;
             }
 
-            // todo: we should always use code, requires refactoring across whole app
+            // flat dimension values might have id only, hierarchical values have code
             if (option.code) {
                 option.id = option.code;
-            } else {
-                console.error('Code value is missing');
             }
 
             if (!option.empty) {
