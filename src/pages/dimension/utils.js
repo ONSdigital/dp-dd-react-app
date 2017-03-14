@@ -9,7 +9,7 @@ export function parseDimension(dimension) {
     dimension.selectableCount = selectableCount;
     return dimension;
 
-    function parseOptions(options, selectedStatus = true) {
+    function parseOptions(options) {
 
         return options.map(option => {
             optionsCount ++;
@@ -22,15 +22,15 @@ export function parseDimension(dimension) {
                 option.id = option.code;
             }
 
-            if (!option.empty) {
-                option.selected = option.selected === false ? false : selectedStatus;
-            } else {
+            if (option.empty) {
                 option.selected = false;
+            } else if (option.selected === undefined) {
+                option.selected = true;
             }
 
             selectedCount += option.selected ? 1 : 0;
             if (option.options && option.options.length > 0) {
-                option.options = parseOptions(option.options, selectedStatus);
+                option.options = parseOptions(option.options);
 
                 if (option.totalSelectables !== undefined) {
                     return option;
