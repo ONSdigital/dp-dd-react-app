@@ -91,7 +91,7 @@ class DatasetVersion extends Component {
 
                         <Link to={this.state.customisePath}
                               className="btn btn--primary btn--thick btn--big btn--wide margin-top--2 font-size--17">
-                                Customise this dataset
+                                Filter this dataset
                         </Link>
                         <br/>
 
