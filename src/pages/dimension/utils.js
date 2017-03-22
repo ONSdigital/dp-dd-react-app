@@ -126,26 +126,24 @@ export function searchOptions({options, term = ''}) {
             list.push({
                 id: option.id,
                 name: option.name,
-                selected: option.selected
+                selected: option.selected,
+                levelType: option.levelType
             })
         }
 
         if (option.options) {
             let parentName = option.name;
-            if (option.levelType) {
-                parentName = option.levelType.name;
-            }
             let matchingOptions = searchOptions({
                 options: option.options,
                 term
             }).map(option => Object.assign({}, option, {
                 name: !option.found ? `${option.name}` : option.name,
-                note: `found in ${parentName}`,
+                note: option.levelType ? option.levelType.name : parentName,
                 found: true
             }));
             Array.prototype.push.apply(list, matchingOptions);
         }
-    })
+    });
     return list;
 }
 

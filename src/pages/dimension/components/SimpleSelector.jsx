@@ -163,7 +163,7 @@ class SimpleSelector extends Component {
                 onChange: this.cacheSelection,
                 checked: cachedOption.selected,
                 key
-            }
+            };
 
             checkboxes.push(<Checkbox {...checkboxProps} />);
         });
