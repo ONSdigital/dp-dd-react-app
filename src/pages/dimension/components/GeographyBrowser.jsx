@@ -91,7 +91,6 @@ class GeographyBrowser extends Component {
         const areaList = this.buildGeographyBrowseList();
 
         const optionElements = areaList.map((option, index) => {
-            console.log(option);
             const query = {
                 action,
                 id: option.parentId,
