@@ -10,7 +10,8 @@ import {
 import {
     updateOption,
     toggleSelectedOptions,
-    parseDimension
+    parseDimension,
+    parseGeographyDimension
 } from './utils';
 
 export const SAVE_DIMENSION_OPTIONS = 'SAVE_DIMENSION_OPTIONS';
@@ -136,7 +137,12 @@ export function saveDimensionOptions({dimensionID, options}) {
 }
 
 export function updateDimension(dimension) {
-    dimension = parseDimension(dimension);
+    if (dimension.type === "geography") {
+        dimension = parseGeographyDimension(dimension);
+    } else {
+        dimension = parseDimension(dimension);
+    }
+
     return {
         type: UPDATE_DIMENSION,
         dimension
