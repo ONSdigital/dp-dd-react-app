@@ -3,7 +3,7 @@ export function purifyPathSlashes(path) {
 }
 
 export function dropLastPathComponent (path) {
-    return purifyPathSlashes(path.replace(/\/[\w\s%]+\/?$/, ''));
+    return purifyPathSlashes(path.replace(/\/[\w\s%,]+\/?$/, ''));
 }
 
 export function replaceLastPathComponent (path, pathComponent) {
