@@ -48,6 +48,13 @@ export function parseDimension(dimension) {
     }
 }
 
+/**
+ * Toggles selected property on all of the options in the hierarchy
+ * @param {Object} param
+ * @param {Object[]} param.options - Hierarchy of options
+ * @param {boolean} param.selected - Option ID
+ * @returns {Object[]}
+ */
 export function toggleSelectedOptions ({options, selected = true}) {
     return options.map(option => {
         option.selected = option.empty ? false : selected;
@@ -58,6 +65,14 @@ export function toggleSelectedOptions ({options, selected = true}) {
     });
 }
 
+/**
+ * Updates an option value in a hierarchy
+ * @param {Object} param
+ * @param {Object[]} param.options - Hierarchy of options
+ * @param {string} param.id - Updated option ID
+ * @param {Object} param.update - New option value
+ * @returns {Object}
+ */
 export function updateOption ({options, id, update}) {
     let retOption = null;
     let index = 0;
@@ -81,6 +96,13 @@ export function updateOption ({options, id, update}) {
     return retOption;
 }
 
+/**
+ * Finds and returns option from the hierarchy. Returns null if option is not found.
+ * @param {Object} param
+ * @param {Object[]} param.options - Hierarchy of options
+ * @param {string} param.id - Option ID
+ * @returns {Object|null}
+ */
 export function findOptionByID ({options, id}) {
     let retOptions = null;
     let index = 0;
@@ -116,6 +138,13 @@ export function filterOptions({options, filter = {}}) {
     });
 }
 
+/**
+ * Searches hierarchy of options for term in option names and returns an array of options
+ * @param {Object} param
+ * @param {Object[]} param.options - Hierarchy of options
+ * @param {string} param.term - Searched string
+ * @returns {Object[]}
+ */
 export function searchOptions({options, term = ''}) {
     let list = [];
     options.forEach(option => {
@@ -147,10 +176,10 @@ export function searchOptions({options, term = ''}) {
 
 /**
  * Renders flattened hierarchy with only single level of depth
- * @param {Object} params
- * @param {Object} params.hierarchy - Hierarchy structure
- * @param {Object} params.filter - Hierarchy entry filter
- * @param {Object} params.depth - Used to group top level entries
+ * @param {Object} param
+ * @param {Object|Object[]} param.hierarchy - Hierarchy structure
+ * @param {Object} param.filter - Hierarchy entry filter
+ * @param {number} param.depth - Used to group top level entries
  */
 export function renderFlatHierarchy ({ hierarchy, filter = {}, depth = 0 }) {
     const selectedOptions = [];
@@ -199,6 +228,14 @@ export function renderFlatHierarchy ({ hierarchy, filter = {}, depth = 0 }) {
     return selectedOptions;
 }
 
+
+/**
+ * Returns hierarchy of options as flat list
+ * @param {Object} param
+ * @param {Object[]} param.hierarchy - Hierarchy of options
+ * @param {string} param.filter - Option filter todo: implement
+ * @returns {Object[]}
+ */
 export function renderFlatListOfOptions ({ hierarchy, filter = {} }) {
     const list = [];
     if (!(hierarchy instanceof Array)) {
