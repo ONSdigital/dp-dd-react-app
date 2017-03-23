@@ -3,7 +3,7 @@ const request = new Request();
 
 import api from '../../config/api';
 
-import { toggleSelectedOptions } from '../dimension/utils';
+import { toggleSelectedOptions } from '../dimension/utils/updating';
 import { parseDimension } from './utils';
 
 export const REQUEST_DIMENSIONS = 'REQUEST_DIMENSIONS';

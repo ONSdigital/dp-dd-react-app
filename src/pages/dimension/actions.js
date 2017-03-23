@@ -7,12 +7,8 @@ import {
     parseDimensions as persistDimensions
 } from '../dimensions/actions';
 
-import {
-    updateOption,
-    toggleSelectedOptions,
-    parseDimension,
-    parseGeographyDimension
-} from './utils';
+import { updateOption, toggleSelectedOptions } from './utils/updating';
+import { parseDimension, parseGeographyDimension } from './utils/parsing';
 
 export const SAVE_DIMENSION_OPTIONS = 'SAVE_DIMENSION_OPTIONS';
 export const SELECT_DIMENSION = 'SELECT_DIMENSION';

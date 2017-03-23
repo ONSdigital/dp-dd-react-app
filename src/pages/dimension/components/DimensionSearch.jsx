@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import SimpleSelector from './SimpleSelector';
-import { searchOptions } from '../utils';
+import { searchOptions } from '../utils/querying';
 
 class Search extends Component {
     constructor(props) {

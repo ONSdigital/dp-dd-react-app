@@ -5,8 +5,8 @@ import TimeRangeSelector from './TimeRangeSelector';
 import { Link } from 'react-router';
 
 import { dropLastPathComponent } from '../../../common/helpers';
+import { renderFlatListOfOptions } from '../utils/transforming';
 import { saveDimensionOptions } from '../actions';
-import { renderFlatListOfOptions } from '../utils';
 
 class TimeSelector extends Component {
 

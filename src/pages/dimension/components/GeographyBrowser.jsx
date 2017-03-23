@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import SimpleSelector from './SimpleSelector';
 
-import { findOptionByID } from '../utils';
+import { findOptionByID } from '../utils/querying';
 import { dropLastPathComponent } from '../../../common/helpers';
 import { requestVersionMetadata } from '../../dataset/actions';
 
