@@ -27,12 +27,12 @@ export default class ToggleSelectAll extends Component {
     render() {
         if (this.props.enabled) {
             return (
-                <a className="margin-right"
+                <a className="margin-right font-size--16"
                    onClick={this.handleOnClick}>{this.props.label}</a>
             )
         }
 
-        return <span className="margin-right font-size--14">{this.props.label}</span>
+        return <span className="margin-right font-size--16">{this.props.label}</span>
     }
 }
 

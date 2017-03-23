@@ -69,7 +69,7 @@ class DatasetVersion extends Component {
             <div>
 
                 <div className="wrapper margin-bottom--double">
-                    <div className="col--lg-two-thirds margin-bottom--6">
+                    <div className="margin-bottom--4">
 
                         <DocumentTitle title={title}>
                             <h1 className="margin-top--4 margin-bottom">{title}: {edition}</h1>
@@ -91,7 +91,7 @@ class DatasetVersion extends Component {
 
                         <Link to={this.state.customisePath}
                               className="btn btn--primary btn--thick btn--big btn--wide margin-top--2 font-size--17">
-                                Customise this dataset
+                                Filter this dataset
                         </Link>
                         <br/>
 

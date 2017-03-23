@@ -176,7 +176,7 @@ class Dimension extends Component {
         componentProps.router = this.props.router;
         componentProps.onSave = () => {
             this.props.router.push(this.state.parentPath);
-        }
+        };
 
         if (this.props.isFlat) {
             componentProps.sortingAZ = true;

@@ -160,11 +160,7 @@ class GeographyBrowser extends Component {
                     const id = option.id;
                     const parentId = previousID;
                     const name = option.levelType.name;
-
-                    let code = null;
-                    if (option.levelType.level == 5) {
-                        code = option.levelType.id
-                    }
+                    const code = option.levelType.id;
 
                     const summary = `For example: ${option.name}`;
                     const area = {id, parentId, name, summary, typeCode: code};

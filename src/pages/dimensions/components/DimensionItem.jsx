@@ -27,7 +27,7 @@ export default class DimensionItem extends Component {
                     {this.props.label}
                 </div>
                 <div className="col col--md-6 col--lg-6">
-                    <Link to={pathname} className="float-right--md">Customise</Link>
+                    <Link to={pathname} className="float-right--md">Filter</Link>
                 </div>
             </li>
         )
