@@ -6,7 +6,7 @@ import SimpleSelector from './SimpleSelector';
 
 import { findOptionByID } from '../utils';
 import { dropLastPathComponent } from '../../../common/helpers';
-import { requestVersionMetadata, requestDimensions } from '../../dataset/actions';
+import { requestVersionMetadata } from '../../dataset/actions';
 
 const propTypes = {
     dimensionID: PropTypes.string.isRequired,
