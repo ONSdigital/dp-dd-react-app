@@ -5,7 +5,7 @@ import TimeRangeSelector from './TimeRangeSelector';
 import { Link } from 'react-router';
 
 import { dropLastPathComponent } from '../../../common/helpers';
-import { saveDimensionOptions } from '../actions';
+import { saveDimensionOptions, selectAllOptions } from '../actions';
 import { renderFlatListOfOptions } from '../utils';
 
 class TimeSelector extends Component {
@@ -68,6 +68,18 @@ class TimeSelector extends Component {
         let options = [];
         const selectedOptions = this.state.selectedOptions;
 
+        if (selectedOptions.length === 0 && this.state.selectedInterval === "all") {
+            console.log('selectAll for', this.props.dimensionId);
+            this.props.dispatch(selectAllOptions(this.props.dimensionID));
+            this.props.router.push({
+                pathname: this.props.location.pathname,
+                query: {
+                    action: 'summary'
+                }
+            });
+            return;
+        }
+
         if (selectedOptions.length === 0) {
             throw new Error("missing selection");
         }
@@ -124,7 +136,8 @@ class TimeSelector extends Component {
         const intervalLabel = this.getIntervalValue();
         const intervalSelector = [
             { id: intervalLabel, value: intervalLabel, label: 'Single ' + intervalLabel },
-            { id: 'range', value: 'range', label: 'Range' }
+            { id: 'range', value: 'range', label: 'Range' },
+            { id: 'all', value: 'all', label: 'Select all' }
         ];
 
         return (
@@ -154,6 +167,8 @@ class TimeSelector extends Component {
             case 'month':
             case 'year':
                 return this.renderSingleSelector();
+            case 'all':
+                return null;
             default:
                 return this.renderRangeSelector();
         }
