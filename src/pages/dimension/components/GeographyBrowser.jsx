@@ -35,7 +35,6 @@ class GeographyBrowser extends Component {
         }
     }
 
-
     shouldComponentUpdate(nextProps) {
         if (this.state.initialFetchRequired) {
             this.state.initialFetchRequired = false;
@@ -114,7 +113,6 @@ class GeographyBrowser extends Component {
                 <Link className="inline-block font-size--17" to={parentPath}>Cancel</Link>
             </div>
         )
-
     }
 
     renderOptionLinks () {

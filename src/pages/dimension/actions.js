@@ -3,10 +3,7 @@ const request = new Request();
 
 import api from '../../config/api';
 
-import {
-    parseDimensions as persistDimensions
-} from '../dimensions/actions';
-
+import { parseDimensions as persistDimensions } from '../dimensions/actions';
 import { updateOption, toggleSelectedOptions } from './utils/updating';
 import { parseDimension, parseGeographyDimension } from './utils/parsing';
 
@@ -27,7 +24,7 @@ export function selectDimension(dimensionID) {
         dispatch({
             type: SELECT_DIMENSION,
             dimension
-        })
+        });
     }
 }
 
@@ -35,7 +32,7 @@ export function deselectDimension(dimensionID) {
     return {
         type: DESELECT_DIMENSION,
         dimensionID
-    }
+    };
 }
 
 export function requestHierarchical(datasetID, edition, version, dimensionID) {
@@ -53,7 +50,7 @@ export function requestHierarchical(datasetID, edition, version, dimensionID) {
                 dispatch(updateDimension(data));
             }).catch(function (err) {
                 throw(err);
-            })
+            });
     }
 }
 
