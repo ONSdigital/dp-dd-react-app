@@ -23,6 +23,7 @@ class DatasetVersion extends Component {
         this.state = {
             downloadPath: `${baseURL}/download`,
             customisePath: `${baseURL}/dimensions`,
+            backgroundNotesPath: `${baseURL}/background-notes`
         }
     }
 
@@ -108,26 +109,25 @@ class DatasetVersion extends Component {
                                 </a>
                                     : ""}
                         </p>
-
-                        {/*<SupportingFilesList/>*/}
                     </div>
 
-                    <h3>Supporting information</h3>
-                    <p className="margin-top--0 margin-bottom">
-                        This section will provide detailed metadata. It will describe the content and dimensions of this dataset.
-                    </p>
+                    <SupportingFilesList backgroundNotesPath={this.state.backgroundNotesPath}/>
+                    {/*<h3>Supporting information</h3>*/}
+                    {/*<p className="margin-top--0 margin-bottom">*/}
+                        {/*This section will provide detailed metadata. It will describe the content and dimensions of this dataset.*/}
+                    {/*</p>*/}
 
-                    <h3>Selected customisations of this dataset</h3>
+                    <h2>Selected customisations of this dataset</h2>
                     <p className="margin-top--0 margin-bottom">
                         This section will contain pre-generated subsets of this dataset. The statistician responsible will create these to highlight key areas.
                     </p>
 
-                    <h3>Guide to quality</h3>
+                    <h2>Guide to quality</h2>
                     <p className="margin-top--0 margin-bottom">
                         This section will contain details around the statistical accuracy of this dataset. It will also contain any important considerations for interpreting and using this data.
                     </p>
 
-                    <h3>Previous versions</h3>
+                    <h2>Previous versions</h2>
                     <p className="margin-top--0 margin-bottom">
                         This section will provide access to previous versions of the dataset.
                     </p>

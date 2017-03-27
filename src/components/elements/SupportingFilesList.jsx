@@ -1,13 +1,15 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 
 const propTypes = {
     supportingFiles: PropTypes.arrayOf(React.PropTypes.shape({
         title: PropTypes.string.isRequired,
         uri: PropTypes.string.isRequired,
-    }))
-}
+    })),
+    backgroundNotesPath: PropTypes.string.isRequired
+};
 
-export default class SupportingFilesList extends Component {
+class SupportingFilesList extends Component {
     constructor(props) {
         super(props);
     }
@@ -27,13 +29,16 @@ export default class SupportingFilesList extends Component {
             <div>
                 <h2 className="">Supporting information</h2>
                 <ul>
-                    {/* TODO: Background notes will link to React page that generates content from API - once API is ready */}
-                    <li><a href="./files/background-notes.pdf" target="_blank">Background notes</a></li>
-                    { this.renderSupportingFiles() }
+                    <li>
+                        <Link to={this.props.backgroundNotesPath}>Background notes</Link>
+                    </li>
+                    {/*{ this.renderSupportingFiles() }*/}
                 </ul>
             </div>
         )
     }
 }
+
+export default SupportingFilesList;
 
 SupportingFilesList.propTypes = propTypes;
