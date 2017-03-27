@@ -13,11 +13,11 @@ const propTypes = {
     hasDimensions: PropTypes.bool.isRequired,
     hasMetadata: PropTypes.bool.isRequired,
     dimensions: PropTypes.array
-}
+};
 
 class Dimension extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         const pathname = props.location.pathname;
         this.state = {
             initialFetchRequired: false,

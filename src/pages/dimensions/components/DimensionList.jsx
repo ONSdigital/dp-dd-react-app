@@ -20,9 +20,11 @@ export default class DimensionList extends Component {
         const dimensions = this.props.dimensions || [];
         let selectionLabel = '';
         return dimensions.map((item, key) => {
-            if (item.selectedCount === item.selectableCount) {
+            if (item.selectedCount === 1) {
+                selectionLabel = `${item.options[0].name}`
+            } else if (item.selectedCount === item.selectableCount) {
                 selectionLabel = `Everything selected (${item.selectedCount})`
-            } else if (item.selectedCount > 0) {
+            } else if (item.selectedCount > 1) {
                 selectionLabel = `Selected options (${item.selectedCount})`
             } else {
                 selectionLabel = `Nothing selected`
