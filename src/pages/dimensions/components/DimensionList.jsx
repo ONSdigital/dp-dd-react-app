@@ -9,7 +9,7 @@ const propTypes = {
         optionsCount: PropTypes.number.isRequired
     })).isRequired,
     pathname: PropTypes.string.isRequired
-}
+};
 
 export default class DimensionList extends Component {
     constructor(props) {
@@ -20,7 +20,7 @@ export default class DimensionList extends Component {
         const dimensions = this.props.dimensions || [];
         let selectionLabel = '';
         return dimensions.map((item, key) => {
-            if (item.selectedCount === 1) {
+            if (item.selectedCount === 1 && item.selectableCount === 1) {
                 selectionLabel = `${item.options[0].name}`
             } else if (item.selectedCount === item.selectableCount) {
                 selectionLabel = `Everything selected (${item.selectedCount})`
