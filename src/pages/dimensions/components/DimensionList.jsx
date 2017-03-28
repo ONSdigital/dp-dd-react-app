@@ -24,7 +24,7 @@ export default class DimensionList extends Component {
                 selectionLabel = `${item.options[0].name}`
             } else if (item.selectedCount === item.selectableCount) {
                 selectionLabel = `Everything selected (${item.selectedCount})`
-            } else if (item.selectedCount > 1) {
+            } else if (item.selectedCount >= 1) {
                 selectionLabel = `Selected options (${item.selectedCount})`
             } else {
                 selectionLabel = `Nothing selected`
