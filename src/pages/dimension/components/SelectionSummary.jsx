@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
+import { renderFlatHierarchy } from '../utils/transforming';
 import { dropLastPathComponent } from '../../../common/helpers';
-import { renderFlatHierarchy } from '../utils';
 import { saveDimensionOptions, deselectAllOptions } from '../actions';
 
 class Summary extends Component {

@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 
 import SimpleSelector from './SimpleSelector';
 
-import { findOptionByID } from '../utils';
+import { findOptionByID } from '../utils/querying';
 import { dropLastPathComponent } from '../../../common/helpers';
-import { requestVersionMetadata, requestDimensions } from '../../dataset/actions';
+import { requestVersionMetadata } from '../../dataset/actions';
 
 const propTypes = {
     dimensionID: PropTypes.string.isRequired,
@@ -34,7 +34,6 @@ class GeographyBrowser extends Component {
             dispatch(requestDimensions(this.props.params.id));
         }
     }
-
 
     shouldComponentUpdate(nextProps) {
         if (this.state.initialFetchRequired) {
@@ -114,7 +113,6 @@ class GeographyBrowser extends Component {
                 <Link className="inline-block font-size--17" to={parentPath}>Cancel</Link>
             </div>
         )
-
     }
 
     renderOptionLinks () {

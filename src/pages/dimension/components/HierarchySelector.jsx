@@ -4,7 +4,7 @@ import { hashHistory } from 'react-router';
 
 import Checkbox from '../../../components/elements/Checkbox';
 import ToggleLink from '../../../components/elements/ToggleLink';
-import { renderFlatListOfOptions } from '../utils';
+import { renderFlatListOfOptions } from '../utils/transforming';
 import { saveDimensionOptions } from '../actions';
 
 

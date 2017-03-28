@@ -2,7 +2,9 @@ import { Request } from '../../common/utils';
 const request = new Request();
 
 import api from '../../config/api';
-import { parseDimension, toggleSelectedOptions } from '../dimension/utils';
+
+import { toggleSelectedOptions } from '../dimension/utils/updating';
+import { parseDimension } from './utils';
 
 export const REQUEST_DIMENSIONS = 'REQUEST_DIMENSIONS';
 export const REQUEST_DIMENSIONS_SUCCESS = 'REQUEST_DIMENSIONS_SUCCESS';

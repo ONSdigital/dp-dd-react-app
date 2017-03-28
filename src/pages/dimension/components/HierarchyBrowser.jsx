@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import SimpleSelector from './SimpleSelector';
 import HierarchySelector from './HierarchySelector';
 
-import { findOptionByID } from '../utils';
+import { findOptionByID } from '../utils/querying';
 import { dropLastPathComponent } from '../../../common/helpers';
-import { requestVersionMetadata, requestDimensions } from '../../dataset/actions';
+import { requestVersionMetadata } from '../../dataset/actions';
 
 const propTypes = {
     dimensionID: PropTypes.string.isRequired,
