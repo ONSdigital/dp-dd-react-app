@@ -8,8 +8,9 @@ const propTypes = {
     edition: PropTypes.string,
     version: PropTypes.string,
     name: PropTypes.string,
-    label: PropTypes.string
-}
+    label: PropTypes.string,
+    optionsCount: PropTypes.number
+};
 
 export default class DimensionItem extends Component {
     constructor(props) {
@@ -26,9 +27,14 @@ export default class DimensionItem extends Component {
                 <div className="col col--md-17 col--lg-14">
                     {this.props.label}
                 </div>
-                <div className="col col--md-6 col--lg-6">
-                    <Link to={pathname} className="float-right--md">Filter</Link>
-                </div>
+                {
+                    this.props.optionsCount > 1 ?
+                        <div className="col col--md-6 col--lg-6">
+                            <Link to={pathname} className="float-right--md">Filter</Link>
+                        </div>
+                        :
+                        ""
+                }
             </li>
         )
     }
