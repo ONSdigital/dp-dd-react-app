@@ -38,6 +38,7 @@
     "mocha": "^3.2.0",
     "mocha-loader": "^1.1.0",
     "node-sass": "^3.13.0",
+    "object-property-natural-sort": "^0.0.4",
     "react": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",

@@ -1,3 +1,5 @@
+import naturalSort from 'object-property-natural-sort';
+
 export function parseDimension(dimension) {
     let optionsCount = 0;
     let selectableCount = 0;
@@ -11,7 +13,9 @@ export function parseDimension(dimension) {
 
     function parseOptions(options, selectedStatus = true) {
 
-        return options.map(option => {
+        const t0 = performance.now();
+
+        let newOptions = options.map(option => {
             optionsCount ++;
             if (!option.empty) {
                 selectableCount ++;
@@ -47,6 +51,15 @@ export function parseDimension(dimension) {
             }
             return option;
         });
+
+        newOptions = newOptions.sort(naturalSort('name'));
+
+        const t1 = performance.now();
+        // console.log('Took', (t1 - t0).toFixed(4), 'seconds to parse dimension');
+
+
+        console.log(newOptions);
+        return newOptions
     }
 }
 
