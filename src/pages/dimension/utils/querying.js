@@ -75,3 +75,78 @@ export function searchOptions({options, term = ''}) {
     });
     return list;
 }
+
+
+/* -------------- [ geography querying tools ] ----------------- */
+
+/*
+ // leaf types is the set of types to list for the user
+ // when they click on a given leaf type:
+ const leafType = 'MD';
+ const objectSet = tree.levelTypeMap.get(leafType);
+ const topLevelItems = getBrowseList(objectSet);
+ const checkBoxItems = getEntriesOfType(leafType, topLevelItems)
+ const expandingItems = getEntriesWithLeafType(leafType, topLevelItems)
+ // when they click on an expanding item:
+ debugger;
+ const item = expandingItems[0];
+ const children = new Set(item.options);
+ const checkBoxItems2 = getEntriesOfType(leafType, children)
+ const expandingItems2 = getEntriesWithLeafType(leafType, children);
+ */
+
+/**
+ * Given a set of entries (of a particular levelType), identify the top-level list of entries to display
+ * @param {Set} entries - nested entry hierarchy
+ * @param {number} maxListSize - maximum number of entries that can be displayed without grouping
+ * @returns {Set}
+ */
+function getBrowseList(entries, maxListSize = 20) {
+    if (entries.size <= maxListSize) {
+        return entries;
+    }
+    const parents = new Set();
+    entries.forEach(entry => {
+        parents.add(entry.parent==null ? entry : entry.parent);
+    });
+
+    // check they don't all belong to the same parent, or have no parents
+    if (parents.size <= 1  || parents.size == entries.size) {
+        return entries;
+    }
+    return getBrowseList(parents);
+}
+
+/**
+ * Given a set of entries, return those with the requested levelType (i.e. those that should have a check box)
+ * @param {string} levelTypeID - level type ID
+ * @param {Set} entries - nested entry hierarchy
+ * @returns {Array}
+ */
+function getEntriesOfType(levelTypeID, entries) {
+    const matches = [];
+    entries.forEach(entry => {
+        if (entry.levelType.id == levelTypeID) {
+            matches.push(entry)
+        }
+    });
+    return matches
+}
+
+/**
+ * Given a set of entries, return those with children of the requested type
+ * (i.e. those that should be have a link to show a list of their children)
+ * @param {string} levelTypeID - level type ID
+ * @param {Set} entries - nested entry hierarchy
+ * @returns {Array}
+ */
+function getEntriesWithLeafType(levelTypeID, entries) {
+    const matches = [];
+    debugger;
+    entries.forEach(entry => {
+        if (entry.leafTypes.has(levelTypeID)) {
+            matches.push(entry);
+        }
+    });
+    return matches;
+}
