@@ -45,18 +45,19 @@ class GeographyBrowser extends Component {
     }
 
     render () {
-        const isGeography = this.props.type && this.props.type === 'geography' || false;
-        const renderParam = this.props.location.query.render;
+        const dimension = this.props.dimension;
+        const isGeography = dimension.type && dimension.type === 'geography' || false;
 
         if (!isGeography) {
             return null;
         }
 
-        if (renderParam == 'simple') {
-            return this.renderSimpleSelector();
-        }
+        // const renderParam = this.props.location.query.render;
+        // if (renderParam == 'simple') {
+        //     return this.renderSimpleSelector();
+        // }
 
-        return this.renderGeographyLinks();
+        return this.renderTypeLinks();
     }
 
     renderSimpleSelector() {
@@ -83,32 +84,38 @@ class GeographyBrowser extends Component {
         return <SimpleSelector {...selectorProps} />
     }
 
-    renderGeographyLinks() {
+    // todo: move to static component
+    renderTypeLinks() {
         const pathname = this.props.location.pathname;
         const action = this.props.location.query.action;
         const parentPath = dropLastPathComponent(pathname);
-        const areaList = this.buildGeographyBrowseList();
+        const dimension = this.props.dimension;
+        const optionTypeMap = dimension.optionTypeMap;
+        const entryTypeMap = dimension.entryTypeMap;
+        const levelTypeMap = dimension.levelTypeMap;
+        const geographyLinks = [];
 
-        const optionElements = areaList.map((option, index) => {
+        for (var [key, value] of optionTypeMap.entries()) {
             const query = {
                 action,
-                id: option.parentId,
-                render: 'simple',
-                type: option.typeCode
+                type: value.id
             };
 
-            return (
-                <p key={index} className="margin-top">
-                    <Link to={{ pathname, query }}>{option.name}</Link><br />
-                    <span>{option.summary}</span>
+            const optionName = levelTypeMap.get(key).values().next().value.name;
+            const summary = `For example: ${optionName}`;
+
+            geographyLinks.push(
+                <p key={key} className="margin-top">
+                    <Link to={{ pathname, query }}>{value.name}</Link><br />
+                    <span>{summary}</span>
                 </p>
-            )
-        })
+            );
+        }
 
         return (
             <div className="margin-bottom--8">
                 <h1 className="margin-top--4 margin-bottom">Browse {this.props.dimensionID}</h1>
-                {optionElements}
+                {geographyLinks}
                 <br/>
                 <Link className="inline-block font-size--17" to={parentPath}>Cancel</Link>
             </div>
@@ -147,53 +154,6 @@ class GeographyBrowser extends Component {
             </div>
         )
     }
-
-    buildGeographyBrowseList() {
-        const options = this.props.option ? this.props.option.options : this.props.options;
-        const areaList = [];
-
-        (function buildAreaGroupsList(options, previousID) {
-            options.map(option => {
-                if (!option.empty) {
-                    const id = option.id;
-                    const parentId = previousID;
-                    const name = option.levelType.name;
-                    const code = option.levelType.id;
-
-                    const summary = `For example: ${option.name}`;
-                    const area = {id, parentId, name, summary, typeCode: code};
-                    const found = areaList.some(function (el) {
-                        return el.name === area.name;
-                    });
-                    if (!found) {areaList.push(area)}
-                }
-
-                if (option.options) {
-                    buildAreaGroupsList(option.options, option.id)
-                }
-            });
-        })(options);
-
-        return areaList;
-    }
-
-    getAllGeographiesByType(type) {
-        const options = this.props.dimension.options;
-        let geographies = [];
-
-        (function getGeogByType(options) {
-            options.map((option, index) => {
-                if (option.levelType.id == type) {
-                    geographies.push(option);
-                }
-                if (option.options) {
-                    getGeogByType(option.options);
-                }
-            });
-        })(options);
-
-        return geographies;
-    }
 }
 
 GeographyBrowser.propTypes = propTypes;
@@ -201,13 +161,8 @@ GeographyBrowser.propTypes = propTypes;
 function mapStateToProps(state, ownProps) {
     const dimension = state.dimension;
     const optionID = ownProps.location.query.id || null;
-
-    const props = {};
-    props.dimension = dimension;
-    props.optionsCount = dimension.optionsCount;
-    props.options = dimension.options;
-    props.option = optionID ? findOptionByID({ options: dimension.options, id: optionID }) : null;
-    return props;
+    const option = !optionID ? null : findOptionByID({ options: dimension.options, id: optionID });
+    return { dimension, optionID, option };
 }
 
 export default connect(mapStateToProps)(GeographyBrowser);
