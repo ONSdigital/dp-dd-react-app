@@ -75,8 +75,11 @@ export function deselectAllOptions(dimensionID, autoDeselected = false) {
             autoDeselected
         });
 
+console.log('deselectAllOptions() (1)', dimension.options[2].name);
         dimension.options = toggleSelectedOptions({ options: dimension.options, selected: false});
+console.log('deselectAllOptions() (2)', dimension.options[2].name);
         dispatch(updateDimension(dimension));
+console.log('deselectAllOptions() (3)', dimension.options[2].name);
     }
 }
 
@@ -133,7 +136,9 @@ export function updateDimension(dimension) {
     if (dimension.type === "geography") {
         dimension = parseGeographyDimension(dimension);
     } else {
+console.log('updateDimension() (1)', dimension.options[2].name);
         dimension = parseDimension(dimension);
+console.log('updateDimension() (2)', dimension.options[2].name);
     }
 
     return {

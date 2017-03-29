@@ -31,6 +31,8 @@ export default function (dimension = null, action) {
             });
 
         case UPDATE_DIMENSION:
+            const d = Object.assign({}, dimension, action.dimension);
+console.log('UPDATE_DIMENSION', d.options[2].name);
             return Object.assign({}, dimension, action.dimension);
     }
 
