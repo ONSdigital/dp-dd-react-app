@@ -13,8 +13,6 @@ export function parseDimension(dimension) {
 
     function parseOptions(options, selectedStatus = true) {
 
-        const t0 = performance.now();
-
         let newOptions = options.map(option => {
             optionsCount ++;
             if (!option.empty) {
@@ -53,12 +51,6 @@ export function parseDimension(dimension) {
         });
 
         newOptions = newOptions.sort(naturalSort('name'));
-
-        const t1 = performance.now();
-        // console.log('Took', (t1 - t0).toFixed(4), 'seconds to parse dimension');
-
-
-        console.log(newOptions);
         return newOptions
     }
 }

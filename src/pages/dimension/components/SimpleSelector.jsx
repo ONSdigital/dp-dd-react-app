@@ -113,7 +113,6 @@ class SimpleSelector extends Component {
         const errorMessage = this.state.errorMessage;
         const allEnabled = this.state.allEnabled;
         const allDisabled = this.state.allDisabled;
-console.log("render() (1)", this.props.options[2].name);
         return (
             <form className="form">
                 <h1 className="margin-top--4 margin-bottom">{this.props.dimensionID}</h1>
@@ -137,17 +136,8 @@ console.log("render() (1)", this.props.options[2].name);
 
     renderSelector() {
         const checkboxes = [];
-console.log("renderSelector() (1)", this.props.options[2].name);
         let { options } = this.props;
-        // if (this.props.sortingAZ) {
-        //     options = options.sort(function(a, b){
-        //         if(a.name < b.name) return -1;
-        //         if(a.name > b.name) return 1;
-        //         return 0;
-        //     });
-        // }
 
-console.log("renderSelector() (2)", options[2].name);
         options.forEach((optionItem, key) => {
             if (optionItem.empty) {
                 return;
@@ -180,7 +170,6 @@ SimpleSelector.defaultProps = defaultProps;
 function mapStateToProps(state, ownProps) {
     const dimension = state.dimension;
     const options = ownProps.options || dimension.options;
-console.log("mapStateToProps()", options[2].name);
     return {
         dimension,
         options,
