@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 
 import { dropLastPathComponent } from '../../../common/helpers';
 import { renderFlatListOfOptions } from '../utils/transforming';
-import { saveDimensionOptions } from '../actions';
+import { saveDimensionOptions, selectAllOptions } from '../actions';
 
 class TimeSelector extends Component {
 
