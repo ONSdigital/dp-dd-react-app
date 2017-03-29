@@ -69,7 +69,6 @@ class TimeSelector extends Component {
         const selectedOptions = this.state.selectedOptions;
 
         if (selectedOptions.length === 0 && this.state.selectedInterval === "all") {
-            console.log('selectAll for', this.props.dimensionId);
             this.props.dispatch(selectAllOptions(this.props.dimensionID));
             this.props.router.push({
                 pathname: this.props.location.pathname,
