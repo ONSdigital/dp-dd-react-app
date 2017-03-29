@@ -83,8 +83,8 @@ export function searchOptions({options, term = ''}) {
  // leaf types is the set of types to list for the user
  // when they click on a given leaf type:
  const leafType = 'MD';
- const objectSet = tree.levelTypeMap.get(leafType);
- const topLevelItems = getBrowseList(objectSet);
+ const optionSet = tree.levelTypeMap.get(leafType);
+ const topLevelItems = getBrowseList(optionSet);
  const checkBoxItems = getEntriesOfType(leafType, topLevelItems)
  const expandingItems = getEntriesWithLeafType(leafType, topLevelItems)
  // when they click on an expanding item:
@@ -101,7 +101,7 @@ export function searchOptions({options, term = ''}) {
  * @param {number} maxListSize - maximum number of entries that can be displayed without grouping
  * @returns {Set}
  */
-function getBrowseList(entries, maxListSize = 20) {
+export function getBrowseList(entries, maxListSize = 20) {
     if (entries.size <= maxListSize) {
         return entries;
     }
@@ -123,7 +123,7 @@ function getBrowseList(entries, maxListSize = 20) {
  * @param {Set} entries - nested entry hierarchy
  * @returns {Array}
  */
-function getEntriesOfType(levelTypeID, entries) {
+export function getEntriesOfType(levelTypeID, entries) {
     const matches = [];
     entries.forEach(entry => {
         if (entry.levelType.id == levelTypeID) {
@@ -140,9 +140,8 @@ function getEntriesOfType(levelTypeID, entries) {
  * @param {Set} entries - nested entry hierarchy
  * @returns {Array}
  */
-function getEntriesWithLeafType(levelTypeID, entries) {
+export function getEntriesWithLeafType(levelTypeID, entries) {
     const matches = [];
-    debugger;
     entries.forEach(entry => {
         if (entry.leafTypes.has(levelTypeID)) {
             matches.push(entry);
