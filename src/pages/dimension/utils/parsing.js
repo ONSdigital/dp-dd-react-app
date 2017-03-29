@@ -1,107 +1,69 @@
 import naturalSort from 'object-property-natural-sort';
+import { updateDimensionStats } from './updating';
 
-export function parseDimension(dimension) {
-    let optionsCount = 0;
-    let selectableCount = 0;
-    let selectedCount = 0;
-
-    dimension.options = parseOptions(dimension.options);
-    dimension.optionsCount = optionsCount;
-    dimension.selectedCount = selectedCount;
-    dimension.selectableCount = selectableCount;
+export function parseHierarchicalDimension(dimension) {
+    dimension.options = dimension.options.sort(naturalSort('name'));
+    dimension = updateDimensionStats(dimension);
     return dimension;
-
-    function parseOptions(options, selectedStatus = true) {
-
-        let newOptions = options.map(option => {
-            optionsCount ++;
-            if (!option.empty) {
-                selectableCount ++;
-            }
-
-            // todo: we should always use code, requires refactoring across whole app
-            if (option.code) {
-                option.id = option.code;
-            } else {
-                console.error('Code value is missing');
-            }
-
-            if (!option.empty) {
-                option.selected = option.selected === false ? false : selectedStatus;
-            } else {
-                option.selected = false;
-            }
-
-            selectedCount += option.selected ? 1 : 0;
-            if (option.options && option.options.length > 0) {
-                option.options = parseOptions(option.options, selectedStatus);
-
-                if (option.totalSelectables !== undefined) {
-                    return option;
-                }
-
-                option.totalSelectables = 1 + option.options.reduce((sum, option) => {
-                        if (option.totalSelectables) {
-                            return sum + option.totalSelectables + 1;
-                        }
-                        return sum + (option.empty ? 0 : 1);
-                    }, 0);
-            }
-            return option;
-        });
-
-        newOptions = newOptions.sort(naturalSort('name'));
-        return newOptions
-    }
 }
 
-// todo: reimplement for geography
 export function parseGeographyDimension(dimension) {
-    let optionsCount = 0;
-    let selectableCount = 0;
-    let selectedCount = 0;
+    dimension.options = dimension.options.sort(naturalSort('name'));
+    dimension = updateDimensionStats(dimension);
 
-    dimension.options = parseOptions(dimension.options);
-    dimension.optionsCount = optionsCount;
-    dimension.selectedCount = selectedCount;
-    dimension.selectableCount = selectableCount;
+    const entryMap = new Map();
+    const levelTypeMap = new Map();
+    const optionTypeMap = prepareTree(dimension.options, null, entryMap, levelTypeMap);
+
+    dimension = Object.assign(dimension, {
+        entryMap,
+        levelTypeMap,
+        optionTypeMap
+    });
     return dimension;
+}
 
-    function parseOptions(options) {
+/**
+ * Recurse through sparse tree, creating:
+ * - Map of hierarchy entries by code (code=entry)
+ * - Set of hierarchy entries for each level type (levelType=[entry1,entry2...])
+ * While recursing, add the following information to each entry:
+ * - parent
+ * - childTypes (a set of the levelTypes of immediate children)
+ * - leafTypes (a set of the levelTypes of all non-empty descendants)
+ *
+ * @param {Array} options
+ * @param {Object} parent
+ * @param {Map} entryMap - updated key value where entryMap[code] = entry
+ * @param {Map} levelTypeMap - updated key value levelTypeMap[levelType] = [entry1, entry2, entry3]
+ * @returns {Map}
+ */
+function prepareTree(options, parent, entryMap, levelTypeMap) {
+    const optionTypeMap = new Map();
 
-        return options.map(option => {
-            optionsCount ++;
-            if (!option.empty) {
-                selectableCount ++;
-            }
+    options.forEach(option => {
+        const childOptions = option.options == undefined ? [] : option.options;
+        const childOptionTypes = prepareTree(childOptions, option, entryMap, levelTypeMap);
+        childOptionTypes.forEach(childOptionType => optionTypeMap.set(childOptionType.id, childOptionType));
+        option.parent = parent;
+        if (!option.empty) {
+            optionTypeMap.set(option.levelType.id, option.levelType);
+        }
+    });
 
-            // flat dimension values might have id only, hierarchical values have code
-            if (option.code) {
-                option.id = option.code;
-            }
+    if (parent != null) {
+        parent.leafTypes = new Map([...optionTypeMap]);
+        entryMap.set(parent.code, parent);
 
-            if (option.empty) {
-                option.selected = false;
-            } else if (option.selected === undefined) {
-                option.selected = true;
-            }
-
-            selectedCount += option.selected ? 1 : 0;
-            if (option.options && option.options.length > 0) {
-                option.options = parseOptions(option.options);
-
-                if (option.totalSelectables !== undefined) {
-                    return option;
-                }
-
-                option.totalSelectables = 1 + option.options.reduce((sum, option) => {
-                        if (option.totalSelectables) {
-                            return sum + option.totalSelectables + 1;
-                        }
-                        return sum + (option.empty ? 0 : 1);
-                    }, 0);
-            }
-            return option;
-        });
+        let levelEntries = levelTypeMap.get(parent.levelType.id);
+        if (levelEntries == null) {
+            levelEntries = new Set();
+            levelTypeMap.set(parent.levelType.id, levelEntries);
+        }
+        levelEntries.add(parent);
+        if (!parent.empty) {
+            optionTypeMap.set(parent.levelType.id, parent.levelType);
+        }
     }
+    return optionTypeMap;
 }

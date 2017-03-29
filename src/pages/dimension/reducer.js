@@ -1,5 +1,6 @@
 import {
     UPDATE_DIMENSION,
+    PARSE_DIMENSION,
     SELECT_DIMENSION,
     DESELECT_DIMENSION,
     REQUEST_HIERARCHICAL,
@@ -30,8 +31,8 @@ export default function (dimension = null, action) {
                 autoDeselected: action.resetAutoDeselected ? false : dimension.autoDeselected
             });
 
+        case PARSE_DIMENSION:
         case UPDATE_DIMENSION:
-            const d = Object.assign({}, dimension, action.dimension);
             return Object.assign({}, dimension, action.dimension);
     }
 

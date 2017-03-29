@@ -4,17 +4,19 @@ const request = new Request();
 import api from '../../config/api';
 
 import { parseDimensions as persistDimensions } from '../dimensions/actions';
-import { updateOption, toggleSelectedOptions } from './utils/updating';
-import { parseDimension, parseGeographyDimension } from './utils/parsing';
+import { parseHierarchicalDimension, parseGeographyDimension } from './utils/parsing';
+import { updateDimensionStats, updateOption, toggleSelectedOptions } from './utils/updating';
 
 export const SAVE_DIMENSION_OPTIONS = 'SAVE_DIMENSION_OPTIONS';
 export const SELECT_DIMENSION = 'SELECT_DIMENSION';
 export const DESELECT_DIMENSION = 'DESELECT_DIMENSION';
 export const REQUEST_HIERARCHICAL = 'REQUEST_HIERARCHICAL';
 export const REQUEST_HIERARCHICAL_SUCCESS = 'REQUEST_HIERARCHICAL_SUCCESS';
+export const PARSE_DIMENSION = 'PARSE_DIMENSION';
 export const DESELECT_ALL_OPTIONS = 'DESELECT_ALL_OPTIONS';
 export const SELECT_ALL_OPTIONS = 'SELECT_ALL_OPTIONS';
 export const UPDATE_DIMENSION = 'UPDATE_DIMENSION';
+
 
 export function selectDimension(dimensionID) {
     return (dispatch, getState) => {
@@ -47,7 +49,7 @@ export function requestHierarchical(datasetID, edition, version, dimensionID) {
             .then(function (data) {
                 data.hierarchyReady = true;
                 dispatch(requestHierarchicalSuccess(datasetID, data));
-                dispatch(updateDimension(data));
+                dispatch(parseDimension(data));
             }).catch(function (err) {
                 throw(err);
             });
@@ -129,15 +131,21 @@ export function saveDimensionOptions({dimensionID, options}) {
     }
 }
 
-export function updateDimension(dimension) {
+export function parseDimension(dimension) {
     if (dimension.type === "geography") {
         dimension = parseGeographyDimension(dimension);
     } else {
-        dimension = parseDimension(dimension);
+        dimension = parseHierarchicalDimension(dimension);
     }
+    return {
+        type: PARSE_DIMENSION,
+        dimension
+    }
+}
 
+export function updateDimension(dimension) {
     return {
         type: UPDATE_DIMENSION,
-        dimension
+        dimension: updateDimensionStats(dimension)
     }
 }
