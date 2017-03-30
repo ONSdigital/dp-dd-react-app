@@ -20,12 +20,19 @@ export const UPDATE_DIMENSION = 'UPDATE_DIMENSION';
 export function selectDimension(dimensionID) {
     return (dispatch, getState) => {
         const state = getState();
-        const dimension = Object.assign({}, state.dimensions.find(dimension => dimension.id === dimensionID));
+        let dimension = Object.assign({}, state.dimensions.find(dimension => dimension.id === dimensionID));
+
+        if (dimension.type === "geography") {
+            // geography tree must be updated
+            dimension = parseGeographyDimension(dimension);
+        }
 
         dispatch({
             type: SELECT_DIMENSION,
             dimension
         });
+
+
     }
 }
 
