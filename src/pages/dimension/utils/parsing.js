@@ -53,7 +53,8 @@ function prepareTree(options, parent, entryMap, levelTypeMap) {
 
     if (parent != null) {
         parent.leafTypes = new Map([...optionTypeMap]);
-        entryMap.set(parent.code, parent);
+        const combinedEntryId = parent.hierarchy_id + ':' + parent.code
+        entryMap.set(combinedEntryId, parent);
 
         let levelEntries = levelTypeMap.get(parent.levelType.id);
         if (levelEntries == null) {

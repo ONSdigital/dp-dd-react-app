@@ -114,12 +114,14 @@ class GeographyBrowser extends Component {
         const levelTypeMap = dimension.levelTypeMap;
 
         const leafType = this.props.location.query.type;
-        const leafID = this.props.location.query.id;
+        const leafId = this.props.location.query.id;
+        const leafHierarchyId = this.props.location.query.hierarchyId;
 
         const optionSet = levelTypeMap.get(leafType);
         const topLevelItems = getBrowseList(optionSet);
 
-        const entries = !leafID ? topLevelItems : new Set(this.props.dimension.entryMap.get(leafID).options);
+        const combinedEntryId = leafHierarchyId + ':' + leafId;
+        const entries = !leafId ? topLevelItems : new Set(this.props.dimension.entryMap.get(combinedEntryId).options);
 
         const checkBoxItems = getEntriesOfType(leafType, entries)
         const linkItems = getEntriesWithLeafType(leafType, entries)
@@ -150,10 +152,12 @@ class GeographyBrowser extends Component {
                 const query = {
                     action,
                     id: item.id,
+                    hierarchyId: item.hierarchy_id,
                     type: leafType
                 };
 
-                const optionName = entryMap.get(item.id).options[0].name;
+                const combinedEntryId = item.hierarchy_id + ':' + item.id;
+                const optionName = entryMap.get(combinedEntryId).options[0].name;
                 const summary = `For example: ${optionName}`;
 
                 geographyLinks.push(
