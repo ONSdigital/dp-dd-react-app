@@ -4,9 +4,14 @@ import { connect } from 'react-redux';
 
 import SimpleSelector from './SimpleSelector';
 
-import { findOptionByID } from '../utils/querying';
 import { dropLastPathComponent } from '../../../common/helpers';
 import { requestVersionMetadata } from '../../dataset/actions';
+import {
+    findOptionByID,
+    getBrowseList,
+    getEntriesOfType,
+    getEntriesWithLeafType
+} from '../utils/querying';
 
 const propTypes = {
     dimensionID: PropTypes.string.isRequired,
@@ -52,36 +57,11 @@ class GeographyBrowser extends Component {
             return null;
         }
 
-        // const renderParam = this.props.location.query.render;
-        // if (renderParam == 'simple') {
-        //     return this.renderSimpleSelector();
-        // }
+        if (this.props.location.query.type) {
+            return this.renderOptionsOfTypeLinks();
+        }
 
         return this.renderTypeLinks();
-    }
-
-    renderSimpleSelector() {
-        const geogTypeCode = this.props.location.query.type;
-        const selectorProps = {
-            router: this.props.router,
-            datasetID: this.props.params.id,
-            dimensionID: this.props.params.dimensionID,
-            options: this.props.option ? this.props.option.options : this.props.options,
-            onSave: () => {
-                this.props.router.push({
-                    pathname: this.props.location.pathname,
-                    query: {
-                        action: 'summary'
-                    }
-                })
-            }
-        }
-
-        if (geogTypeCode) {
-            selectorProps.options = this.getAllGeographiesByType(geogTypeCode);
-        }
-
-        return <SimpleSelector {...selectorProps} />
     }
 
     // todo: move to static component
@@ -110,6 +90,79 @@ class GeographyBrowser extends Component {
                     <span>{summary}</span>
                 </p>
             );
+        }
+
+        return (
+            <div className="margin-bottom--8">
+                <h1 className="margin-top--4 margin-bottom">Browse {this.props.dimensionID}</h1>
+                {geographyLinks}
+                <br/>
+                <Link className="inline-block font-size--17" to={parentPath}>Cancel</Link>
+            </div>
+        )
+    }
+
+    // todo: move to static component
+    renderOptionsOfTypeLinks() {
+        const pathname = this.props.location.pathname;
+        const action = this.props.location.query.action;
+        const parentPath = dropLastPathComponent(pathname);
+        const dimension = this.props.dimension;
+        const entryMap = dimension.entryMap;
+        const optionTypeMap = dimension.optionTypeMap;
+        const entryTypeMap = dimension.entryTypeMap;
+        const levelTypeMap = dimension.levelTypeMap;
+
+        const leafType = this.props.location.query.type;
+        const leafID = this.props.location.query.id;
+
+        const optionSet = levelTypeMap.get(leafType);
+        const topLevelItems = getBrowseList(optionSet);
+
+        const entries = !leafID ? topLevelItems : new Set(this.props.dimension.entryMap.get(leafID).options);
+
+        const checkBoxItems = getEntriesOfType(leafType, entries)
+        const linkItems = getEntriesWithLeafType(leafType, entries)
+
+        // todo: implement displaying links and checkboxes on the same page
+        if (checkBoxItems.size > 0) {
+            const selectorProps = {
+                router: this.props.router,
+                datasetID: this.props.params.id,
+                dimensionID: this.props.params.dimensionID,
+                options: Array.from(checkBoxItems),
+                onSave: () => {
+                    this.props.router.push({
+                        pathname: this.props.location.pathname,
+                        query: {
+                            action: 'summary'
+                        }
+                    })
+                }
+            }
+
+            return <SimpleSelector {...selectorProps} />
+        }
+
+        const geographyLinks = [];
+        if (linkItems.size > 0) {
+            for (let [item] of linkItems.entries()) {
+                const query = {
+                    action,
+                    id: item.id,
+                    type: leafType
+                };
+
+                const optionName = entryMap.get(item.id).options[0].name;
+                const summary = `For example: ${optionName}`;
+
+                geographyLinks.push(
+                    <p key={item.id} className="margin-top">
+                        <Link to={{ pathname, query }}>{item.name}</Link><br />
+                        <span>{summary}</span>
+                    </p>
+                );
+            }
         }
 
         return (
