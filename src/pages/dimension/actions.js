@@ -17,7 +17,6 @@ export const DESELECT_ALL_OPTIONS = 'DESELECT_ALL_OPTIONS';
 export const SELECT_ALL_OPTIONS = 'SELECT_ALL_OPTIONS';
 export const UPDATE_DIMENSION = 'UPDATE_DIMENSION';
 
-
 export function selectDimension(dimensionID) {
     return (dispatch, getState) => {
         const state = getState();
@@ -109,6 +108,7 @@ export function saveDimensionOptions({dimensionID, options}) {
 
         dispatch({ type: SAVE_DIMENSION_OPTIONS, options });
 
+        // todo: update in bulk instead of individually
         options.forEach(option => {
             updateOption({
                 id: option.id,
