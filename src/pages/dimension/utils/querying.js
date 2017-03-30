@@ -121,16 +121,16 @@ export function getBrowseList(entries, maxListSize = 20) {
  * Given a set of entries, return those with the requested levelType (i.e. those that should have a check box)
  * @param {string} levelTypeID - level type ID
  * @param {Set} entries - nested entry hierarchy
- * @returns {Array}
+ * @returns {Set}
  */
 export function getEntriesOfType(levelTypeID, entries) {
-    const matches = [];
+    const matches = new Set();
     entries.forEach(entry => {
         if (entry.levelType.id == levelTypeID) {
-            matches.push(entry)
+            matches.add(entry);
         }
     });
-    return matches
+    return matches;
 }
 
 /**
@@ -138,13 +138,13 @@ export function getEntriesOfType(levelTypeID, entries) {
  * (i.e. those that should be have a link to show a list of their children)
  * @param {string} levelTypeID - level type ID
  * @param {Set} entries - nested entry hierarchy
- * @returns {Array}
+ * @returns {Set}
  */
 export function getEntriesWithLeafType(levelTypeID, entries) {
-    const matches = [];
+    const matches = new Set();
     entries.forEach(entry => {
         if (entry.leafTypes.has(levelTypeID)) {
-            matches.push(entry);
+            matches.add(entry);
         }
     });
     return matches;
