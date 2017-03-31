@@ -132,11 +132,17 @@ class GeographyBrowser extends Component {
 
         // todo: implement displaying links and checkboxes on the same page
         if (checkBoxItems.size > 0) {
+            const orderedOptions = Array.from(checkBoxItems).sort((a, b) => {
+                if(a.name < b.name) return -1;
+                if(a.name > b.name) return 1;
+                return 0;
+            });
+            console.log(orderedOptions);
             const selectorProps = {
                 router: this.props.router,
                 datasetID: this.props.params.id,
                 dimensionID: this.props.params.dimensionID,
-                options: Array.from(checkBoxItems),
+                options: orderedOptions,
                 onSave: () => {
                     this.props.router.push({
                         pathname: this.props.location.pathname,
@@ -152,7 +158,14 @@ class GeographyBrowser extends Component {
 
         const geographyLinks = [];
         if (linkItems.size > 0) {
-            for (let [item] of linkItems.entries()) {
+
+            const orderedLinks = [...linkItems.values()].sort((a, b) => {
+                if(a.name < b.name) return -1;
+                if(a.name > b.name) return 1;
+                return 0;
+            });
+
+            orderedLinks.forEach(item => {
                 const query = {
                     action,
                     id: item.id,
@@ -170,7 +183,7 @@ class GeographyBrowser extends Component {
                         <span>{summary}</span>
                     </p>
                 );
-            }
+            });
         }
 
         return (
