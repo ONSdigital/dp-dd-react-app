@@ -75,7 +75,11 @@ class GeographyBrowser extends Component {
         const levelTypeMap = dimension.levelTypeMap;
         const geographyLinks = [];
 
-        for (var [key, value] of optionTypeMap.entries()) {
+        const orderedEntries = new Map([...optionTypeMap.entries()].sort((a, b) => {
+            return a[1].level - b[1].level;
+        }));
+
+        for (var [key, value] of orderedEntries.entries()) {
             const query = {
                 action,
                 type: value.id
