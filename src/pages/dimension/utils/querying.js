@@ -105,10 +105,29 @@ export function getBrowseList(entries, maxListSize = 20) {
     if (entries.size <= maxListSize) {
         return entries;
     }
-    const parents = new Set();
+
+    const parentMap = new Map();
     entries.forEach(entry => {
+        // get the parent if there is one
         parents.add(entry.parent==null ? entry : entry.parent);
+        // record how many entries are children of this parent
+        let children = parentMap.get(parent);
+        if (children == null) {
+            children = new Set();
+            parentMap.set(parent, children);
+        }
+        children.add(entry)
     });
+
+    // if a parent has only one child in entries, retain the entry instead - don't walk too far back up the tree
+    const parents = new Set();
+    for (let parent in parentMap.keys) {
+        if (parentMap.get(parent).size == 1) {
+            parents.add(parentMap.get(parent));
+        } else {
+            parents.add(parent);
+        }
+    }
 
     // check they don't all belong to the same parent, or have no parents
     if (parents.size <= 1  || parents.size == entries.size) {
