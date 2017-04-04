@@ -152,7 +152,7 @@ class GeographyBrowser extends Component {
                     })
                 }
             }
-
+            
             return <SimpleSelector {...selectorProps} />
         }
 

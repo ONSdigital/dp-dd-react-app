@@ -25,6 +25,8 @@ class Dimension extends Component {
             currentPath: pathname,
             downloadPath: appendPathComponent(dropLastPathComponent(pathname), '/download')
         }
+
+        this.handleCancelClick = this.handleCancelClick.bind(this);
     }
 
     componentWillMount() {
@@ -33,6 +35,12 @@ class Dimension extends Component {
 
     shouldComponentUpdate(props) {
         return !this.requestDataUpdate(props);
+    }
+
+    handleCancelClick() {
+        this.props.dimensions.forEach(dimension => {
+            dispatch(resetDimension(dimension.id));
+        });
     }
 
     requestDataUpdate(props = this.props) {
@@ -50,10 +58,10 @@ class Dimension extends Component {
         }
 
         props.dimensions.forEach(dimension => {
-           if (dimension.selectedCount === 0) {
-               dispatch(resetDimension(dimension.id));
-               return true;
-           }
+            if (dimension.selectedCount === 0) {
+                dispatch(resetDimension(dimension.id));
+                return true;
+            }
         });
 
         return false;
@@ -83,7 +91,7 @@ class Dimension extends Component {
                         <Link className="btn btn--primary btn--thick btn--wide btn--big margin-right--half"
                               to={this.state.downloadPath}>Choose a download format</Link>
                         <br/>
-                        <Link className="inline-block margin-top--4 font-size--17" to={this.state.parentPath}>Cancel</Link>
+                        <Link className="inline-block margin-top--4 font-size--17" to={this.state.parentPath} onClick={this.handleCancelClick}>Cancel</Link>
                     </div>
                 </div>
             </div>
